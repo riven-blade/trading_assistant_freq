@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   DashboardOutlined,
   SwapOutlined,
-  WalletOutlined,
   UserOutlined,
   LogoutOutlined,
   MenuOutlined,

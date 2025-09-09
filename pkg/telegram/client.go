@@ -569,9 +569,9 @@ func (t *TelegramClient) handleShowCommand(args []string) {
 
 	// 检查币种是否被选中
 	isSelected := redis.GlobalRedisClient.IsCoinSelected(symbol)
-	selectionStatus := "❌ 未选中"
+	selectionStatus := "未选中"
 	if isSelected {
-		selectionStatus = "✅ 已选中"
+		selectionStatus = "已选中"
 	}
 
 	// 获取该交易对的价格监听
@@ -731,20 +731,11 @@ func (t *TelegramClient) setupCustomKeyboard() {
 		return
 	}
 
-	// 创建空的自定义键盘
-	keyboard := tgbotapi.NewReplyKeyboard()
-	keyboard.ResizeKeyboard = true               // 自动调整键盘大小
-	keyboard.OneTimeKeyboard = false             // 键盘持久显示
-	keyboard.InputFieldPlaceholder = "输入交易命令..." // 输入框提示
-
 	// 发送带键盘的消息
 	msg := tgbotapi.NewMessage(t.chatID, "交易助手已就绪，请输入交易命令")
-	msg.ReplyMarkup = keyboard
 
 	_, err := t.bot.Send(msg)
 	if err != nil {
 		logrus.Errorf("设置自定义键盘失败: %v", err)
-	} else {
-		logrus.Info("自定义键盘设置成功")
 	}
 }

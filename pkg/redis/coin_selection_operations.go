@@ -30,11 +30,6 @@ func (c *Client) SetCoinSelection(marketID string, status string) error {
 		return fmt.Errorf("保存币种选择状态失败: %v", err)
 	}
 
-	logrus.WithFields(logrus.Fields{
-		"marketID": marketID,
-		"status":   status,
-	}).Info("币种选择状态已更新")
-
 	return nil
 }
 

@@ -25,7 +25,6 @@ const useAccountData = () => {
       
       if (response.data.success && response.data.data) {
         const positionsData = response.data.data.positions || [];
-        const totalPnl = response.data.data.total_pnl || 0;
         
         // 转换freqtrade数据格式为前端需要的格式
         const formattedPositions = positionsData.map(position => {

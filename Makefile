@@ -3,9 +3,9 @@
 .PHONY: all clean build-frontend build-backend build-backend-linux package dev install-deps docker-build docker-buildx docker-run docker-stop docker-logs docker-shell docker-clean docker-deploy help
 
 # Docker 相关变量
-IMAGE_NAME := ddhdocker/trading-assistant
-IMAGE_TAG := 0.1.180
-CONTAINER_NAME := trading-assistant-container
+IMAGE_NAME := ddhdocker/trading-assistant-freq
+IMAGE_TAG := 0.0.1
+CONTAINER_NAME := trading-assistant-freq
 
 # 默认目标
 all: package

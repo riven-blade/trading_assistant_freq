@@ -13,10 +13,9 @@ import {
   Space,
   Select
 } from 'antd';
-import { 
+import {
   ReloadOutlined,
-  LineChartOutlined,
-  BarChartOutlined
+  LineChartOutlined
 } from '@ant-design/icons';
 import api, { getAllEstimates } from '../services/api';
 
@@ -257,24 +256,18 @@ const Orders = () => {
       }
     },
     {
-      title: '交易数量',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      width: 120,
-      render: (quantity, record) => {
-        const baseAsset = record.symbol?.replace('USDT', '') || '';
-        return <Text>{(quantity || 0).toFixed(6)} {baseAsset}</Text>
-      }
+      title: '比例',
+      dataIndex: 'percentage',
+      key: 'percentage',
+      width: 80,
+      render: (percentage) => <Text strong>{(percentage || 0).toFixed(1)}%</Text>
     },
     {
-      title: '预估金额',
-      dataIndex: 'target_price',
-      key: 'estimated_amount',
+      title: '标签',
+      dataIndex: 'tag',
+      key: 'tag',
       width: 120,
-      render: (targetPrice, record) => {
-        const estimatedAmount = (record.quantity || 0) * (targetPrice || 0);
-        return <Text>${(estimatedAmount || 0).toFixed(2)} USDT</Text>
-      }
+      render: (tag) => tag ? <Tag color="blue">{tag}</Tag> : <Text type="secondary">-</Text>
     },
     {
       title: '杠杆',
