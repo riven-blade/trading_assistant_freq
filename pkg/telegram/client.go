@@ -10,6 +10,7 @@ import (
 	"trading_assistant/pkg/config"
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/redis"
+	"trading_assistant/pkg/utils"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
@@ -43,6 +44,25 @@ func getChinaLocation() *time.Location {
 		return time.UTC
 	}
 	return loc
+}
+
+// normalizeSymbol 标准化symbol输入格式
+func (t *TelegramClient) normalizeSymbol(input string) string {
+	if input == "" {
+		return ""
+	}
+
+	input = strings.ToUpper(input)
+
+	if strings.Contains(input, "/") || strings.Contains(input, ":") {
+		return utils.ConvertSymbolToMarketID(input)
+	}
+
+	if strings.HasSuffix(input, "USDT") {
+		return input
+	}
+
+	return input + "USDT"
 }
 
 // 格式化创建时间为完整的年月日时间格式
@@ -260,13 +280,9 @@ func (t *TelegramClient) handleCommand(message *tgbotapi.Message) {
 		t.handleTradingCommand(command, args, models.ActionTypeAddition, types.PositionSideShort)
 	case "al": // 做多加仓
 		t.handleTradingCommand(command, args, models.ActionTypeAddition, types.PositionSideLong)
-	case "ts": // 做空止盈
+	case "ps": // 做空止盈
 		t.handleTradingCommand(command, args, models.ActionTypeTakeProfit, types.PositionSideShort)
-	case "tl": // 做多止盈
-		t.handleTradingCommand(command, args, models.ActionTypeTakeProfit, types.PositionSideLong)
-	case "ps": // 做空平仓（等同于做空止盈）
-		t.handleTradingCommand(command, args, models.ActionTypeTakeProfit, types.PositionSideShort)
-	case "pl": // 做多平仓（等同于做多止盈）
+	case "pl": // 做多止盈
 		t.handleTradingCommand(command, args, models.ActionTypeTakeProfit, types.PositionSideLong)
 	case "estimates": // 价格监听查询
 		t.handleEstimatesCommand()
@@ -288,27 +304,38 @@ func (t *TelegramClient) handleTradingCommand(command string, args []string, act
 		"side":        side,
 	}).Info("开始处理交易命令")
 
-	if len(args) < 2 {
-		t.SendMessage(fmt.Sprintf("参数错误\n用法: /%s <symbol> <usdt数量> [price]\n例如: /%s BTCUSDT 100 50000", command, command))
+	// 检查参数数量
+	if len(args) < 1 {
+		t.SendMessage("参数错误: 缺少交易对")
 		return
 	}
 
-	symbol := strings.ToUpper(args[0])
-	if !strings.HasSuffix(symbol, "USDT") {
-		symbol += "USDT"
+	symbol := t.normalizeSymbol(args[0])
+
+	var percentage float64
+	var priceArgIndex int
+
+	// 根据操作类型设置默认比例
+	switch actionType {
+	case models.ActionTypeOpen:
+		// 开仓命令格式: /os <symbol> [price] 或 /ol <symbol> [price]
+		percentage = 100.0
+		priceArgIndex = 1
+	case models.ActionTypeAddition:
+		// 加仓命令格式: /as <symbol> [price] 或 /al <symbol> [price]
+		percentage = 20.0 // 默认加仓20%（相对于原始成本）
+		priceArgIndex = 1
+	case models.ActionTypeTakeProfit:
+		// 止盈命令格式: /ps <symbol> [price] 或 /pl <symbol> [price]
+		percentage = 50.0 // 默认止盈50%（卖出一半持仓）
+		priceArgIndex = 1
 	}
 
-	// 解析USDT数量
-	usdtAmount, err := strconv.ParseFloat(args[1], 64)
-	if err != nil || usdtAmount <= 0 {
-		t.SendMessage("错误: USDT数量格式错误，请输入有效数字")
-		return
-	}
-
-	// 解析价格（可选）
+	// 解析价格
 	var price float64
-	if len(args) >= 3 {
-		price, err = strconv.ParseFloat(args[2], 64)
+	if len(args) > priceArgIndex {
+		var err error
+		price, err = strconv.ParseFloat(args[priceArgIndex], 64)
 		if err != nil || price <= 0 {
 			t.SendMessage("错误: 价格格式错误，请输入有效数字")
 			return
@@ -329,7 +356,7 @@ func (t *TelegramClient) handleTradingCommand(command string, args []string, act
 	}
 
 	// 创建价格预估并执行
-	t.executeTradingOrder(symbol, actionType, side, usdtAmount, price)
+	t.executeTradingOrder(symbol, actionType, side, percentage, price)
 }
 
 // checkListeningEstimateExists 检查指定交易对、方向和操作类型的监听中估价是否存在
@@ -357,12 +384,12 @@ func (t *TelegramClient) checkListeningEstimateExists(symbol, side, actionType s
 }
 
 // executeTradingOrder 创建交易价格监听
-func (t *TelegramClient) executeTradingOrder(symbol, actionType, side string, usdtAmount, price float64) {
+func (t *TelegramClient) executeTradingOrder(symbol, actionType, side string, percentage, price float64) {
 	logrus.WithFields(logrus.Fields{
 		"symbol":      symbol,
 		"action_type": actionType,
 		"side":        side,
-		"usdt_amount": usdtAmount,
+		"percentage":  percentage,
 		"price":       price,
 	}).Info("开始创建交易价格监听")
 
@@ -387,9 +414,6 @@ func (t *TelegramClient) executeTradingOrder(symbol, actionType, side string, us
 	// 默认杠杆3倍
 	leverage := 3
 
-	// 对于Telegram机器人，使用默认100%比例
-	percentage := 100.0
-
 	// 创建价格预估
 	estimate := &models.PriceEstimate{
 		ID:          fmt.Sprintf("tg_%d", time.Now().UnixNano()),
@@ -397,12 +421,13 @@ func (t *TelegramClient) executeTradingOrder(symbol, actionType, side string, us
 		Side:        side,
 		ActionType:  actionType,
 		TargetPrice: price,
-		Percentage:  percentage, // 使用百分比而不是具体数量
+		Percentage:  percentage, // 使用配置的百分比
 		Leverage:    leverage,
 		OrderType:   types.OrderTypeLimit,
-		MarginMode:  types.MarginModeCrossed,
+		MarginMode:  types.MarginModeIsolated,
 		Status:      models.EstimateStatusListening,
 		Enabled:     true,
+		Tag:         "manual",                    // 默认tag为manual
 		TriggerType: models.TriggerTypeCondition, // 使用条件触发，等待价格监听
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
@@ -551,14 +576,11 @@ func (t *TelegramClient) handleShowCommand(args []string) {
 	}
 
 	if len(args) == 0 {
-		t.SendMessage("请输入交易对\n用法: /show <symbol>\n例如: /show BTCUSDT")
+		t.SendMessage("请输入交易对\n用法: /show <symbol>\n")
 		return
 	}
 
-	symbol := strings.ToUpper(args[0])
-	if !strings.HasSuffix(symbol, "USDT") {
-		symbol += "USDT"
-	}
+	symbol := t.normalizeSymbol(args[0])
 
 	// 获取当前价格
 	markPriceData, err := redis.GlobalRedisClient.GetMarkPrice(symbol)
@@ -614,31 +636,38 @@ func (t *TelegramClient) handleStartCommand() {
 	message := `交易助手机器人
 
 交易命令:
-• /os <symbol> <usdt数量> [price] - 做空开仓
-• /ol <symbol> <usdt数量> [price] - 做多开仓
-• /as <symbol> <usdt数量> [price] - 做空加仓
-• /al <symbol> <usdt数量> [price] - 做多加仓
-• /ts <symbol> <usdt数量> [price] - 做空止盈
-• /tl <symbol> <usdt数量> [price] - 做多止盈
-• /ps <symbol> <usdt数量> [price] - 做空平仓
-• /pl <symbol> <usdt数量> [price] - 做多平仓
+• /os <symbol> [price] - 强制做空开仓
+• /ol <symbol> [price] - 强制做多开仓  
+• /as <symbol> [price] - 做空加仓
+• /al <symbol> [price] - 做多加仓
+• /ps <symbol> [price] - 做空止盈
+• /pl <symbol> [price] - 做多止盈
 
-💡 注意：/ts、/tl（止盈）和 /ps、/pl（平仓）效果相同
+💡 注意：
+• 开仓命令: 使用100%资金，逐仓模式
+• 加仓命令: 使用20%比例（相对于原始成本）
+• 止盈命令: 卖出50%持仓
 
 查询命令:
 • /estimates - 查看价格监听
 • /show <symbol> - 显示交易对信息
 
 使用说明:
-• symbol: 交易对 (如 BTC、BTCUSDT)
-• usdt数量: 使用的USDT金额
+• symbol: 交易对 (如 BTC、BTCUSDT)  
 • price: 限价 (可选，不填则使用当前价格)
 • 默认杠杆: 3倍
 • 默认订单类型: 限价单
 
+比例配置:
+• 开仓: 100%资金
+• 加仓: 20%（相对于原始成本）
+• 止盈: 50%（卖出一半持仓）
+
 示例:
-• /ol BTC 100 50000 - 做多开仓BTC，使用100 USDT，价格50000
-• /os ETH 50 - 做空开仓ETH，使用50 USDT，当前价格
+• /ol BTC 50000 - 做多开仓BTC，价格50000
+• /os ETH - 做空开仓ETH，当前价格
+• /as BTC 45000 - 做空加仓BTC，加仓20%，价格45000
+• /pl BTC - 做多止盈BTC，卖出50%，当前价格
 • /show BTC - 显示BTCUSDT的详细信息`
 
 	// 直接发送消息，不使用按钮
@@ -708,20 +737,6 @@ func (t *TelegramClient) getMarginModeText(marginMode string) string {
 		return "逐仓"
 	default:
 		return marginMode // 如果未知，返回原值
-	}
-}
-
-// getPositionSideText 获取仓位方向的中文描述
-func (t *TelegramClient) getPositionSideText(side string) string {
-	switch strings.ToUpper(side) {
-	case "LONG":
-		return "🟢  多头"
-	case "SHORT":
-		return "🔴  空头"
-	case "BOTH":
-		return "🟡  双向"
-	default:
-		return "🟡  " + side // 如果未知，返回原值
 	}
 }
 

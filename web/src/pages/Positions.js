@@ -37,6 +37,7 @@ const Positions = () => {
   const [pricePercentage, setPricePercentage] = useState(0);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [entryTag, setEntryTag] = useState('');
+  const [exitTag, setExitTag] = useState('');
 
   // 详情抽屉相关状态
   const [detailDrawerVisible, setDetailDrawerVisible] = useState(false);
@@ -267,7 +268,8 @@ const Positions = () => {
         margin_mode: 'ISOLATED',
         order_type: 'limit',
         trigger_type: 'condition',
-        tag: actionType === 'addition' ? (entryTag || undefined) : undefined // 只在加仓时添加标签
+        tag: actionType === 'addition' ? (entryTag || undefined) : 
+             actionType === 'take_profit' ? (exitTag || undefined) : undefined // 加仓时添加入场标签，止盈时添加退出标签
         // created_by字段已移除
       };
 
@@ -281,6 +283,8 @@ const Positions = () => {
       
       message.success(`${ACTIONS[actionType].title}监听已创建`);
       setDrawerVisible(false);
+      setEntryTag('');
+      setExitTag('');
       
       // 数据会通过全局estimates自动更新，无需手动刷新
     } catch (error) {
@@ -478,7 +482,11 @@ const Positions = () => {
           </div>
         }
         placement="right"
-        onClose={() => setDrawerVisible(false)}
+        onClose={() => {
+          setDrawerVisible(false);
+          setEntryTag('');
+          setExitTag('');
+        }}
         open={drawerVisible}
         width={window.innerWidth < 768 ? '100%' : 480}
         extra={
@@ -588,6 +596,36 @@ const Positions = () => {
                   多头开仓: 163, 162, 161, 144, 143, 142, 141, 120, 104, 103, 102, 101, 62, 61, 46, 45, 44, 43, 42, 41, 21, 6, 5, 4, 3, 2, 1
                   空头开仓: 542, 502, 501
                   */}
+                </Select>
+              </div>
+            )}
+
+            {/* 退出标签选择 - 仅在止盈时显示 */}
+            {actionType === 'take_profit' && (
+              <div style={{ marginTop: 16, marginBottom: 16 }}>
+                <Typography.Text strong style={{ display: 'block', marginBottom: 8, fontSize: '14px' }}>
+                  止盈标签
+                </Typography.Text>
+                <Select
+                  value={exitTag || 'grind_1_exit'}
+                  onChange={(value) => setExitTag(value || '')}
+                  placeholder="选择止盈标签..."
+                  allowClear
+                  size="large"
+                  style={{ width: '100%' }}
+                  listHeight={256}
+                  virtual={false}
+                  getPopupContainer={(trigger) => trigger.parentElement}
+                >
+                  {/* 止盈退出标签 */}
+                  <Select.Option value="grind_1_exit">grind_1_exit</Select.Option>
+                  <Select.Option value="grind_2_exit">grind_2_exit</Select.Option>
+                  <Select.Option value="grind_3_exit">grind_3_exit</Select.Option>
+                  <Select.Option value="grind_4_exit">grind_4_exit</Select.Option>
+                  <Select.Option value="grind_5_exit">grind_5_exit</Select.Option>
+                  <Select.Option value="buyback_1_exit">buyback_1_exit</Select.Option>
+                  <Select.Option value="buyback_2_exit">buyback_2_exit</Select.Option>
+                  <Select.Option value="buyback_3_exit">buyback_3_exit</Select.Option>
                 </Select>
               </div>
             )}

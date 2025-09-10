@@ -69,7 +69,7 @@ const TradingPairs = () => {
   const [selectedLeverage, setSelectedLeverage] = useState(DEFAULT_CONFIG.leverage);
   const [targetPrice, setTargetPrice] = useState(0);
   const [orderType, setOrderType] = useState(DEFAULT_CONFIG.orderType);
-  const [entryTag, setEntryTag] = useState('force_entry'); // 入场标签
+  const [entryTag, setEntryTag] = useState('manual'); // 入场标签
 
   // 监控抽屉相关状态
   const [monitorDrawerVisible, setMonitorDrawerVisible] = useState(false);
@@ -287,7 +287,7 @@ const TradingPairs = () => {
     // 重置状态到默认值
     setSelectedLeverage(DEFAULT_CONFIG.leverage);
     setOrderType(DEFAULT_CONFIG.orderType);
-    setEntryTag('force_entry');
+    setEntryTag('manual');
     
     setTradeModalVisible(true);
   };

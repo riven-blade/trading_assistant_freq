@@ -125,7 +125,7 @@ const TradeDrawer = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <Text type="secondary">入场标签:</Text>
             <Text strong style={{ color: '#1890ff' }}>
-              {entryTag || 'force_entry'}
+              {entryTag || 'manual'}
             </Text>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -203,6 +203,9 @@ const TradeDrawer = ({
             virtual={false}
             getPopupContainer={(trigger) => trigger.parentElement}
           >
+            <Select.Option key="manual" value="manual">
+              manual
+            </Select.Option>
             <Select.Option key="force_entry" value="force_entry">
               force_entry
             </Select.Option>
