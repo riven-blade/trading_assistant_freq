@@ -100,10 +100,18 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 		entryTag = fmt.Sprintf("open_%s", estimate.Side)
 	}
 
+	// 确定开仓方向
+	side := "long"
+	if estimate.Side == types.PositionSideShort {
+		side = "short"
+	}
+
 	payload := models.ForceBuyPayload{
 		Pair:      futureSymbol,
 		OrderType: orderType,
 		EntryTag:  entryTag,
+		Side:      side, // 设置开仓方向
+		Leverage:  estimate.Leverage,
 	}
 
 	// 设置订单价格
@@ -113,7 +121,9 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 
 	logrus.WithFields(logrus.Fields{
 		"symbol":        estimate.Symbol,
+		"side":          side,
 		"order_type":    orderType,
+		"leverage":      estimate.Leverage,
 		"current_price": currentPrice,
 		"order_price":   orderPrice,
 		"target_price":  estimate.TargetPrice,

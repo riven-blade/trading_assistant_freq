@@ -32,10 +32,8 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
   
   const isProfit = (realTimeUnrealizedPnl || 0) >= 0;
   
-  // 计算保证金 = 持仓价值 / 杠杆倍数
-  const margin = (position.notional && position.leverage && position.leverage > 0) 
-    ? position.notional / position.leverage 
-    : 0;
+  // 计算保证金 = 实际占用保证金（stake_amount）
+  const margin = position.notional || 0;
   
   // 计算盈亏百分比 = 未实现盈亏 / 保证金 * 100%
   const pnlPercentage = (margin > 0 && !isNaN(realTimeUnrealizedPnl)) 

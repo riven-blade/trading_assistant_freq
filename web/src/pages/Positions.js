@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 import api, { toggleEstimateEnabled } from '../services/api';
-import { calculateUsdtAmount, calculatePnl } from '../utils/precision';
+import { calculatePnl } from '../utils/precision';
 
 // 通用组件和Hooks
 import PageHeader from '../components/Common/PageHeader';
@@ -33,11 +33,12 @@ const Positions = () => {
   const [actionType, setActionType] = useState('');
   const [markPrice, setMarkPrice] = useState(0);
   const [targetPrice, setTargetPrice] = useState(0);
+  // 数量/比例：加仓/止盈时表示百分比0-100，其它情况表示绝对数量
   const [quantity, setQuantity] = useState(0);
   const [pricePercentage, setPricePercentage] = useState(0);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [entryTag, setEntryTag] = useState('');
-  const [exitTag, setExitTag] = useState('');
+  const [entryTag, setEntryTag] = useState('manual');
+  const [exitTag, setExitTag] = useState('manual');
 
   // 详情抽屉相关状态
   const [detailDrawerVisible, setDetailDrawerVisible] = useState(false);
@@ -167,16 +168,15 @@ const Positions = () => {
     const basePrice = priceBase === 'current' ? price : entryPrice;
     let defaultTargetPrice = basePrice * (1 + defaultPercentage / 100);
 
-    // 设置默认数量（持仓数量的50%）
-    let defaultQuantity = Math.abs(position.size) * 0.5;
+    // 设置默认比例/数量：加仓/止盈默认50%
+    let defaultQuantity = 50;
     
     setPricePercentage(defaultPercentage);
     setTargetPrice(defaultTargetPrice);
     setQuantity(defaultQuantity);
     
-    // 只在加仓时设置默认入场标签
-    const defaultTag = action === 'addition' ? 'grind_1_entry' : '';
-    setEntryTag(defaultTag);
+    // 设置默认入场标签为manual
+    setEntryTag('manual');
     
     setDrawerVisible(true);
   };
@@ -197,23 +197,12 @@ const Positions = () => {
     
     setTargetPrice(newTargetPrice);
     
-    // 对于加仓，价格变化时需要调整数量以保持在最大范围内
-    if (actionType === 'addition') {
-      const maxUsdtAmount = getFirstOrderCost(currentPosition);
-      const newMaxQuantity = (maxUsdtAmount * currentPosition.leverage) / newTargetPrice;
-      
-      // 如果当前数量超过了新的最大数量，调整到最大数量
-      if (quantity > newMaxQuantity) {
-        const adjustedQuantity = newMaxQuantity;
-        setQuantity(adjustedQuantity);
-      }
-    }
+    // 加仓/止盈改为百分比模式，与价格滑块解耦，不做数量联动
   };
 
   // 数量滑块变化处理
   const handleQuantitySliderChange = (newQuantity) => {
-    let finalQuantity = newQuantity;
-    setQuantity(finalQuantity);
+    setQuantity(newQuantity);
   };
 
   // 获取第一个订单的cost作为最大加仓金额
@@ -268,23 +257,21 @@ const Positions = () => {
         margin_mode: 'ISOLATED',
         order_type: 'limit',
         trigger_type: 'condition',
-        tag: actionType === 'addition' ? (entryTag || undefined) : 
-             actionType === 'take_profit' ? (exitTag || undefined) : undefined // 加仓时添加入场标签，止盈时添加退出标签
-        // created_by字段已移除
+        tag: actionType === 'addition' ? (entryTag || 'manual') : 
+             actionType === 'take_profit' ? (exitTag || 'manual') : undefined
       };
 
-      // 只在加仓和止盈时添加交易比例
+      // 加仓/止盈使用百分比（0-100）
       if (actionType === 'addition' || actionType === 'take_profit') {
-        const percentage = (quantity / getMaxQuantity()) * 100;
-        orderData.percentage = Math.min(100, Math.max(0, percentage));
+        orderData.percentage = Math.min(100, Math.max(0, quantity));
       }
 
       await api.post('/estimates', orderData);
       
       message.success(`${ACTIONS[actionType].title}监听已创建`);
       setDrawerVisible(false);
-      setEntryTag('');
-      setExitTag('');
+      setEntryTag('manual');
+      setExitTag('manual');
       
       // 数据会通过全局estimates自动更新，无需手动刷新
     } catch (error) {
@@ -484,8 +471,8 @@ const Positions = () => {
         placement="right"
         onClose={() => {
           setDrawerVisible(false);
-          setEntryTag('');
-          setExitTag('');
+          setEntryTag('manual');
+          setExitTag('manual');
         }}
         open={drawerVisible}
         width={window.innerWidth < 768 ? '100%' : 480}
@@ -571,8 +558,8 @@ const Positions = () => {
                   入场标签
                 </Typography.Text>
                 <Select
-                  value={entryTag || undefined}
-                  onChange={(value) => setEntryTag(value || '')}
+                  value={entryTag || 'manual'}
+                  onChange={(value) => setEntryTag(value || 'manual')}
                   placeholder="选择入场标签..."
                   allowClear
                   size="large"
@@ -582,6 +569,7 @@ const Positions = () => {
                   getPopupContainer={(trigger) => trigger.parentElement}
                 >
                   {/* 加仓标签 */}
+                  <Select.Option value="manual">manual</Select.Option>
                   <Select.Option value="grind_1_entry">grind_1_entry</Select.Option>
                   <Select.Option value="grind_2_entry">grind_2_entry</Select.Option>
                   <Select.Option value="grind_3_entry">grind_3_entry</Select.Option>
@@ -607,8 +595,8 @@ const Positions = () => {
                   止盈标签
                 </Typography.Text>
                 <Select
-                  value={exitTag || 'grind_1_exit'}
-                  onChange={(value) => setExitTag(value || '')}
+                  value={exitTag || 'manual'}
+                  onChange={(value) => setExitTag(value || 'manual')}
                   placeholder="选择止盈标签..."
                   allowClear
                   size="large"
@@ -618,6 +606,7 @@ const Positions = () => {
                   getPopupContainer={(trigger) => trigger.parentElement}
                 >
                   {/* 止盈退出标签 */}
+                  <Select.Option value="manual">manual</Select.Option>
                   <Select.Option value="grind_1_exit">grind_1_exit</Select.Option>
                   <Select.Option value="grind_2_exit">grind_2_exit</Select.Option>
                   <Select.Option value="grind_3_exit">grind_3_exit</Select.Option>
@@ -630,32 +619,25 @@ const Positions = () => {
               </div>
             )}
 
-            {/* 金额显示 */}
-            <div style={{ 
-              background: '#f0f9ff', 
-              padding: 16, 
-              borderRadius: 8,
-              marginTop: 24,
-              border: '1px solid #bae6fd'
-            }}>
-              {actionType === 'addition' ? (
-                (() => {
-                  const marginRequired = calculateUsdtAmount(quantity, targetPrice, currentPosition.leverage);
-                  return (
-                    <>
-                      <Text strong>预计使用: {(marginRequired || 0).toFixed(2)} USDT</Text>
-                    </>
-                  );
-                })()
-              ) : (
-                (() => {
-                  const expectedPnl = calculatePnl(quantity, currentPosition.entry_price, targetPrice, currentPosition.side);
+            {/* 预计盈亏 - 仅在止盈时显示 */}
+            {actionType === 'take_profit' && (
+              <div style={{ 
+                background: '#f0f9ff', 
+                padding: 16, 
+                borderRadius: 8,
+                marginTop: 24,
+                border: '1px solid #bae6fd'
+              }}>
+                {(() => {
+                  // 百分比转换为绝对数量再计算
+                  const absoluteQty = getMaxQuantity() * (quantity / 100);
+                  const expectedPnl = calculatePnl(absoluteQty, currentPosition.entry_price, targetPrice, currentPosition.side);
                   return (
                     <Text strong>预计盈亏: {(expectedPnl || 0).toFixed(2)} USDT</Text>
                   );
-                })()
-              )}
-            </div>
+                })()}
+              </div>
+            )}
           </div>
         )}
       </Drawer>

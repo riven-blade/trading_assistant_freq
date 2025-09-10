@@ -19,9 +19,20 @@ const QuantitySlider = ({
   config 
 }) => {
   const baseAsset = symbol.replace('USDT', '');
-  
-  // 统一使用数量模式
-  const optimizedMarks = {
+
+  const isPercentMode = action === 'addition' || action === 'take_profit';
+
+  // 百分比模式：0-100，独立于价格滑块
+  const percentMarks = {
+    0: '0%',
+    25: '25%',
+    50: '50%',
+    75: '75%',
+    100: '100%'
+  };
+
+  // 数量模式
+  const quantityMarks = {
     0: '0%',
     [maxQuantity * 0.25]: '25%',
     [maxQuantity * 0.5]: '50%',
@@ -33,14 +44,17 @@ const QuantitySlider = ({
     <TradingSlider
       title={config.quantityLabel || `${baseAsset}数量`}
       value={quantity}
-      min={0.001}
-      max={maxQuantity}
-      step={0.001}
+      min={isPercentMode ? 0 : 0.001}
+      max={isPercentMode ? 100 : maxQuantity}
+      step={isPercentMode ? 1 : 0.001}
       onChange={onQuantityChange}
-      marks={optimizedMarks}
-      displayLabel="当前数量:"
-      displayValue={`${quantity.toFixed(6)} ${baseAsset}`}
-      tooltipFormatter={(value) => `${value?.toFixed(6)} ${baseAsset}`}
+      marks={isPercentMode ? percentMarks : quantityMarks}
+      tooltipFormatter={(value) => {
+        if (isPercentMode) {
+          return `${value}%`;
+        }
+        return `${value?.toFixed(6)} ${baseAsset}`;
+      }}
       action={action}
     />
   );
