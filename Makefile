@@ -4,7 +4,7 @@
 
 # Docker 相关变量
 IMAGE_NAME := ddhdocker/trading-assistant-freq
-IMAGE_TAG := 0.0.1
+IMAGE_TAG := 0.0.36
 CONTAINER_NAME := trading-assistant-freq
 
 # 默认目标
@@ -95,3 +95,6 @@ help:
 	@echo "  本地开发: make install-deps && make dev"
 	@echo "  本地构建: make package && make start"
 	@echo "  Docker部署: make docker-deploy"
+
+
+#scp ./x6.py root@168.93.214.185:/root/service/data/strategies

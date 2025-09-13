@@ -70,7 +70,7 @@ class NostalgiaForInfinityX6(IStrategy):
   INTERFACE_VERSION = 3
 
   def version(self) -> str:
-    return "v16.7.63"
+    return "v16.5.322"
 
   stoploss = -0.99
 
@@ -179,7 +179,7 @@ class NostalgiaForInfinityX6(IStrategy):
 
   # Limit the number of long/short trades for futures (0 for no limit)
   futures_max_open_trades_long = 3
-  futures_max_open_trades_short = 5
+  futures_max_open_trades_short = 3
 
   # Based on the the first entry (regardless of rebuys)
   stop_threshold_spot = 0.10
@@ -370,59 +370,59 @@ class NostalgiaForInfinityX6(IStrategy):
 
   # Grinding v2
   grinding_v2_max_stake = 1.0  # ratio of first entry
-  grinding_v2_max_grinds_and_buybacks = 30  # current open
+  grinding_v2_max_grinds_and_buybacks = 40  # current open
 
   grinding_v2_derisk_level_1_enable = True
   grinding_v2_derisk_level_1_spot = -0.12
   grinding_v2_derisk_level_1_futures = -0.24
   grinding_v2_derisk_level_2_enable = True
   grinding_v2_derisk_level_2_spot = -0.14
-  grinding_v2_derisk_level_2_futures = -0.36
+  grinding_v2_derisk_level_2_futures = -0.32
   grinding_v2_derisk_level_3_enable = True
   grinding_v2_derisk_level_3_spot = -0.15
-  grinding_v2_derisk_level_3_futures = -0.38
+  grinding_v2_derisk_level_3_futures = -0.36
   grinding_v2_derisk_level_1_stake_spot = 0.20
   grinding_v2_derisk_level_1_stake_futures = 0.50
   grinding_v2_derisk_level_2_stake_spot = 0.30
   grinding_v2_derisk_level_2_stake_futures = 0.30
-  grinding_v2_derisk_level_3_stake_spot = 0.50
+  grinding_v2_derisk_level_3_stake_spot = 0.20
   grinding_v2_derisk_level_3_stake_futures = 0.20
   grinding_v2_derisk_global_enable = False
   grinding_v2_derisk_global_spot = -0.10
   grinding_v2_derisk_global_futures = -0.30
 
   grinding_v2_grind_1_enable = True
-  grinding_v2_grind_1_stakes_spot = [0.20, 0.21, 0.22, 0.23]
-  grinding_v2_grind_1_thresholds_spot = [-0.06, -0.07, -0.08, -0.09]
-  grinding_v2_grind_1_stakes_futures = [0.20, 0.21, 0.22, 0.23]
-  grinding_v2_grind_1_thresholds_futures = [-0.06, -0.07, -0.08, -0.09]
+  grinding_v2_grind_1_stakes_spot = [0.25, 0.26, 0.27, 0.28]
+  grinding_v2_grind_1_thresholds_spot = [-0.12, -0.14, -0.16, -0.18]
+  grinding_v2_grind_1_stakes_futures = [0.25, 0.26, 0.27, 0.28]
+  grinding_v2_grind_1_thresholds_futures = [-0.12, -0.14, -0.16, -0.18]
   grinding_v2_grind_1_profit_threshold_spot = 0.028
   grinding_v2_grind_1_profit_threshold_futures = 0.028
-  grinding_v2_grind_1_use_derisk = True
-  grinding_v2_grind_1_derisk_spot = -0.18
-  grinding_v2_grind_1_derisk_futures = -0.18
+  grinding_v2_grind_1_use_derisk = False
+  grinding_v2_grind_1_derisk_spot = -0.35
+  grinding_v2_grind_1_derisk_futures = -0.35
 
   grinding_v2_grind_2_enable = True
   grinding_v2_grind_2_stakes_spot = [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18]
-  grinding_v2_grind_2_thresholds_spot = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
+  grinding_v2_grind_2_thresholds_spot = [-0.10, -0.11, -0.12, -0.13, -0.14, -0.15, -0.16, -0.17, -0.18]
   grinding_v2_grind_2_stakes_futures = [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18]
-  grinding_v2_grind_2_thresholds_futures = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
+  grinding_v2_grind_2_thresholds_futures = [-0.10, -0.11, -0.12, -0.13, -0.14, -0.15, -0.16, -0.17, -0.18]
   grinding_v2_grind_2_profit_threshold_spot = 0.05
   grinding_v2_grind_2_profit_threshold_futures = 0.05
-  grinding_v2_grind_2_use_derisk = True
-  grinding_v2_grind_2_derisk_spot = -0.18
-  grinding_v2_grind_2_derisk_futures = -0.18
+  grinding_v2_grind_2_use_derisk = False
+  grinding_v2_grind_2_derisk_spot = -0.35
+  grinding_v2_grind_2_derisk_futures = -0.35
 
   grinding_v2_grind_3_enable = True
   grinding_v2_grind_3_stakes_spot = [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18]
-  grinding_v2_grind_3_thresholds_spot = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
+  grinding_v2_grind_3_thresholds_spot = [-0.10, -0.11, -0.12, -0.13, -0.14, -0.15, -0.16, -0.17, -0.18]
   grinding_v2_grind_3_stakes_futures = [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18]
-  grinding_v2_grind_3_thresholds_futures = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
+  grinding_v2_grind_3_thresholds_futures = [-0.10, -0.11, -0.12, -0.13, -0.14, -0.15, -0.16, -0.17, -0.18]
   grinding_v2_grind_3_profit_threshold_spot = 0.05
   grinding_v2_grind_3_profit_threshold_futures = 0.05
-  grinding_v2_grind_3_use_derisk = True
-  grinding_v2_grind_3_derisk_spot = -0.18
-  grinding_v2_grind_3_derisk_futures = -0.18
+  grinding_v2_grind_3_use_derisk = False
+  grinding_v2_grind_3_derisk_spot = -0.35
+  grinding_v2_grind_3_derisk_futures = -0.35
 
   grinding_v2_grind_4_enable = True
   grinding_v2_grind_4_stakes_spot = [0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11]
@@ -431,53 +431,42 @@ class NostalgiaForInfinityX6(IStrategy):
   grinding_v2_grind_4_thresholds_futures = [-0.06, -0.07, -0.09, -0.12, -0.16, -0.21, -0.27]
   grinding_v2_grind_4_profit_threshold_spot = 0.10
   grinding_v2_grind_4_profit_threshold_futures = 0.10
-  grinding_v2_grind_4_use_derisk = True
-  grinding_v2_grind_4_derisk_spot = -0.18
-  grinding_v2_grind_4_derisk_futures = -0.18
-
-  grinding_v2_grind_5_enable = True
-  grinding_v2_grind_5_stakes_spot = [0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11]
-  grinding_v2_grind_5_thresholds_spot = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
-  grinding_v2_grind_5_stakes_futures = [0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11]
-  grinding_v2_grind_5_thresholds_futures = [-0.03, -0.04, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.11]
-  grinding_v2_grind_5_profit_threshold_spot = 0.10
-  grinding_v2_grind_5_profit_threshold_futures = 0.10
-  grinding_v2_grind_5_use_derisk = True
-  grinding_v2_grind_5_derisk_spot = -0.18
-  grinding_v2_grind_5_derisk_futures = -0.18
+  grinding_v2_grind_4_use_derisk = False
+  grinding_v2_grind_4_derisk_spot = -0.35
+  grinding_v2_grind_4_derisk_futures = -0.35
 
   grinding_v2_buyback_1_enable = True
-  grinding_v2_buyback_1_stake_spot = 0.10
-  grinding_v2_buyback_1_stake_futures = 0.10
+  grinding_v2_buyback_1_stake_spot = 0.20
+  grinding_v2_buyback_1_stake_futures = 0.20
   grinding_v2_buyback_1_distance_ratio_spot = -0.06
   grinding_v2_buyback_1_distance_ratio_futures = -0.06
   grinding_v2_buyback_1_profit_threshold_spot = 0.05
   grinding_v2_buyback_1_profit_threshold_futures = 0.05
-  grinding_v2_buyback_1_use_derisk = True
-  grinding_v2_buyback_1_derisk_spot = -0.18
-  grinding_v2_buyback_1_derisk_futures = -0.18
+  grinding_v2_buyback_1_use_derisk = False
+  grinding_v2_buyback_1_derisk_spot = -0.35
+  grinding_v2_buyback_1_derisk_futures = -0.35
 
   grinding_v2_buyback_2_enable = True
-  grinding_v2_buyback_2_stake_spot = 0.10
-  grinding_v2_buyback_2_stake_futures = 0.10
+  grinding_v2_buyback_2_stake_spot = 0.20
+  grinding_v2_buyback_2_stake_futures = 0.20
   grinding_v2_buyback_2_distance_ratio_spot = -0.12
   grinding_v2_buyback_2_distance_ratio_futures = -0.12
   grinding_v2_buyback_2_profit_threshold_spot = 0.05
   grinding_v2_buyback_2_profit_threshold_futures = 0.05
-  grinding_v2_buyback_2_use_derisk = True
-  grinding_v2_buyback_2_derisk_spot = -0.18
-  grinding_v2_buyback_2_derisk_futures = -0.18
+  grinding_v2_buyback_2_use_derisk = False
+  grinding_v2_buyback_2_derisk_spot = -0.35
+  grinding_v2_buyback_2_derisk_futures = -0.35
 
   grinding_v2_buyback_3_enable = True
-  grinding_v2_buyback_3_stake_spot = 0.10
-  grinding_v2_buyback_3_stake_futures = 0.10
+  grinding_v2_buyback_3_stake_spot = 0.20
+  grinding_v2_buyback_3_stake_futures = 0.20
   grinding_v2_buyback_3_distance_ratio_spot = -0.16
   grinding_v2_buyback_3_distance_ratio_futures = -0.16
   grinding_v2_buyback_3_profit_threshold_spot = 0.05
   grinding_v2_buyback_3_profit_threshold_futures = 0.05
-  grinding_v2_buyback_3_use_derisk = True
-  grinding_v2_buyback_3_derisk_spot = -0.18
-  grinding_v2_buyback_3_derisk_futures = -0.18
+  grinding_v2_buyback_3_use_derisk = False
+  grinding_v2_buyback_3_derisk_spot = -0.35
+  grinding_v2_buyback_3_derisk_futures = -0.35
 
   # Rebuy mode
   rebuy_mode_stake_multiplier = 0.35
@@ -519,7 +508,6 @@ class NostalgiaForInfinityX6(IStrategy):
     "FIL",
     "GRT",
     "HBAR",
-    "HYPE",
     "ICP",
     "KAS",
     "LINK",
@@ -561,7 +549,6 @@ class NostalgiaForInfinityX6(IStrategy):
     "FIL",
     "GRT",
     "HBAR",
-    "HYPE",
     "ICP",
     "IMX",
     "INJ",
@@ -2407,137 +2394,6 @@ class NostalgiaForInfinityX6(IStrategy):
 
     return None
 
-  def notification_msg(
-    self,
-    msg_type: str,
-    tag: str,
-    pair: str,
-    rate: float,
-    stake_amount: float,
-    profit_stake: float,
-    profit_ratio: float,
-    grind_profit_stake: float = None,
-    grind_profit_pct: float = None,
-    stake_currency: str = None,
-    coin_amount: float = None,
-  ) -> str:
-    """
-    Generate a formatted notification message for trade events.
-
-    This function is designed to standardize trade-related notifications
-    such as grinding entries, exits, stop-losses, buybacks, and re-entries.
-    It builds a Markdown-formatted message with emojis for readability.
-
-    Parameters
-    ----------
-    msg_type : str
-        Type of notification. Must be one of:
-        - "grinding-entry"
-        - "grinding-exit"
-        - "grinding-derisk"
-        - "grinding-stop"
-        - "buyback-entry"
-        - "buyback-exit"
-        - "buyback-derisk"
-        - "re-entry"
-        - "de-risk"
-        - "rebuy-derisk"
-        - "rebuy"
-    tag : str
-        Identifier or label for the trade step (e.g., "g1", "dl1").
-    pair : str
-        Pair (e.g., "BTC/USDT").
-    rate : float
-        Entry or exit rate for the trade.
-    stake_amount : float
-        Amount of stake used in the trade.
-    profit_stake : float
-        Profit expressed in stake currency.
-    profit_ratio : float
-        Profit ratio (decimal form, e.g. 0.05 = 5%).
-    grind_profit_stake : float, optional
-        Grind profit expressed in stake currency (default: None).
-    grind_profit_pct : float, optional
-        Grind profit ratio (decimal form, e.g. 0.02 = 2%) (default: None).
-    stake_currency : str, optional
-        Symbol of the stake currency (e.g., "USDT"). If None, only numeric values are shown.
-    coin_amount : float, optional
-        Amount of base coins involved in the trade (e.g., exit/stop cases).
-
-    Returns
-    -------
-    str
-        A formatted multi-line string with trade details.
-        Example:
-        ```
-        ✅ **Grinding entry:** `(dl1)`
-        🏦 **Exchange:** `Binance`
-        🪙 **Pair:** `BTC/USDT`
-        〽️ **Rate:** `20000.0`
-        💰 **Stake amount:** `100.00 USDT`
-        💵 **Profit (stake):** `5.00 USDT`
-        💸 **Profit (percent):** `5.00%`
-        💶 **Grind profit (stake):** `2.00 USDT`
-        💸 **Grind profit (percent):** `2.00%`
-        ```
-
-    Notes
-    -----
-    - The function uses Markdown formatting (e.g., **bold**, `inline code`)
-      for compatibility with Discord, Telegram, etc.
-    - If `grind_profit_stake` or `grind_profit_pct` are not provided,
-      the related fields are omitted.
-    - If `stake_currency` is provided, it will be appended to amounts.
-    """
-
-    # Headers for different message types
-    headers = {
-      "grinding-entry": f"✅ ​**Grinding entry:** `({tag})`\n",
-      "grinding-exit": f"❎​ ​**Grinding exit:** `({tag})`\n",
-      "grinding-derisk": f"❌​​ ​**Grinding de-risk:** `({tag})`\n",
-      "grinding-stop": f"❌ ​**Grinding stop exit:** `({tag})`\n",
-      "buyback-entry": f"✅ ​**Buyback entry:** `({tag})`\n",
-      "buyback-exit": f"❎​​ ​**Buyback exit:** `({tag})`\n",
-      "buyback-derisk": f"❌​​ ​**Buyback de-risk:** `({tag})`\n",
-      "re-entry": f"✅ ​**Re-entry:** `({tag})`\n",
-      "de-risk": f"❌​​ ​**De-risk:** `({tag})`\n",
-      "rebuy-derisk": f"❌​​ ​**Rebuy de-risk:** `({tag})`\n",
-      "rebuy": f"✅ ​**Rebuy:** `({tag})`\n",
-    }
-
-    # Start with the header
-    msg = headers.get(msg_type, None)
-
-    # Add exchange information
-    exchange_name = getattr(self, "config", {}).get("exchange", {}).get("name", "Unknown").capitalize()
-    msg += f"🏦 **Exchange:** `{exchange_name}`\n"
-
-    # Common fields
-    msg += (
-      f"🪙 **Pair:** `{pair}`\n"
-      f"〽️ **Rate:** `{rate}`\n"
-      f"💰 **Stake amount:** `{stake_amount:.2f}{'' if stake_currency is None else ' ' + stake_currency}`\n"
-    )
-
-    # Add coin amount if available (exit/stop cases)
-    if coin_amount is not None:
-      msg += f"🪙 **Coin amount:** `{coin_amount}`\n"
-
-    # Profit section
-    profit_pct = profit_ratio * 100
-    msg += (
-      f"💵 **Profit (stake):** `{profit_stake:.2f}{'' if stake_currency is None else ' ' + stake_currency}`\n"
-      f"💸 **Profit (percent):** `{profit_pct:.2f}%`\n"
-    )
-
-    # Grind profit calculation
-    if grind_profit_stake is not None:
-      msg += f"💶 **Grind profit (stake):** `{grind_profit_stake:.2f}{'' if stake_currency is None else ' ' + stake_currency}`\n"
-    if grind_profit_pct is not None:
-      msg += f"💸 **Grind profit (percent):** `{(grind_profit_pct * 100.0):.2f}%`"
-
-    return msg
-
   # Informative Pairs
   # ---------------------------------------------------------------------------------------------
   def informative_pairs(self):
@@ -2940,8 +2796,6 @@ class NostalgiaForInfinityX6(IStrategy):
     # EMA
     informative_1h["EMA_12"] = pta.ema(informative_1h["close"], length=12)
     informative_1h["EMA_200"] = pta.ema(informative_1h["close"], length=200, fillna=0.0)
-    # SMA
-    informative_1h["SMA_16"] = pta.sma(informative_1h["close"], length=16)
     # BB 20 - STD2
     bbands_20_2 = pta.bbands(informative_1h["close"], length=20)
     informative_1h["BBL_20_2.0"] = bbands_20_2["BBL_20_2.0"] if isinstance(bbands_20_2, pd.DataFrame) else np.nan
@@ -3538,21 +3392,8 @@ class NostalgiaForInfinityX6(IStrategy):
 
     # Global protections Long
     df["protections_long_global"] = (
-      # 5m & 15m & 1h & 4h & 1d down move, 1h & 4h & 1d still not low enough
-      (
-        (df["RSI_3"] > 1.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 20.0)
-        | (df["RSI_3_1d"] > 20.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["RSI_14_1d"] < 30.0)
-        | (df["CCI_20_1h"] < -250.0)
-        | (df["CCI_20_4h"] < -200.0)
-      )
       # 5m & 4h & 1d down move, 15m & 1h & 4h still not low enough, 1d still high
-      & (
+      (
         (df["RSI_3"] > 1.0)
         | (df["RSI_3_4h"] > 10.0)
         | (df["RSI_3_1d"] > 35.0)
@@ -3561,15 +3402,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 30.0)
         | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
         | (df["STOCHRSIk_14_14_3_3_1d"] < 50.0)
-      )
-      # 5m down move, 15m & 1h & 4h still high, 15m high
-      & (
-        (df["RSI_3"] > 3.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
       )
       # 1h & 4h down move, 15m & 1h & 4h downtrend, 1h still high
       & (
@@ -3581,17 +3413,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 60.0)
         | (df["ROC_9_1d"] < 80.0)
       )
-      # 5m & 15m & 1h down move, 1h & 4h still high, 15m still high, 1h high
-      & (
-        (df["RSI_3"] > 5.0)
-        | (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-      )
       # 5m & 15m & 1h & 4h down move, 4h high
       & (
         (df["RSI_3"] > 5.0)
@@ -3601,138 +3422,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 50.0)
         | (df["AROONU_14_4h"] < 80.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 5m & 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m & 4h high
-      & (
-        (df["RSI_3"] > 5.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-      )
-      # 5m & 15m & 4h down move, 15m & 1h & 4h still high, 15m & 1h still high
-      & (
-        (df["RSI_3"] > 5.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-      )
-      # 5m & 4h & 1d down move, 15m high
-      & (
-        (df["RSI_3"] > 5.0)
-        | (df["RSI_3_4h"] > 10.0)
-        | (df["RSI_3_1d"] > 15.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
-      )
-      # 5m & 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h stil high, 15m & 4h high
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 5m & 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 4h high
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 5m & 15m & 1h down move, 15m & 1h still high, 4h high, 15m still not low enough, 5h overbought
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 20.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 5m & 15m & 1h & 1d down move, 1h & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 65.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_1d"] > -0.20)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] > -15.0)
-      )
-      # 5m & 15m & 4h down move, 15m & 1h still not low enough, 4h still high, 15m & 4h high
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 60.0)
-      )
-      # 5m & 15m & 1h down move, 15m still not low enough, 1h still high, 4h high, 15m & 4h high
-      & (
-        (df["RSI_3"] > 10.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 5m & 15m & 1h down move, 15m still high, 1h & 4h high, 4h high & overbought
-      & (
-        (df["RSI_3"] > 15.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 1h & 4h down move, 4h still high, 1h downtrend, 4h still high
-      & (
-        (df["RSI_3_15m"] > 3.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.30)
-        | (df["AROONU_14_4h"] < 40.0)
       )
       # 15m & 1h & 4h down move, 1h & 4h still not low enough, 15m downtrend
       & (
@@ -3744,82 +3433,14 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_15m"] > -0.25)
         | (df["AROONU_14_4h"] < 25.0)
       )
-      # 15m & 4h down move, 1h & 4h still high, 15m still not low enough, 1h still high
-      & (
-        (df["RSI_3_15m"] > 3.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 25.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m downtrend, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 5.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_3_1d"] > 40.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["ROC_9_1d"] < 100.0)
-      )
       # 15m & 1h & 4h down move, 15m & 1h downtrend, 4h still high
       & (
         (df["RSI_3_15m"] > 5.0)
         | (df["RSI_3_1h"] > 5.0)
         | (df["RSI_14_1h"] < 20.0)
         | (df["CMF_20_15m"] > -0.25)
-        | (df["CMF_20_1h"] > -0.40)
+        | (df["CMF_20_15m"] > -0.40)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h downtrend, 1h still high
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["CMF_20_1h"] > -0.30)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m downtrend, 1h still high, 1h & 4h still not low enough, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_3_1d"] > 55.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 1h down move, 1h & 4h still not low enough, 4h high
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["AROONU_14_1h"] < 20.0)
-        | (df["AROONU_14_4h"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-      )
-      # 15m & 1h & 4h down move, 1h & 4h still not low enough, 15m still high
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 15.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 15m still not low enough, 1d high & overbought
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1d"] < 90.0)
-        | (df["ROC_9_1d"] < 80.0)
       )
       # 15m & 1h down move, 1h & 4h high
       & (
@@ -3845,19 +3466,9 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_3_4h"] > 50.0)
         | (df["RSI_14_1h"] < 40.0)
         | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_15m"] > -0.25)
+        | (df["CMF_20_15m"] > -0.30)
         | (df["AROONU_14_4h"] < 50.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 1h & 4h still high, 4h high
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
       )
       # 15m & 1h & 3h down move, 1h & 4h still not low enough, 15m downtrend, 1h still high
       & (
@@ -3869,48 +3480,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_15m"] > -0.30)
         | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
       )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 75.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["ROC_9_1h"] < 10.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m down move, 15m still not low enough, 1h & 4h high, 1h overbought
-      & (
-        (df["RSI_3_15m"] > 5.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 10.0)
-      )
-      # 15m & 1h & 4h down move, 4h still not low enough, 1h still high, 4h high
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 15m & 1h down move, 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 10.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
       # 15m & 1h & 4h down move, 1h downtrend, 4h high
       & (
         (df["RSI_3_15m"] > 10.0)
@@ -3921,19 +3490,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 80.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
       )
-      # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 1h downtrend, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 20.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.25)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["CCI_20_1h"] < -200.0)
-        | (df["CCI_20_4h"] < -0.0)
-        | (df["ROC_9_1d"] < 30.0)
-      )
       # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h high
       & (
         (df["RSI_3_15m"] > 10.0)
@@ -3942,16 +3498,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_15m"] < 30.0)
         | (df["AROONU_14_1h"] < 60.0)
         | (df["AROONU_14_4h"] < 100.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 1h still not low enough, 4h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_3_1d"] > 45.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["ROC_9_1d"] < 50.0)
       )
       # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h overbought
       & (
@@ -3963,31 +3509,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 40.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
         | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1h high
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h high, 1h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_4h"] < 10.0)
-        | (df["ROC_9_1d"] < 20.0)
       )
       # 15m & 1h & 4h down move, 1h & 4h not low enouhg, 15m downtrend, 4h high, 1d overbought
       & (
@@ -4011,29 +3532,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 40.0)
         | (df["AROONU_14_1d"] < 70.0)
         | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h & 1d down move, 1h still not low enough, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["ROC_9_1h"] > -20.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 1h & 4h down move, 1h & 4h still high, 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_1h"] < 45.0)
-        | (df["RSI_14_4h"] < 55.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 25.0)
-        | (df["ROC_9_1d"] < 50.0)
       )
       # 15m & 1h down move, 4h high, 1d downtrend, 1h still not low enough, 1d overbought
       & (
@@ -4099,18 +3597,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_4h"] < 25.0)
       )
-      # 15m & 1h & 4h down move, 15m stil not low enough, 1h & 4h still high, 15m & 4h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
       # 15m & 1h down move, 15m still not low enough, 1h & 4h high, 4h overbought
       & (
         (df["RSI_3_15m"] > 10.0)
@@ -4120,18 +3606,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_1h"] < 80.0)
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 60.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 50.0)
       )
       # 15m & 1h & 4h down move, 1h & 4h downtrend, 15m still high, 1h high
       & (
@@ -4143,55 +3617,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_15m"] < 50.0)
         | (df["STOCHRSIk_14_14_3_3_1h"] < 90.0)
       )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 40.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 15m & 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 10.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h down move, 15m & 1h still high, 4h high, 15m still not low enough, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 20.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 1h & 4h downtrend, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["CMF_20_1h"] > -0.0)
-        | (df["CMF_20_4h"] > -0.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-      )
       # 15m & 1h down move, 15m & 4h high, 4h overbought
       & (
         (df["RSI_3_15m"] > 10.0)
@@ -4199,64 +3624,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_15m"] < 80.0)
         | (df["AROONU_14_4h"] < 85.0)
         | (df["ROC_9_4h"] < 100.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 4h down move, 1h & 4h stil high, 15m high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m down move, 15m still not low enough, 1h & 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 30.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m down move, 15m & 1h & 4h still high, 15m still high, 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 1h & 4h still not low enough, 1h & 4h downtrend, 4h still high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 15.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_4h"] < 40.0)
-        | (df["ROC_9_4h"] > -20.0)
       )
       # 15m & 1h & 4h down move, 1h still not low enough, 4h high, 1h downtrend
       & (
@@ -4277,31 +3644,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 80.0)
         | (df["ROC_9_1d"] < 150.0)
       )
-      # 15m & 1h & 4h down move, 15m & 1h still not low enough, 4h still high, 1h & 4h downtrend, 1h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.40)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_1h"] < 70.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m still not low enough, 1h & 4h still high, 4h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_3_1d"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] < 30.0)
-      )
       # 15m & 1h & 4h down move, 1h still high, 4h high, 4h & 1d overbought
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4312,41 +3654,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 70.0)
         | (df["ROC_9_4h"] < 25.0)
         | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 45.0)
-        | (df["ROC_9_4h"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 30.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 15.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high, 1d downtrend, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["CMF_20_1d"] > -0.10)
-        | (df["AROONU_14_15m"] < 20.0)
-        | (df["AROONU_14_1h"] < 20.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 20.0)
       )
       # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high
       & (
@@ -4367,19 +3674,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_1d"] < 50.0)
       )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h still not low enough, 1d high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_3_1d"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["RSI_14_1d"] < 40.0)
-        | (df["AROONU_14_1d"] < 70.0)
-        | (df["ROC_9_4h"] > -40.0)
-      )
       # 15m & 1h & 4h down move, 15m & 1h still not low enough, 4h high & overbought, 1d overbought
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4391,56 +3685,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 80.0)
         | (df["ROC_9_4h"] < 20.0)
         | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 1d downtrend, 1h & 4h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_1d"] > -0.1)
-        | (df["AROONU_14_1h"] < 60.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["ROC_9_1d"] < 20.0)
-      )
-      # 15m & 1h down move, 15m & 1h still high, 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 10.0)
       )
       # 15m & 1h & 4h & 1d down move, 1h still high, 4h still not low enough, 4h downtrend
       & (
@@ -4455,61 +3699,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CCI_20_4h"] < -250.0)
         | (df["ROC_9_4h"] > -15.0)
       )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h downtrend, 1h & 4h still not low enough, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_3_1d"] > 30.0)
-        | (df["RSI_14_1h"] < 35.0)
-        | (df["RSI_14_4h"] < 35.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["CMF_20_1h"] > -0.30)
-        | (df["CMF_20_4h"] > -0.30)
-        | (df["CCI_20_1h"] < -200.0)
-        | (df["CCI_20_4h"] < -200.0)
-        | (df["ROC_9_1d"] > -25.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h still high, 4h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high, 15m still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m still high, 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-      )
       # 15m & 1h & 1d down move, 15m still not low enough, 1h & 4h high, 1d overbought
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4522,31 +3711,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_1d"] < 50.0)
       )
-      # 14m & 1h down move, 15m & 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 65.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 35.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 5h still high, 15m still high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] < 20.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
       # 15m & 1h & 1d down move, 15m still not low enough, 1h & 4h still high, 1d overbought
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4557,17 +3721,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 50.0)
         | (df["AROONU_14_1h"] < 70.0)
         | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h down move, 15m & 1h stil high, 4h high, 15m & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 100.0)
       )
       # 15m & 4h & 1d down move, 15m & 1h & 4h still not low enough, 15m & 1d downtrend
       & (
@@ -4581,40 +3734,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_1d"] > -0.3)
         | (df["AROONU_14_15m"] < 30.0)
       )
-      # 15m & 4h down move, 15m & 1h still high, 1h high, 1h over
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_4h"] > 15.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 90.0)
-        | (df["ROC_9_1h"] < 10.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still not low enough, 15m & 4h high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] > -20.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
       # 15m & 1d down move, 15m still not low enough, 1h & 4h high
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4623,27 +3742,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
       )
-      # 15m down move, 15m & 1h & 4h still not low enough, 15m & 1h downtrend, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["CMF_20_15m"] > -0.20)
-        | (df["CMF_20_1h"] > -0.20)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m down move, 15m still not low enough, 1h & 4h high, 1d downtrend, 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_14_15m"] < 35.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["CMF_20_1d"] > -0.1)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-      )
       # 15m down move, 15m still not low enough, 1h & 4h high, 1d overbought
       & (
         (df["RSI_3_15m"] > 15.0)
@@ -4651,99 +3749,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_1h"] < 85.0)
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_1d"] < 250.0)
-      )
-      # 15m down move, 15m & 1h still high, 1h high, 1h overbought, 4h & 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["ROC_9_1h"] < 40.0)
-        | (df["ROC_9_4h"] > -50.0)
-        | (df["ROC_9_1d"] > -50.0)
-      )
-      # 15m down move, 15m still high, 1h & 4h high, 1h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["ROC_9_1h"] < 40.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 1h still high, 15m still not low enough, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 15.0)
-        | (df["RSI_3_4h"] > 5.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["ROC_9_4h"] > -30.0)
-      )
-      # 15m & 1h & 4h down move, 15m downtrend, 1h & 4h till high, 15m still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 20.0)
-        | (df["CMF_20_15m"] > -0.3)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 4h & 1d still not low enough, 1d downtrend, 1h & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 20.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["RSI_14_1d"] < 30.0)
-        | (df["CMF_20_1d"] > -0.20)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
-        | (df["ROC_9_1d"] > -15.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 1h & 4h still not low enough, 1d still high, 1d downtrend, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_3_1d"] > 45.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["RSI_14_1d"] < 50.0)
-        | (df["CMF_20_1d"] > -0.0)
-        | (df["MFI_14_1d"] < 70.0)
-        | (df["CCI_20_1h"] < -250.0)
-        | (df["CCI_20_4h"] < -200.0)
-        | (df["ROC_9_4h"] > -10.0)
-        | (df["ROC_9_1d"] < 15.0)
-      )
-      # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 1h high, 1h & 4h downtrend, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["ROC_9_1h"] > -10.0)
-        | (df["ROC_9_4h"] > -10.0)
-        | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h down move, 1h still not low enough, 1h still high, 4h high & overbought, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-        | (df["ROC_9_4h"] < 40.0)
-        | (df["ROC_9_1d"] > -50.0)
       )
       # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 1d overbought
       & (
@@ -4788,41 +3793,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["ROC_9_4h"] < 20.0)
         | (df["ROC_9_1d"] < 50.0)
       )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m & 4h still not low enough, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_4h"] < 30.0)
-        | (df["ROC_9_4h"] > -50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h downtrend, 4h still high, 15m still not low enough, 1h still high
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["CMF_20_15m"] > -0.10)
-        | (df["CMF_20_1h"] > -0.20)
-        | (df["CMF_20_4h"] > -0.20)
-        | (df["AROONU_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["ROC_9_4h"] > -30.0)
-      )
       # 15m & 1h & 4h & 1d down move, 1d still high, 1h still high, 4h high
       & (
         (df["RSI_3_15m"] > 20.0)
@@ -4832,77 +3802,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["MFI_14_1d"] < 50.0)
         | (df["AROONU_14_1h"] < 50.0)
         | (df["AROONU_14_4h"] < 85.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h still not low enough, 15m still high, 1h high, 1h & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 90.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] > -50.0)
-      )
-      # 15m & 1h & 1d down move, 15m still not low enough, 1h & 4h still high, 1d downtrend, 1h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_1d"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_1d"] > -0.20)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["ROC_9_1d"] < 20.0)
-      )
-      # 15m & 1h down move, 15m & 1h sitll high, 4h high, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 4h downtrend, 15m & 1h still high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_4h"] > -0.25)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_4h"] > -20.0)
-      )
-      # 15m & 1h & 4h down move, 4d downtrend, 1h high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["CMF_20_4h"] > -0.40)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-        | (df["ROC_9_4h"] > -30.0)
       )
       # 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high & overbought
       & (
@@ -4929,77 +3828,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CCI_20_4h"] < 0.0)
         | (df["ROC_9_4h"] < 40.0)
       )
-      # 15m & 1h & 4h down move, 15m & 1h still high, 4h high, 15m stil high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 25.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m high, 1h still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1h high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["ROC_9_1h"] < 10.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h downtrend, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["CMF_20_15m"] > -0.25)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 90.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m still high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] > -40.0)
-      )
       # 15m & 1h & 4h down move, 1h & 4h high, 4h & 1d overbought
       & (
         (df["RSI_3_15m"] > 20.0)
@@ -5011,17 +3839,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["ROC_9_4h"] < 25.0)
         | (df["ROC_9_1d"] < 150.0)
       )
-      # 15m & 1h down move, 15m & 1h stil high, 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_1h"] < 40.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
       # 15m & 1h down move, 15m still high, 1h high & overbought
       & (
         (df["RSI_3_15m"] > 20.0)
@@ -5030,77 +3847,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_1h"] < 50.0)
         | (df["AROONU_14_1h"] < 70.0)
         | (df["ROC_9_1h"] < 80.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 65.0)
-        | (df["RSI_14_15m"] < 35.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 75.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 100.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h sitll high, 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["ROC_9_4h"] < 15.0)
-        | (df["ROC_9_1d"] < 60.0)
-      )
-      # 15m & 4h & 1d down move, 15m & 1h & 4h s till high, 15m & 4h high
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_3_1d"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m still high, 1h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["ROC_9_4h"] < 70.0)
-      )
-      # 15m & 4h down move, 15m & 1h still not low enough, 1h still high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 35.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 4h down move, 15m still high, 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["ROC_9_4h"] < 100.0)
       )
       # 15m down move, 15m still high, 1h & 4h high, 4h overbought
       & (
@@ -5135,113 +3881,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 50.0)
         | (df["ROC_9_4h"] < 70.0)
       )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m high, 1h & 4h still high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["AROONU_14_4h"] < 85.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h stil high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 70.0)
-      )
-      # 15m & 1h & 1d down move, 1h & 4h stilkl high, 1d downtrend, 1h high, 1h & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1d"] > -0.20)
-        | (df["AROONU_14_1h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] > -15.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h still not low enough, 4h stil high, 15m still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_3_1d"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h downtrend, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_3_1d"] > 30.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["CMF_20_1h"] > -0.40)
-        | (df["CMF_20_4h"] > -0.40)
-        | (df["ROC_9_4h"] > -40.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 1h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 15m downtrend, 15m still not low enough
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["AROONU_14_15m"] < 20.0)
-        | (df["AROONU_14_1h"] < 30.0)
-        | (df["AROONU_14_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h stil high, 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 25.0)
-      )
       # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high & overbought
       & (
         (df["RSI_3_15m"] > 25.0)
@@ -5252,53 +3891,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_1h"] < 70.0)
         | (df["AROONU_14_4h"] < 100.0)
         | (df["ROC_9_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 10.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m & 1h & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] > -40.0)
-      )
-      # 15m & 1h & 1d down move, 4h & 1d downtrend, 1h & 4h high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_1d"] > 35.0)
-        | (df["CMF_20_4h"] > -0.1)
-        | (df["CMF_20_1d"] > -0.1)
-        | (df["AROONU_14_1h"] < 75.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-        | (df["ROC_2_1d"] > -20.0)
       )
       # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high, 4h & 1d overbought
       & (
@@ -5311,70 +3903,16 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["ROC_9_4h"] < 80.0)
         | (df["ROC_9_1d"] < 100.0)
       )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h high, 1h & 4h overbought
+      # 15m & 1h & 1d down move, 4h & 1d downtrend, 1h & 4h high, 1d downtrend
       & (
         (df["RSI_3_15m"] > 25.0)
         | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 60.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["ROC_9_4h"] < 30.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 15.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 1h & 4h downtrend, 15m high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["CMF_20_1h"] > -0.20)
-        | (df["CMF_20_4h"] > -0.30)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] > -30.0)
-      )
-      # 15m & 1h & 4h, 15m still not low enough, 1h & 4h still high, 15m downtrend, 15m & 4h high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_15m"] > -0.25)
-        | (df["AROONU_14_15m"] < 50.0)
+        | (df["RSI_3_1d"] > 35.0)
+        | (df["CMF_20_4h"] > -0.1)
+        | (df["CMF_20_1d"] > -0.1)
+        | (df["AROONU_14_1h"] < 75.0)
         | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
+        | (df["ROC_2_1d"] > -20.0)
       )
       # 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high & overbought
       & (
@@ -5387,106 +3925,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_1h"] < 50.0)
         | (df["AROONU_14_4h"] < 85.0)
         | (df["ROC_9_4h"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 1h & 1d down move, 15m & 1h & 4h still high, 15m & 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_1d"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 45.0)
-        | (df["RSI_14_4h"] < 45.0)
-        | (df["AROONU_14_15m"] < 25.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["ROC_9_15m"] > -40.0)
-        | (df["ROC_9_1d"] > -40.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h stil high, 15m & 1h & 4h high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_1d"] > -50.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 40.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 1h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 90.0)
-        | (df["ROC_9_4h"] < 10.0)
-      )
-      # 15m & 1h down move, 15m still high, 1h & 4h high, 1h overbought, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 90.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_1d"] > -30.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] > -15.0)
-      )
-      # 15m & 1h down move, 15m & 1h still high, 4h high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-        | (df["ROC_9_4h"] < 60.0)
       )
       # 15m & 1h down move, 1h & 4h high, 4h overbought
       & (
@@ -5511,105 +3949,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["ROC_9_4h"] < 50.0)
         | (df["ROC_9_1d"] < 250.0)
       )
-      # 15m & 4h & 1d down move, 15m still high, 1h & 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_4h"] > 15.0)
-        | (df["RSI_3_1d"] > 15.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["CMF_20_1h"] > -0.20)
-        | (df["CMF_20_4h"] > -0.20)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m & 1h high, 1h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-        | (df["ROC_9_1h"] < 10.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 25.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 15m & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h & 4h still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
-      # 15m & 1d down move, 1h & 4h still not low enough, 1h & 4h downtrend, 4h still high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["MFI_14_1h"] < 40.0)
-        | (df["MFI_14_4h"] < 50.0)
-        | (df["CMF_20_1h"] > -0.0)
-        | (df["CMF_20_4h"] > -0.20)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
-      )
-      # 15m down move, 15m & 1h & 4h still high, 15m & 1h & 4h high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m down move, 15m & 1h & 4h still high, 15m & 1h downtrend, 4h high, 15m & 1h still high
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_15m"] > -0.20)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-      )
-      # 15m down move, 15m still high, 1h >& 4h high, 15m & 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 25.0)
-      )
       # 15m down move, 15m still high, 1h & 4h high, 1d downtrend, 4h overbought
       & (
         (df["RSI_3_15m"] > 25.0)
@@ -5619,221 +3958,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_1d"] > -0.0)
         | (df["AROONU_14_4h"] < 90.0)
         | (df["ROC_9_4h"] < 50.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h downtrend, 15m & 4h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 30.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_15m"] > -0.25)
-        | (df["CMF_20_1h"] > -0.30)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h stil high, 15m high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["ROC_9_4h"] > -40.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 30.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_4h"] < 20.0)
-        | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 1h still not low enough, 4h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h downtrend, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h sitll high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h still high, 4h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15h & 4h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m still low, 1h & 4h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h stil high, 15m & 4h still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_3_1d"] > 45.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1d"] > -50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h stil high, 15m & 4h still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CCI_20_1h"] < 0.0)
-        | (df["CCI_20_4h"] < 0.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h still high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["ROC_9_4h"] < 70.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 4h downtrend, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_3_1d"] > 55.0)
-        | (df["CMF_20_15m"] > -0.25)
-        | (df["CMF_20_4h"] > -0.20)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 60.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 25.0)
       )
       # 15m & 1h down move, 15m still high, 1h & 4h high & overbought
       & (
@@ -5857,252 +3981,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 90.0)
         | (df["ROC_9_4h"] < 130.0)
       )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m still high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 5.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-      )
-      # 15m & 4h down move, 15m & 1h high, 4h downtrend
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 15.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-        | (df["ROC_9_4h"] > -50.0)
-      )
-      # 15m & 4h down move, 15m & 1h still high, 1h & 4h downtrend, 15m & 1h still high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 30.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["CMF_20_4h"] > -0.30)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-      )
-      # 15m & 1h down move, 15m still high, 1h & 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 75.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 40.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still high, 15m high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h stil high, 14m & 4h high
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-      )
-      # 15m & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 4h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 30.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 15m & 1h down move, 15m & 1h still high, 1h & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m & 4h still high, 1d downtrend
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_1d"] > -50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h still high, 4h high, 15m & 4h high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 15m high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h still high, 15m & 1h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_3_1d"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 60.0)
-        | (df["ROC_9_4h"] < 10.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_1d"] < 40.0)
-      )
-      # 15m & 1h down move, 15m still not low enough, 1h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["STOCHk_14_3_3_1h"] < 60.0)
-        | (df["STOCHk_14_3_3_4h"] < 90.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m still high, 4h overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 4h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 90.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h downtrend, 15m high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m still not low enough, 4h & 1h still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 20.0)
-        | (df["AROONU_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_1d"] < 150.0)
-      )
       # 15m & 1h down move, 15m & 1h & 4h high, 1h overbought
       & (
         (df["RSI_3_15m"] > 35.0)
@@ -6112,249 +3990,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 90.0)
         | (df["ROC_9_1h"] < 30.0)
       )
-      # 15m & 4h down move, 15m still high, 1h high, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m & 4h down move, 15m still not low enough, 1h & 4h still high, 15m & 1h high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 100.0)
-      )
-      # 15m & 4h down move, 15m still not low enough, 1h & 4h still high, 1h & 4h downtrend, 15m & 1h still high
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.25)
-        | (df["CMF_20_4h"] > -0.25)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 15m down move, 15m still high, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 60.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m down move, 15m & 1h still high, 4h high, 15m downtrend, 15m high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["CMF_20_15m"] > -0.10)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["ROC_9_1h"] < 15.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 1d downtrend, 4h still not low enough, 15m still high, 1h downtrend
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_3_1d"] > 45.0)
-        | (df["CMF_20_1d"] > -0.40)
-        | (df["AROONU_14_4h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_1h"] > -25.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["AROONU_14_4h"] < 100.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h still high, 15m & 1h high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_3_1d"] > 60.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 15m down move, 15m still high, 1h & 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 70.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
-      # 15m down move, 15m & 1h & 4h still high, 15m & 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["AROONU_14_4h"] < 100.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h & 1d downtrend, 1h & 4h high
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_1h"] > -0.10)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["CMF_20_1d"] > -0.30)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 90.0)
-      )
-      # 15m & 1h down move, 1h & 4h still high, 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
-        | (df["ROC_9_1h"] < 30.0)
-        | (df["ROC_9_4h"] < 100.0)
-      )
-      # 15m & 1h & 4h & 1d down move, 15m still not low enough, 1h & 4h still high, 15m still high, 1d overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_1h"] > 50.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_3_1d"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_1d"] < 80.0)
-      )
-      # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 15m still high, 4h high & overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h down move, 15m still high, 1h high, 15m overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-        | (df["ROC_9_15m"] < 20.0)
-      )
-      # 15m & 4h down move, 15m & 1h & 4h still not low enough, 15m & 1h & 4h downtrend, 1h & 4h still high
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_3_4h"] > 45.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["CMF_20_15m"] > -0.15)
-        | (df["CMF_20_1h"] > -0.25)
-        | (df["CMF_20_4h"] > -0.35)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 15m down move, 15m & 1h & 4h high, 15m & 1h high, 4h & 1d overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 70.0)
-        | (df["AROONU_14_15m"] < 70.0)
-        | (df["AROONU_14_1h"] < 100.0)
-        | (df["ROC_9_4h"] < 10.0)
-        | (df["ROC_9_1d"] < 40.0)
-      )
-      # 15m down move, 15m & 1h & 4h high, 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 45.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 70.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 40.0)
-        | (df["ROC_9_4h"] < 100.0)
-      )
-      # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m downtrend, 15m & 4h high
-      & (
-        (df["RSI_3_15m"] > 55.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["CMF_20_15m"] > -0.10)
-        | (df["AROONU_14_1h"] < 30.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
-      )
-      # 15m & 1h down move, 15m & 1h & 4h high, 1h & 4h overbought
-      & (
-        (df["RSI_3_15m"] > 55.0)
-        | (df["RSI_3_1h"] > 65.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 60.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 70.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1h"] < 30.0)
-        | (df["ROC_9_4h"] < 70.0)
-      )
-      # 1h & 4h down move, 15m high
-      & ((df["RSI_3_1h"] > 3.0) | (df["RSI_3_4h"] > 3.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0))
       # 1h & 4h & 1d down move, 1d still not low enough, 1d downtrend
       & (
         (df["RSI_3_1h"] > 5.0)
@@ -6403,8 +4038,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
         | (df["ROC_9_4h"] < 80.0)
       )
-      # 1h down move, 1h still high, 4h overbought
-      & ((df["RSI_3_1h"] > 55.0) | (df["RSI_14_1h"] < 40.0) | (df["ROC_9_4h"] < 300.0))
       # 1h & 1d down move, 1h & 4h & 1d still high, 1h & 4h high, 4h overbought
       & (
         (df["RSI_3_1h"] > 60.0)
@@ -6423,89 +4056,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_4h"] > -0.30)
         | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
       )
-      # 4h down move, 15m & 1h high
-      & ((df["RSI_3_4h"] > 3.0) | (df["AROONU_14_15m"] < 60.0) | (df["AROONU_14_1h"] < 90.0))
-      # 4h down move, 15m high, 4h still high
-      & (
-        (df["RSI_3_4h"] > 3.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-      )
-      # 4h down move, 15m & 1h high, 4h downtrend
-      & (
-        (df["RSI_3_4h"] > 3.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_4h"] > -20.0)
-      )
-      # 4h & 1d down move, 15m still not low enough, 4h downtrend
-      & (
-        (df["RSI_3_4h"] > 5.0)
-        | (df["RSI_3_1d"] > 5.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["ROC_9_4h"] > -40.0)
-      )
-      # 4h down move, 15m & 1h & 4h still high, 15m high
-      & (
-        (df["RSI_3_4h"] > 10.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
-      )
-      # 4h & 1d down move, 1h still high, 4h high, 1d downtrend
-      & (
-        (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_3_1d"] > 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 100.0)
-        | (df["ROC_9_1d"] > -40.0)
-      )
-      # 4h down move, 1h & 4h still not low enough, 15m high, 4h downtrend
-      & (
-        (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["ROC_9_4h"] > -50.0)
-      )
-      # 4h down move, 15m & 1h & 4h still high, 15m high, 4h still not low enough, 1d overbought
-      & (
-        (df["RSI_3_4h"] > 35.0)
-        | (df["RSI_14_15m"] < 50.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["AROONU_14_4h"] < 30.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
-        | (df["ROC_9_1d"] < 50.0)
-      )
-      # 1d down move, 1h & 4h still not low enough, 1h still high & overbought, 1d downtrend
-      & (
-        (df["RSI_3_1d"] > 3.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_1h"] < 10.0)
-        | (df["ROC_9_1d"] > -30.0)
-      )
-      # 1d down move, 15m & 1h & 4h still not low enough, 15m still not low enough, 1h high
-      & (
-        (df["RSI_3_1d"] > 5.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 30.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-      )
       # 1d down move, 15m still not low enough, 1h high, 1d downtrend
       & (
         (df["RSI_3_1d"] > 5.0)
@@ -6519,17 +4069,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
         | (df["ROC_9_1h"] > -60.0)
         | (df["ROC_9_4h"] > -60.0)
-      )
-      # 1d down move, 1h & 4h still high, 1h & 4h downtrend, 1h & 4h high, 1d downtrend
-      & (
-        (df["RSI_3_1d"] > 10.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_1h"] > -0.40)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["AROONU_14_1h"] < 50.0)
-        | (df["AROONU_14_4h"] < 85.0)
-        | (df["ROC_9_1d"] > -40.0)
       )
       # 15m & 1h & 4h still high, 4h downtrend, 4h overbought
       & (
@@ -6588,48 +4127,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
         | (df["ROC_9_4h"] > -35.0)
       )
-      # 1d P^D, 15m & 4h down move, 15m & 4h still high
-      & (
-        (df["change_pct_1d"] > -20.0)
-        | (df["change_pct_1d"].shift(288) < 20.0)
-        | (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-      )
-      # 1d red, 15m & 1h & 4h down move, 1h still not low enough, 4h & 1d still high
-      & (
-        (df["change_pct_1d"] > -20.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_1h"] < 35.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1d"] < 50.0)
-      )
-      # 1d red, 1h & 4h & 1d down move, 1h still not low enough, 4h & 1d still high, 1d downtrend
-      & (
-        (df["change_pct_1d"] > -20.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_3_1d"] > 50.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["RSI_14_1d"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
-        | (df["ROC_9_1d"] > -20.0)
-      )
-      # 1d red, 15m & 1h & 4h down move, 1d high, 15m & 1h still high
-      & (
-        (df["change_pct_1d"] > -20.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["AROONU_14_1d"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-      )
       # 1d P&D, 15m & 1h & 4h & 1d down move, 4h still not low enough
       & (
         (df["change_pct_1d"] > -10.0)
@@ -6639,17 +4136,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_3_4h"] > 10.0)
         | (df["RSI_3_1d"] > 40.0)
         | (df["RSI_14_4h"] < 30.0)
-      )
-      # 1d P&D, 15m & 1h down move, 1h still not low enough, 4h still high, 15m downtrend, 1h still high
-      & (
-        (df["change_pct_1d"] > -10.0)
-        | (df["change_pct_1d"].shift(288) < 10.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 20.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["CMF_20_15m"] > -0.30)
-        | (df["AROONU_14_1h"] < 50.0)
       )
       # 1d red with top wick, 15m & 1h down move, 1h downtrend, 1h high
       & (
@@ -6685,30 +4171,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["ROC_9_4h"] > -25.0)
         | (df["ROC_9_1d"] < 50.0)
       )
-      # 1d red, 15m & 1h & 4h down move, 1h & 4h still not low enough, 1d high, 4h downtrend, 1d overbought
-      & (
-        (df["change_pct_1d"] > -5.0)
-        | (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 40.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_1h"] < 30.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_1d"] < 85.0)
-        | (df["ROC_9_4h"] > -30.0)
-        | (df["ROC_9_1d"] < 20.0)
-      )
-      # 1d green with top wick, 15m & 1h & 4h down move, 1h & 4h still high
-      & (
-        (df["change_pct_1d"] < 10.0)
-        | (df["top_wick_pct_1d"] < 10.0)
-        | (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_1h"] < 30.0)
-        | (df["AROONU_14_4h"] < 60.0)
-      )
       # 1d green with top wick, 15m down move, 1h & 4h high, 1d overbought
       & (
         (df["change_pct_1d"] < 10.0)
@@ -6719,42 +4181,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
         | (df["ROC_9_1d"] < 40.0)
       )
-      # 1d green with top wick, 15m down move, 15m & 1h still high, 4h & 1d high, 4h overbought
-      & (
-        (df["change_pct_1d"] < 10.0)
-        | (df["top_wick_pct_1d"] < 10.0)
-        | (df["RSI_3_15m"] > 10.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 75.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["AROONU_14_1d"] < 90.0)
-        | (df["ROC_9_4h"] < 25.0)
-      )
-      # 1d green with top wick, 15m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high
-      & (
-        (df["change_pct_1d"] < 10.0)
-        | (df["top_wick_pct_1d"] < 10.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 65.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_4h"] < 60.0)
-      )
-      # 1d green with top wick, 15m down move, 15m & 1h still high, 4h high & overbought
-      & (
-        (df["change_pct_1d"] < 10.0)
-        | (df["top_wick_pct_1d"] < 10.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 80.0)
-      )
       # 1d green with top wick, 1h & 4h down move, 1h & 4h still high
       & (
         (df["change_pct_1d"] < 10.0)
@@ -6763,18 +4189,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_3_4h"] > 55.0)
         | (df["AROONU_14_1h"] < 50.0)
         | (df["AROONU_14_4h"] < 50.0)
-      )
-      # 1d green with top wick, 15m & 1h down move, 15m & 1h & 4h still high, 4h high & overbought
-      & (
-        (df["change_pct_1d"] < 20.0)
-        | (df["top_wick_pct_1d"] < 20.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 70.0)
-        | (df["ROC_9_4h"] < 20.0)
       )
       # 1d green with top wick, 15m & 1h & 4h down move, 15m still not low enough, 4h high, 1d overbought
       & (
@@ -6799,17 +4213,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_4h"] < 50.0)
         | (df["ROC_9_1d"] < 100.0)
       )
-      # 1d green with top wick, 15m down move, 15m & 1h still high, 4h high & overbought
-      & (
-        (df["change_pct_1d"] < 30.0)
-        | (df["top_wick_pct_1d"] < 20.0)
-        | (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
       # 1d green with top wick, 1h down move, 1h still high, 4h high & overbought, 1d overbought
       & (
         (df["change_pct_1d"] < 30.0)
@@ -6831,77 +4234,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_4h"] < 40.0)
         | (df["AROONU_14_4h"] < 80.0)
         | (df["ROC_9_4h"] < 30.0)
-      )
-      # 1d green with top wick, 15m & 4h down move, 15m & 1h still high, 1d overbought
-      & (
-        (df["change_pct_1d"] < 30.0)
-        | (df["top_wick_pct_1d"] < 30.0)
-        | (df["RSI_3_15m"] > 50.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["AROONU_14_15m"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 1d green, 15m & 4h down move, 4h still high, 4h & 1d overbought
-      & (
-        (df["change_pct_1d"] < 50.0)
-        | (df["RSI_3_15m"] > 15.0)
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 40.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 1d green with top wick, 1d down move, 4h still high & overbought
-      & (
-        (df["change_pct_1d"] < 50.0)
-        | (df["top_wick_pct_1d"] < 50.0)
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
-      # 1d green with top wick, 4h down move, 4h still high, 1d overbought
-      & (
-        (df["change_pct_1d"] < 50.0)
-        | (df["top_wick_pct_1d"] < 50.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 1d green, 15m & 4h down move, 15m & 1h & 4h still high, 15m high, 4h & 1d overbought
-      & (
-        (df["change_pct_1d"] < 50.0)
-        | (df["RSI_3_15m"] > 50.0)
-        | (df["RSI_3_4h"] > 50.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_15m"] < 60.0)
-        | (df["ROC_9_4h"] < 30.0)
-        | (df["ROC_9_1d"] < 200.0)
-      )
-      # 4h top wick, 15m down move, 15m still not low enough, 1h & 4h still high, 4h overbought
-      & (
-        (df["top_wick_pct_4h"] < 20.0)
-        | (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
-      # 4h top wick, 15m & 1h down move, 15m & 1h still high, 1h & 4h high
-      & (
-        (df["top_wick_pct_4h"] < 20.0)
-        | (df["RSI_3_15m"] > 40.0)
-        | (df["RSI_3_1h"] > 55.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 60.0)
-        | (df["AROONU_14_15m"] < 40.0)
-        | (df["AROONU_14_1h"] < 85.0)
-        | (df["AROONU_14_4h"] < 100.0)
       )
       # 1d top wick, 1h & 4h down move, 15m downtrend, 4h still high, 1d overbought
       & (
@@ -6930,31 +4262,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_1h"] > -0.25)
         | (df["AROONU_14_4h"] < 50.0)
       )
-      # 1d top wick, 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high
-      & (
-        (df["top_wick_pct_1d"] < 25.0)
-        | (df["RSI_3_15m"] > 30.0)
-        | (df["RSI_3_1h"] > 60.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 40.0)
-        | (df["AROONU_14_15m"] < 30.0)
-        | (df["AROONU_14_4h"] < 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
-      )
-      # 1d top wick, 15m down move, 15m stil high, 1h & 4h high, 4h overbought
-      & (
-        (df["top_wick_pct_1d"] < 25.0)
-        | (df["RSI_3_15m"] > 35.0)
-        | (df["RSI_14_15m"] < 40.0)
-        | (df["RSI_14_1h"] < 50.0)
-        | (df["RSI_14_4h"] < 80.0)
-        | (df["AROONU_14_1h"] < 80.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
       # pump, drop but not yet near the previous lows, 15m & 1h & 4h & 1d down move, 1d overbought
       & (
         (((df["high_max_6_1d"] - df["low_min_6_1d"]) / df["low_min_6_1d"]) < 1.5)
@@ -6975,20 +4282,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["RSI_14_1h"] < 30.0)
         | (df["RSI_14_4h"] < 40.0)
         | (df["ROC_9_1d"] < 20.0)
-      )
-      # drop in the last 4 hours, 1h & 4h high
-      & ((df["close"] > (df["close_max_48"] * 0.30)) | (df["AROONU_14_1h"] < 85.0) | (df["AROONU_14_4h"] < 85.0))
-      # drop in last 12 hours, 14m & 1h & 4h down move, 15m still not low enough, 1h still high, 4h high & overbought
-      & (
-        (df["close"] > (df["high_max_12_1h"] * 0.50))
-        | (df["RSI_3_15m"] > 20.0)
-        | (df["RSI_3_1h"] > 35.0)
-        | (df["RSI_3_4h"] > 55.0)
-        | (df["RSI_14_15m"] < 30.0)
-        | (df["RSI_14_1h"] < 40.0)
-        | (df["RSI_14_4h"] < 50.0)
-        | (df["AROONU_14_4h"] < 80.0)
-        | (df["ROC_9_4h"] < 25.0)
       )
       # drop in last 12 hours, 1h & 4h down move, 1h & 4h downtrend
       & (
@@ -7077,13 +4370,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["CMF_20_1d"] > -0.50)
         | (df["AROONU_14_1h"] < 30.0)
       )
-      # drop in last 4 days, 4h & 1d down move, 1h high
-      & (
-        (df["close"] > (df["high_max_24_4h"] * 0.15))
-        | (df["RSI_3_4h"] > 25.0)
-        | (df["RSI_3_1d"] > 25.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-      )
       # drop in last 4 days, 1d down move, 1d downtrendm 1h still high, 1d downtrend
       & (
         (df["close"] > (df["high_max_24_4h"] * 0.15))
@@ -7131,22 +4417,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_15m"] < 30.0)
         | (df["AROONU_14_1h"] < 80.0)
       )
-      # drop in last 20 days, 1h & 4h & 1d down move, 1h & 4h still not low enough, 1h & 4h & 1d downtrend
-      & (
-        (df["close"] > (df["high_max_20_1d"] * 0.01))
-        | (df["RSI_3_1h"] > 45.0)
-        | (df["RSI_3_4h"] > 60.0)
-        | (df["RSI_3_1d"] > 15.0)
-        | (df["RSI_14_1h"] < 15.0)
-        | (df["RSI_14_4h"] < 20.0)
-        | (df["CMF_20_1h"] > -0.0)
-        | (df["CMF_20_4h"] > -0.10)
-        | (df["CMF_20_1d"] > -0.40)
-        | (df["CCI_20_1h"] < -150.0)
-        | (df["CCI_20_4h"] < -200.0)
-        | (df["ROC_2_1d"] > -25.0)
-        | (df["ROC_9_1d"] > -60.0)
-      )
       # drop in last 30 days, 15m & 1h down move, 1h still high, 4h high & overbought
       & (
         (df["close"] > (df["high_max_30_1d"] * 0.10))
@@ -7164,15 +4434,6 @@ class NostalgiaForInfinityX6(IStrategy):
         | (df["AROONU_14_15m"] < 80.0)
         | (df["STOCHRSIk_14_14_3_3_1h"] < 85.0)
       )
-      # drop in last 30 days, 15m & 1h & 4h down move, 15m still not low enough, 1h high
-      & (
-        (df["close"] > (df["high_max_30_1d"] * 0.05))
-        | (df["RSI_3_15m"] > 25.0)
-        | (df["RSI_3_1h"] > 25.0)
-        | (df["RSI_3_4h"] > 40.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-      )
     )
 
     df["global_protections_long_pump"] = True
@@ -7182,109 +4443,7 @@ class NostalgiaForInfinityX6(IStrategy):
     df["protections_long_rebuy"] = True
 
     # Global protections Short
-    df["protections_short_global"] = (
-      # 5m & 15m up move, 15m & 1h & 4h still low, 15m & 1h low, 4h still low
-      (
-        (df["RSI_3"] < 90.0)
-        | (df["RSI_3_15m"] < 75.0)
-        | (df["RSI_14_15m"] > 60.0)
-        | (df["RSI_14_1h"] > 50.0)
-        | (df["RSI_14_4h"] > 40.0)
-        | (df["AROONU_14_15m"] > 20.0)
-        | (df["AROONU_14_1h"] > 20.0)
-        | (df["AROONU_14_4h"] > 40.0)
-      )
-      # 15m & 1h & 4h up move, 15m & 1h & 4h still not high enough, 4h uptrend
-      & (
-        (df["RSI_3_15m"] < 95.0)
-        | (df["RSI_3_1h"] < 80.0)
-        | (df["RSI_3_4h"] < 80.0)
-        | (df["RSI_14_15m"] > 80.0)
-        | (df["RSI_14_1h"] > 80.0)
-        | (df["RSI_14_4h"] > 80.0)
-        | (df["CCI_20_1h"] > 200.0)
-        | (df["CCI_20_4h"] > 150.0)
-        | (df["ROC_9_4h"] < 20.0)
-      )
-      # 15m & 1h & 4h up move, 1h & 4h still now high enough, 15m uptrend, 1h still not high enough
-      & (
-        (df["RSI_3_15m"] < 95.0)
-        | (df["RSI_3_1h"] < 50.0)
-        | (df["RSI_3_4h"] < 50.0)
-        | (df["RSI_14_1h"] > 70.0)
-        | (df["RSI_14_4h"] > 70.0)
-        | (df["CMF_20_15m"] < 0.20)
-        | (df["STOCHRSIk_14_14_3_3_1h"] > 70.0)
-      )
-      # 15m & 1h & 4h up move, 15m & 1h & 4h still not high enough, 1h & 4h uptrend
-      & (
-        (df["RSI_3_15m"] < 90.0)
-        | (df["RSI_3_1h"] < 80.0)
-        | (df["RSI_3_4h"] < 80.0)
-        | (df["RSI_14_15m"] > 80.0)
-        | (df["RSI_14_1h"] > 80.0)
-        | (df["RSI_14_4h"] > 80.0)
-        | (df["CCI_20_1h"] > 250.0)
-        | (df["CCI_20_4h"] > 200.0)
-        | (df["ROC_9_1h"] < 10.0)
-        | (df["ROC_9_4h"] < 40.0)
-      )
-      # 15m & 1h & 4h up move, 1h still low, 4h & 1d uptrend
-      & (
-        (df["RSI_3_15m"] < 85.0)
-        | (df["RSI_3_1h"] < 85.0)
-        | (df["RSI_3_4h"] < 70.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] > 50.0)
-        | (df["ROC_9_4h"] < 80.0)
-        | (df["ROC_9_1d"] < 100.0)
-      )
-      # 15m & 1h & 4h up move, 1h still nt high enough, 1h & 4h uptrend
-      & (
-        (df["RSI_3_15m"] < 85.0)
-        | (df["RSI_3_1h"] < 70.0)
-        | (df["RSI_3_4h"] < 70.0)
-        | (df["AROONU_14_1h"] > 70.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] > 70.0)
-        | (df["ROC_9_1h"] < 45.0)
-        | (df["ROC_9_4h"] < 45.0)
-      )
-      # 15m & 1h & 4h up move, 15m low, 1h uptrend
-      & (
-        (df["RSI_3_15m"] < 70.0)
-        | (df["RSI_3_1h"] < 95.0)
-        | (df["RSI_3_4h"] < 85.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] > 30.0)
-        | (df["ROC_9_1h"] < 25.0)
-      )
-      # 15m & 1h & 4h up move, 15m & 1h & 4h still not high enough, 4h uptrend
-      & (
-        (df["RSI_3_15m"] < 70.0)
-        | (df["RSI_3_1h"] < 60.0)
-        | (df["RSI_3_4h"] < 60.0)
-        | (df["RSI_14_15m"] > 70.0)
-        | (df["RSI_14_1h"] > 70.0)
-        | (df["RSI_14_4h"] > 70.0)
-        | (df["STOCHRSIk_14_14_3_3_1h"] > 70.0)
-        | (df["ROC_9_4h"] < 50.0)
-      )
-      # 1h & 4h up move, 1d still low, 15m & 4h still not high enough
-      & (
-        (df["RSI_3_1h"] < 95.0)
-        | (df["RSI_3_4h"] < 80.0)
-        | (df["RSI_14_1d"] > 50.0)
-        | (df["STOCHRSIk_14_14_3_3_15m"] > 70.0)
-        | (df["STOCHRSIk_14_14_3_3_4h"] > 70.0)
-      )
-      # 1h & 4h up move, 1d still low, 1h & 4h & 1d uptrend
-      & (
-        (df["RSI_3_1h"] < 90.0)
-        | (df["RSI_3_4h"] < 90.0)
-        | (df["RSI_14_1d"] > 50.0)
-        | (df["ROC_9_1h"] < 20.0)
-        | (df["ROC_9_4h"] < 20.0)
-        | (df["ROC_9_1d"] < 20.0)
-      )
-    )
+    df["protections_short_global"] = True
 
     df["global_protections_short_pump"] = (
       # 15m & 1h & 4h & 1d up move, 15m & 1h & 4h still not high enough, 1d still not high enough & uptrend
@@ -7644,36 +4803,6 @@ class NostalgiaForInfinityX6(IStrategy):
     # Force Entry
     if entry_tag == "force_entry":
       return True
-
-    # Mode configurations (dynamic structure)
-    mode_configs = {
-      "grind": {
-        "tags": self.long_grind_mode_tags,
-        "coins": self.grind_mode_coins,
-        "max_slots": self.grind_mode_max_slots,
-        "log_message": "grind mode",
-      },
-      "top_coins": {
-        "tags": self.long_top_coins_mode_tags,
-        "coins": self.top_coins_mode_coins,
-        "log_message": "top coins mode",
-      },
-      "scalp": {
-        "tags": self.long_scalp_mode_tags,
-        "min_free_slots": self.min_free_slots_scalp_mode,
-        "log_message": "scalp mode",
-      },
-    }
-
-    # Mode Validation
-    for mode, config in mode_configs.items():
-      if all(c in config["tags"] for c in entry_tag.split()):
-        if mode == "grind":
-          return self._handle_grind_mode(pair, config, current_time)
-        elif mode == "top_coins":
-          return self._handle_top_coins_mode(pair, config, current_time)
-        elif mode == "scalp":
-          return self._handle_scalp_mode(pair, config, current_time)
 
     # Long/Short Slot Validation (only in futures mode)
     if self.is_futures_mode and (self.futures_max_open_trades_long != 0 or self.futures_max_open_trades_short != 0):
@@ -8243,828 +5372,748 @@ class NostalgiaForInfinityX6(IStrategy):
         if long_entry_condition_index == 2:
           # Protections
           long_entry_logic.append(df["num_empty_288"] <= allowed_empty_candles_288)
-          long_entry_logic.append(df["protections_long_global"] == True)
 
-          long_entry_logic.append((df["RSI_3"] > 3.0) & (df["RSI_3_15m"] > 3.0))
-
+          # 5m & 4h & 1d down move
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["RSI_3_4h"] > 20.0) | (df["RSI_3_1d"] > 20.0))
+          # 5m down move, 15m still not low enough
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0))
+          # 5m down move, 1h still not low enough, 4h still high
           long_entry_logic.append(
-            # 5m & 15m & 1h down move, 1h & 4h high, 4h overbought
-            (
-              (df["RSI_3"] > 5.0)
-              | (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_4h"] < 100.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-              | (df["ROC_9_4h"] < 20.0)
-            )
-            # 5m & 15m & 1h & 4h down move, 1h & 4h still not low enough, 1h still high
-            & (
-              (df["RSI_3"] > 5.0)
-              | (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["AROONU_14_1h"] < 20.0)
-              | (df["AROONU_14_4h"] < 20.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-            )
-            # 5m & 15m & 1h down move, 15m still high, 1h & 4h high
-            & (
-              (df["RSI_3"] > 5.0)
-              | (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 60.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 5m & 15m & 4h down move, 15m downtrend, 1d high, 1h & 4h still not low enough
-            & (
-              (df["RSI_3"] > 10.0)
-              | (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_14_4h"] < 10.0)
-              | (df["CMF_20_15m"] > -0.20)
-              | (df["STOCHRSIk_14_14_3_3_1d"] < 90.0)
-              | (df["CCI_20_1h"] < -150.0)
-              | (df["CCI_20_4h"] < -250.0)
-            )
-            # 15m & 1h & 4h down move, 4h still not low enough
-            & ((df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 15.0) | (df["RSI_14_4h"] < 30.0))
-            # 15m & 1h down move, 4h still high
-            & ((df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 10.0) | (df["RSI_14_4h"] < 50.0))
-            # 15m & 1h & 4h down move, 15m & 1h downtrend
-            & (
-              (df["RSI_3_15m"] > 5.0)
-              | (df["RSI_3_1h"] > 15.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["CMF_20_15m"] > -0.5)
-              | (df["CCI_20_change_pct_15m"] > -0.0)
-              | (df["CCI_20_change_pct_1h"] > -0.0)
-            )
-            # 15m & 1h & 4h down move, 1h still not low enough, 4h still high
-            & (
-              (df["RSI_3_15m"] > 5.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_3_4h"] > 25.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 40.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 5.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_3_4h"] > 55.0)
-              | (df["AROONU_14_1h"] < 50.0)
-              | (df["AROONU_14_4h"] < 80.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still not low enough
-            & (
-              (df["RSI_3_15m"] > 5.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 5.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_1h"] < 75.0)
-            )
-            # 15m & 4h down move, 1h still not low enough
-            & ((df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0))
-            # 15m & 1h & 4h & 1d down move, 1h & 4h still not low enough
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 10.0)
-              | (df["RSI_3_4h"] > 25.0)
-              | (df["RSI_3_1d"] > 25.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h downtrend
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 15.0)
-              | (df["RSI_3_4h"] > 35.0)
-              | (df["CMF_20_15m"] > -0.30)
-              | (df["CMF_20_1h"] > -0.30)
-              | (df["CMF_20_4h"] > -0.25)
-            )
-            # 15m & 1h down move, 1h & 4h & 1d high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 20.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_1d"] < 100.0)
-            )
-            # 15m & 1h down move, 1h & 4h still high, 15m & 1h downtrend
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 20.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["CMF_20_15m"] > -0.25)
-              | (df["CMF_20_1h"] > -0.25)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still not low enough, 1d high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 35.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
-              | (df["STOCHRSIk_14_14_3_3_1d"] < 90.0)
-            )
-            # 15m & 1h & 4h down move, 15m downtrend, 1d high, 1h & 4h downtrend
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["CMF_20_15m"] > -0.25)
-              | (df["STOCHRSIk_14_14_3_3_1d"] < 90.0)
-              | (df["CCI_20_1h"] < -150.0)
-              | (df["CCI_20_4h"] < -250.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 1h high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-            )
-            # 15m & 1h down move, 1h & 4h still high, 1d high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_1d"] < 80.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still not low enough, 1 high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h down move, 1h still high, 4h high & overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 20.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 70.0)
-              | (df["AROONU_14_1h"] < 40.0)
-              | (df["AROONU_14_4h"] < 85.0)
-              | (df["ROC_9_4h"] < 40.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still not low enough
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 20.0)
-              | (df["RSI_3_4h"] > 10.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 35.0)
-            )
-            # 15m & 1h & 4h & 1d down move, 1h & 4h still not low enough
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 20.0)
-              | (df["RSI_3_4h"] > 20.0)
-              | (df["RSI_3_1d"] > 40.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 35.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1d overbought
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["ROC_9_1d"] < 30.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 80.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h downtrend, 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["CMF_20_1h"] > -0.0)
-              | (df["CMF_20_4h"] > -0.25)
-              | (df["AROONU_14_1h"] < 40.0)
-              | (df["AROONU_14_4h"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still high, 1d overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_3_4h"] > 55.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["ROC_9_1d"] < 50.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h stil high, 1h & 4h high, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 60.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_4h"] < 100.0)
-              | (df["ROC_9_4h"] < 20.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_14_15m"] < 35.0)
-              | (df["AROONU_14_1h"] < 80.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 1h still not low enough, 4h still high, 1d downtrend
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_3_4h"] > 25.0)
-              | (df["AROONU_14_1h"] < 20.0)
-              | (df["AROONU_14_4h"] < 50.0)
-              | (df["ROC_9_1d"] > -30.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 25.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 60.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 15m & 1h down move, 15m & 1h & 4h still high, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 55.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 40.0)
-              | (df["AROONU_14_4h"] < 85.0)
-              | (df["ROC_9_4h"] < 80.0)
-            )
-            # 15m & 1h down move, 15m still high, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 60.0)
-              | (df["RSI_14_4h"] < 70.0)
-              | (df["AROONU_14_1h"] < 80.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 1h down move, 15m still high, 1h & 4h high, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 60.0)
-              | (df["RSI_14_4h"] < 60.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
-              | (df["ROC_9_4h"] < 40.0)
-            )
-            # 15m & 1h down move, 15m downtrend, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["CMF_20_15m"] > -0.30)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["AROONU_14_4h"] < 70.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 35.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 35.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 50.0)
-              | (df["AROONU_14_4h"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 15m high
-            & (
-              (df["RSI_3_15m"] > 45.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0)
-            )
-            # 1h & 4h & 1d down move, 4h downtrend, 1d downtrend
-            & (
-              (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 30.0)
-              | (df["RSI_3_1d"] > 30.0)
-              | (df["CMF_20_4h"] > -0.40)
-              | (df["ROC_9_1d"] > -50.0)
-            )
-            # 4h down move, 4h still high
-            & ((df["RSI_3_4h"] > 10.0) | (df["AROONU_14_4h"] < 50.0))
-            # 1d down move, 4h downtrend, 1h high
-            & ((df["RSI_3_1d"] > 10.0) | (df["CMF_20_4h"] > -0.30) | (df["AROONU_14_1h"] < 80.0))
-            & (
-              # 1d green, 15m down move, 1h & 4h still high, 4h overbought
-              (df["change_pct_1d"] < 30.0)
-              | (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["ROC_9_4h"] < 50.0)
-            )
+            (df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
           )
+          # 5m & 15m down move, 4h still high
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["RSI_3_15m"] > 10.0) | (df["AROONU_14_4h"] < 50.0))
+          # 5m & 15m down move, 1h still high
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_1h"] < 50.0))
+          # 5m down move, 1h still high, 1d high
+          long_entry_logic.append(
+            (df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0) | (df["AROONU_14_1d"] < 90.0)
+          )
+          # 5m down move, 1h high
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0))
+          # 5m & 15m down move, 1h high
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_1h"] < 70.0))
+          # 5m & 1h & 4h down move
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 10.0))
+          # 5m & 1h down move, 1h still high
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["RSI_3_1h"] > 20.0) | (df["AROONU_14_1h"] < 50.0))
+          # 5m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3"] > 5.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 5m & 4h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3"] > 5.0) | (df["RSI_3_4h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
+          )
+          # 5m down move, 4h high, 1d overbought
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["AROONU_14_4h"] < 80.0) | (df["ROC_9_1d"] < 80.0))
+          # 5m down move, 15m still high
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["AROONU_14_15m"] < 75.0))
+          # 5m down move, 1h & 4h high
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["AROONU_14_1h"] < 70.0) | (df["AROONU_14_4h"] < 90.0))
+          # 5m down move, 1h high
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["AROONU_14_1h"] < 90.0))
+          # 5m & 4h down move, 15m still high
+          long_entry_logic.append(
+            (df["RSI_3"] > 15.0) | (df["RSI_3_4h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
+          )
+          # 5m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3"] > 20.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 90.0)
+          )
+          # 5m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3"] > 20.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 35.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 15m & 1h & 4h down move
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 20.0))
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 20.0) | (df["AROONU_14_1h"] < 20.0))
+          # 15m & 4h down move, 1h still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_1h"] < 30.0))
+          # 15m & 4h down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 3.0) | (df["RSI_3_4h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 15m & 1h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
+          )
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
+          )
+          # 5m & 4h & 1d down move
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 10.0) | (df["RSI_3_1d"] > 20.0))
+          # 15m & 4h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 15m & 4h down move, 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 30.0) | (df["AROONU_14_4h"] < 50.0))
+          # 15m down move, 1h & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 15m & 4h down move, 4h still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_4h"] < 20.0))
+          # 15m & 1h down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 40.0) | (df["AROONU_14_1h"] < 50.0))
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 4h down move, 1d high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1d"] < 80.0)
+          )
+          # 15m & 1h down move, 15m still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
+          )
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
+          )
+          # 15m down move, 15m & 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 10.0) | (df["AROONU_14_4h"] < 30.0)
+          )
+          # 15m down move, 1h still not low enough, 1d overbought
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0) | (df["ROC_9_1d"] < 80.0)
+          )
+          # 15m down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["AROONU_14_1h"] < 75.0))
+          # 15m down move, 1h & 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["AROONU_14_1h"] < 50.0) | (df["AROONU_14_4h"] < 40.0))
+          # 15m & 1h & 4h down move
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 15.0))
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 20.0) | (df["AROONU_14_1h"] < 50.0))
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 1h down move, 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 40.0) | (df["AROONU_14_4h"] < 70.0))
+          # 15m down move, 1h & 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_14_1h"] < 70.0) | (df["RSI_14_4h"] < 75.0))
+          # 15m down move, 15m still not low enough, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0) | (df["AROONU_14_4h"] < 60.0)
+          )
+          # 15m down move, 1h & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_1h"] < 50.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m down move, 1h & 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["AROONU_14_1h"] < 70.0) | (df["AROONU_14_4h"] < 90.0))
+          # 15m & 1h down move, 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 25.0) | (df["AROONU_14_4h"] < 50.0))
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 40.0) | (df["AROONU_14_1h"] < 70.0))
+          # 15m & 1h down move, 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 40.0) | (df["AROONU_14_4h"] < 80.0))
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
+          )
+          # 15m down move, 15m high, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_15m"] < 70.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 15m down move, 4h high & overbought
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0) | (df["ROC_9_4h"] < 50.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 35.0) | (df["AROONU_14_1h"] < 80.0))
+          # 15m down move, 15m still not low enough, 1d overbought
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0) | (df["ROC_9_1d"] < 80.0)
+          )
+          # 15m downmove, 1h still high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0) | (df["AROONU_14_4h"] < 85.0)
+          )
+          # 15m down move, 1h still high, 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 30.0) | (df["AROONU_14_1h"] < 50.0) | (df["RSI_14_4h"] < 80.0))
+          # 15m & 1h down move, 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 30.0) | (df["RSI_3_1h"] > 50.0) | (df["AROONU_14_4h"] < 90.0))
+          # 15m down move, 1h still high, 1d overbought
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0) | (df["ROC_9_1d"] < 200.0)
+          )
+          # 15m & 1h down move, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 40.0) | (df["RSI_3_1h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
+          )
+          # 1h & 4h strong down move
+          long_entry_logic.append((df["RSI_3_1h"] > 3.0) | (df["RSI_3_4h"] > 3.0))
+          # 1h & 4h down move, drop in the last hour
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 20.0) | (df["close"] > (df["close_max_12"] * 0.90))
+          )
+          # 1h & 4h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
+          )
+          # 1h & 1d down move, 5m moving down
+          long_entry_logic.append((df["RSI_3_1h"] > 10.0) | (df["RSI_3_1d"] > 15.0) | (df["ROC_2"] > -0.0))
+          # 1h down move, 15m & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 1h & 4h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
+          )
+          # 1h & 4h down move, 4h high
+          long_entry_logic.append((df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 50.0) | (df["AROONU_14_4h"] < 70.0))
+          # 1h down move, 1h still not low enough, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 20.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0) | (df["AROONU_14_4h"] < 80.0)
+          )
+          # 1h down move, 4h still high & overbought
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 20.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0) | (df["ROC_9_4h"] < 50.0)
+          )
+          # 1h down move, 1h still high, 4h high
+          long_entry_logic.append((df["RSI_3_1h"] > 25.0) | (df["AROONU_14_1h"] < 50.0) | (df["AROONU_14_4h"] < 80.0))
+          # 1h, 4h still high, 1d downtrend
+          long_entry_logic.append((df["RSI_3_1h"] > 25.0) | (df["AROONU_14_4h"] < 50.0) | (df["ROC_9_1d"] > -50.0))
+          # 1h & 4h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 30.0) | (df["RSI_3_4h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 1h down move, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 30.0)
+            | (df["close"] > (df["high_max_12_4h"] * 0.50))
+            | (df["close"] < (df["low_min_24_4h"] * 1.10))
+          )
+          # 4h down move, 15m still not low enough, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 5.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0) | (df["AROONU_14_1h"] < 50.0)
+          )
+          # 4h down move, 15m still high
+          long_entry_logic.append((df["RSI_3_4h"] > 5.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0))
+          # 4h down move, 15m 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 4h & 1d down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 40.0) | (df["RSI_3_1d"] > 10.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 1d down move, 1h still not low enough
+          long_entry_logic.append((df["RSI_3_1d"] > 5.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0))
+          # 15m still high, 1h & 4h high
+          long_entry_logic.append(
+            (df["RSI_14_15m"] < 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0) | (df["AROONU_14_4h"] < 90.0)
+          )
+          # 4h still high, 4h moving lower, 4h overbought
+          long_entry_logic.append(
+            (df["AROONU_14_4h"] < 50.0) | (df["AROONU_14_4h"] > df["AROONU_14_4h"].shift(48)) | (df["ROC_9_4h"] < 40.0)
+          )
+          # 4h overbought, drop but not yet near the previous lows in last 2 days
+          long_entry_logic.append(
+            (df["ROC_9_4h"] < 50.0)
+            | (df["close"] > (df["high_max_12_4h"] * 0.50))
+            | (df["close"] < (df["low_min_12_4h"] * 1.25))
+          )
+          # 1d overbought, drop but not yet near the previous lows in last 2 days
+          long_entry_logic.append(
+            (df["ROC_9_1d"] < 60.0)
+            | (df["close"] > (df["high_max_12_4h"] * 0.50))
+            | (df["close"] < (df["low_min_12_4h"] * 1.25))
+          )
+          # 1d top wick, 4h down move, 4h high
+          long_entry_logic.append(
+            (df["top_wick_pct_1d"] < 10.0) | (df["RSI_3_4h"] > 40.0) | (df["AROONU_14_4h"] < 80.0)
+          )
+          # pump, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (((df["high_max_6_1d"] - df["low_min_6_1d"]) / df["low_min_6_1d"]) < 6.0)
+            | (df["close"] > (df["high_max_6_4h"] * 0.85))
+            | (df["close"] < (df["low_min_6_1d"] * 1.25))
+          )
+          # pump, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (((df["high_max_12_1d"] - df["low_min_12_1d"]) / df["low_min_12_1d"]) < 2.0)
+            | (df["close"] > (df["high_max_6_1d"] * 0.60))
+            | (df["close"] < (df["low_min_12_1d"] * 1.25))
+          )
+          # 1d overbought, drop but not yet near the previous lows in last 12 days
+          long_entry_logic.append(
+            (df["ROC_9_1d"] < 200.0)
+            | (df["close"] > (df["high_max_12_1d"] * 0.50))
+            | (df["close"] < (df["low_min_12_1d"] * 1.25))
+          )
+          # big drop in last 6 hours, 1d overbought
+          long_entry_logic.append((df["close"] > (df["high_max_6_1h"] * 0.65)) | (df["ROC_9_1d"] < 50.0))
+          # big drop in last 12 hours, 1d overbought
+          long_entry_logic.append((df["close"] > (df["high_max_12_1h"] * 0.50)) | (df["ROC_9_1d"] < 50.0))
+          # big drop in last 24 hours, 4h down move
+          long_entry_logic.append((df["close"] > (df["high_max_24_1h"] * 0.50)) | (df["RSI_3_4h"] > 10.0))
+          # big drop in last 24 hours, 1h still high
+          long_entry_logic.append(
+            (df["close"] > (df["high_max_24_1h"] * 0.50)) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # big drop in last 48 hours, 4h down move
+          long_entry_logic.append((df["close"] > (df["high_max_12_4h"] * 0.30)) | (df["RSI_3_4h"] > 15.0))
+          # big drop in last 4 days, 1h high
+          long_entry_logic.append(
+            (df["close"] > (df["high_max_24_4h"] * 0.20)) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
+          )
+          # big drop in the last 6 days, 1d down move
+          long_entry_logic.append((df["close"] > (df["high_max_6_1d"] * 0.30)) | (df["RSI_3_1d"] > 15.0))
+          # big drop in the last 30 days, 1d downtrend
+          long_entry_logic.append((df["close"] > (df["high_max_30_1d"] * 0.05)) | (df["ROC_9_1d"] > -40.0))
+          # big drop in the last 30 days
+          long_entry_logic.append((df["close"] > (df["high_max_30_1d"] * 0.01)))
 
           # Logic
-          long_entry_logic.append(
-            (df["AROONU_14"] < 25.0)
-            & (df["STOCHRSIk_14_14_3_3"] < 20.0)
-            & (df["AROONU_14_15m"] < 25.0)
-            & (df["close"] < (df["EMA_20"] * 0.944))
-          )
+          long_entry_logic.append(df["AROONU_14"] < 25.0)
+          long_entry_logic.append(df["STOCHRSIk_14_14_3_3"] < 20.0)
+          long_entry_logic.append(df["AROONU_14_15m"] < 25.0)
+          long_entry_logic.append(df["close"] < (df["EMA_20"] * 0.944))
 
         # Condition #3 - Normal mode (Long).
         if long_entry_condition_index == 3:
           # Protections
           long_entry_logic.append(df["num_empty_288"] <= allowed_empty_candles_288)
-          long_entry_logic.append(df["protections_long_global"] == True)
 
+          long_entry_logic.append(df["RSI_3_1h"] <= 95.0)
+          long_entry_logic.append(df["RSI_3_4h"] <= 80.0)
+          long_entry_logic.append(df["RSI_3_1d"] <= 80.0)
+          long_entry_logic.append(df["RSI_14_1h"] < 80.0)
+          long_entry_logic.append(df["RSI_14_4h"] < 80.0)
+          long_entry_logic.append(df["RSI_14_1d"] < 90.0)
+          # 5m & 15m down move, 15m sitll not low enough
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_15m"] < 30.0))
+          # 5m & 15m down move, 1h still high
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_1h"] < 50.0))
+          # 5m down move, 1h still high, 1d high
           long_entry_logic.append(
-            # 5m & 15m down move, 15m & 1h & 4h still high, 15m & 4h high, 1h & 4h still high
-            (
-              (df["RSI_14"] < 5.0)
-              | (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["AROONU_14_4h"] < 70.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
-            )
-            # 5m & 15m & dh down move, 15m & 1h still high, 15m high
-            & (
-              (df["RSI_3"] > 5.0)
-              | (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_4h"] > 25.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
-            )
-            # 5m & 15m & 4h down move, 15m still not low enough, 1h & 4h still high, 15m still high
-            & (
-              (df["RSI_3"] > 10.0)
-              | (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_4h"] > 20.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_15m"] < 50.0)
-            )
-            # 5m & 15m & 4h down move, 15m & 1h & 4h still high, 15m & 1h & 4h high
-            & (
-              (df["RSI_3"] > 10.0)
-              | (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_4h"] > 60.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["AROONU_14_1h"] < 60.0)
-              | (df["AROONU_14_4h"] < 60.0)
-            )
-            # 15m & 1h & 4h down move, 1h & 4h still not low enough, 1h still high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-            )
-            # 5m & 15m & 4h & 1d down move, 15m & 4h still not low enough, 4h downtrend
-            & (
-              (df["RSI_3"] > 10.0)
-              | (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_4h"] > 30.0)
-              | (df["RSI_3_1d"] > 40.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
-              | (df["ROC_9_4h"] > -10.0)
-            )
-            # 5m & 15m & 1h down move, 15m still not low enough, 1h high
-            & (
-              (df["RSI_3"] > 15.0)
-              | (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["AROONU_14_15m"] < 40.0)
-              | (df["AROONU_14_1h"] < 70.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 15m still not low enough, 1h high
-            & (
-              (df["RSI_3_15m"] > 10.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 30.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h still not low enough, 15m & 1h still high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 40.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 1d overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["ROC_9_1d"] < 80.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_3_4h"] > 55.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-            )
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h still high, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["ROC_9_4h"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["ROC_9_4h"] < 20.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m still high, 1h still high, 4h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 65.0)
-              | (df["RSI_3_1d"] > 65.0)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
-            )
-            # 15m & 1d down move, 15m & 1h & 4h still high, 15m still high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1d"] > 20.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_15m"] < 50.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 4h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_1h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m still not low enough, 1h & 4h still high, 15m high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_3_4h"] > 30.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 60.0)
-            )
-            # 15m & 4h down move, 15m & 4h still high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_4h"] > 35.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 50.0)
-            )
-            # 15m & 4h down move, 15m & 1h & 4h still high, 15m & 4h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["AROONU_14_4h"] < 60.0)
-            )
-            # 15m down move, 15m & 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["AROONU_14_1h"] < 50.0)
-              | (df["AROONU_14_4h"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
-            )
-            # 15m & 1h down move, 15m & 1h still high, 4h downtrend, 15m still not low enough, 1h high
-            & (
-              (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["CMF_20_4h"] > -0.20)
-              | (df["AROONU_14_15m"] < 30.0)
-              | (df["AROONU_14_1h"] < 80.0)
-            )
-            # 15m & 4h down move, 15m high
-            & (
-              (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_4h"] > 40.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["STOCHRSIk_14_14_3_3_15m"] < 60.0)
-            )
-            # 15m & 4h down move, 15m & 1h & 4h still high, 15m high, 1h & 4h still not low enough, 1d overbought
-            & (
-              (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
-              | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
-              | (df["ROC_9_1d"] < 50.0)
-            )
-            # 15m & 4h down move, 15m & 1h still high, 4h high & overbought
-            & (
-              (df["RSI_3_15m"] > 25.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 60.0)
-              | (df["ROC_9_4h"] < 50.0)
-            )
-            # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h downtrend, 15m stil high, 1h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["CMF_20_1h"] > -0.10)
-              | (df["CMF_20_4h"] > -0.10)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["AROONU_14_1h"] < 90.0)
-            )
-            # 15m & 1h & 4h & 1d down move, 15m & 1h & 4h still not low enough, 15m still high, 1d downtrend
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_3_4h"] > 50.0)
-              | (df["RSI_3_1d"] > 15.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 30.0)
-              | (df["RSI_14_4h"] < 30.0)
-              | (df["AROONU_14_15m"] < 40.0)
-              | (df["ROC_9_1d"] > -40.0)
-            )
-            # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h downtrend, 15m still high, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 50.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["CMF_20_1h"] > -0.10)
-              | (df["CMF_20_4h"] > -0.10)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["AROONU_14_1h"] < 85.0)
-              | (df["AROONU_14_4h"] < 90.0)
-            )
-            # 15m & 1h down move, 15m still high, 1h & 4h high, 15m & 4h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 55.0)
-              | (df["RSI_14_15m"] < 45.0)
-              | (df["RSI_14_1h"] < 55.0)
-              | (df["RSI_14_4h"] < 60.0)
-              | (df["AROONU_14_15m"] < 60.0)
-              | (df["AROONU_14_4h"] < 80.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 65.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
-            )
-            # 15m & 1h down move, 15m & 1h & 4h still high, 15m & 1h still not low enough, 4h high, 1d overbought
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 65.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 30.0)
-              | (df["AROONU_14_1h"] < 30.0)
-              | (df["AROONU_14_4h"] < 80.0)
-              | (df["ROC_9_1d"] < 150.0)
-            )
-            # 15m & 1h & 4h & 1d down move, 15m still not low enough, 1h & 4h still high, 15m still high, 4h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 55.0)
-              | (df["RSI_3_1d"] > 55.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 40.0)
-              | (df["AROONU_14_15m"] < 50.0)
-              | (df["AROONU_14_4h"] < 70.0)
-            )
-            # 15m & 1h & 4h down move, 15m & 1h & 4h still high, 15m & 1h still not low enough, 4h high
-            & (
-              (df["RSI_3_15m"] > 35.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["RSI_3_4h"] > 60.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["AROONU_14_15m"] < 30.0)
-              | (df["AROONU_14_1h"] < 30.0)
-              | (df["AROONU_14_4h"] < 70.0)
-            )
-            # 15m & 1h down move, 15m & 1h & 4h still high, 1h & 4h downtrend, 15m still high, 4h high & overbought
-            & (
-              (df["RSI_3_15m"] > 35.0)
-              | (df["RSI_3_1h"] > 60.0)
-              | (df["RSI_14_15m"] < 40.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["CMF_20_1h"] > -0.0)
-              | (df["CMF_20_4h"] > -0.1)
-              | (df["AROONU_14_15m"] < 40.0)
-              | (df["AROONU_14_4h"] < 70.0)
-              | (df["ROC_9_4h"] < 10.0)
-            )
-            # 15m & 4h down move, 15m still not low enough, 1h still high, 4h high, 4h downtrend, 4h overbought
-            & (
-              (df["RSI_3_15m"] > 45.0)
-              | (df["RSI_3_4h"] > 65.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 40.0)
-              | (df["RSI_14_4h"] < 50.0)
-              | (df["CMF_20_4h"] > -0.10)
-              | (df["AROONU_14_15m"] < 40.0)
-              | (df["AROONU_14_4h"] < 70.0)
-              | (df["ROC_9_4h"] < 20.0)
-            )
-            # 1h & 4h down move, 15m still high
-            & ((df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 10.0) | (df["AROONU_14_15m"] < 50.0))
+            (df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0) | (df["AROONU_14_1d"] < 90.0)
           )
+          # 5m down move, 1h & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 5m down move, 1h high
+          long_entry_logic.append((df["RSI_3"] > 3.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0))
+          # 5m & 15m down move, 15m still not low enough
+          long_entry_logic.append(
+            (df["RSI_3"] > 5.0) | (df["RSI_3_15m"] > 20.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0)
+          )
+          # 5m & 15m down move, 4h still high
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_4h"] < 50.0))
+          # 5m down move, 15m still high
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["AROONU_14_15m"] < 50.0))
+          # 5m down move, 15m still high
+          long_entry_logic.append((df["RSI_3"] > 5.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0))
+          # # 5m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3"] > 10.0) | (df["RSI_3_1h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 10.0)
+          )
+          # 5m & 1h down move, 4h high
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["RSI_3_1h"] > 30.0) | (df["AROONU_14_4h"] < 80.0))
+          # 5m & 4h down move, 4h still not low enough
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_4h"] < 30.0))
+          # 5m down move, 15m & 1h still high
+          long_entry_logic.append(
+            (df["RSI_3"] > 10.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 5m down move, 15m still high, 4h high
+          long_entry_logic.append((df["RSI_3"] > 10.0) | (df["AROONU_14_15m"] < 50.0) | (df["AROONU_14_4h"] < 70.0))
+          # 5m down move, 15m still high, 1h high
+          long_entry_logic.append((df["RSI_3"] > 15.0) | (df["AROONU_14_15m"] < 50.0) | (df["AROONU_14_1h"] < 90.0))
+          # 5m down move, 15m still not low enough, 4h high
+          long_entry_logic.append(
+            (df["RSI_3"] > 20.0) | (df["AROONU_14_15m"] < 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
+          )
+          # 5m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3"] > 20.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 90.0)
+          )
+          # 5m & 1h down move
+          long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 5.0))
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 25.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 35.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["RSI_3_1h"] > 50.0) | (df["AROONU_14_1h"] < 70.0))
+          # 15m down move, 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0))
+          # 5m & 1h & 4h down move
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 10.0) | (df["RSI_3_1h"] > 45.0))
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 15m & 1h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
+          )
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 40.0) | (df["AROONU_14_1h"] < 50.0))
+          # 15m & 4h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
+          )
+          # 15m & 4h down move, 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 30.0) | (df["AROONU_14_4h"] < 50.0))
+          # 15m & 4h down move, 15m still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_15m"] < 30.0))
+          # 15m & 1d down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1d"] > 5.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 15m down move, 15m still not low enough, 1h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["AROONU_14_15m"] < 25.0) | (df["AROONU_14_1h"] < 50.0))
+          # 15m & 1h down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 40.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 1h down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m & 4h down move, 1d high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1d"] < 80.0)
+          )
+          # 15m & 4h down move, 1h still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_1h"] < 30.0))
+          # 15m & 4h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 15m & 4h down move, 4h still high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 25.0) | (df["AROONU_14_4h"] < 50.0))
+          # 15m & 4h down move, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_4h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 60.0)
+          )
+          # 15m down move, 15m still high, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0)
+          )
+          # 15m down move, 15m & 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 10.0) | (df["AROONU_14_4h"] < 30.0)
+          )
+          # 15m down move, 1h & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0) | (df["AROONU_14_4h"] < 40.0)
+          )
+          # 15m down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0))
+          # 15m down move, 4h high
+          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0))
+          # 15m & 1h & 1d down move
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 20.0) | (df["RSI_3_1d"] > 20.0))
+          # 15m & 1h down move, 15m still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 30.0)
+          )
+          # 15m & 1h down move, 1h still not low enough
+          long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 15.0) | (df["AROONU_14_1h"] < 25.0))
+          # 15m & 1d down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["RSI_3_1d"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0)
+          )
+          # 15m down move, 15m still high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_15m"] < 40.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
+          )
+          # 15m down move, 1h & 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 15.0) | (df["AROONU_14_1h"] < 50.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 20.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 30.0) | (df["AROONU_14_1h"] < 70.0))
+          # 15m down move, 15m still not low enough, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_15m"] < 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
+          )
+          # 15m down move, 15m & 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 15m down move, 1h still high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 20.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
+          )
+          # 15m & 1h down move, 15m still high
+          long_entry_logic.append((df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 25.0) | (df["AROONU_14_15m"] < 50.0))
+          # 15m & 1h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 15m & 1h down move, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0)
+          )
+          # 15m & 1h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 35.0) | (df["AROONU_14_1h"] < 80.0))
+          # 15m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
+          )
+          # 15m down move, 15m still high
+          long_entry_logic.append((df["RSI_3_15m"] > 25.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0))
+          # 15m down move, 15m still not low enough, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 10.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
+          )
+          # 15m downmove, 1h still high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 25.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0) | (df["AROONU_14_4h"] < 85.0)
+          )
+          # 15m down move, 15m still not low enough, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 30.0) | (df["AROONU_14_15m"] < 35.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 30.0) | (df["AROONU_14_15m"] < 50.0) | (df["AROONU_14_1h"] < 90.0)
+          )
+          # 15m & 4h down move, 1h high
+          long_entry_logic.append((df["RSI_3_15m"] > 35.0) | (df["RSI_3_4h"] > 55.0) | (df["AROONU_14_1h"] < 90.0))
+          # 15m down move, 15m high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 35.0) | (df["AROONU_14_15m"] < 70.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 15m down move, 1h & 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 35.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0) | (df["AROONU_14_4h"] < 90.0)
+          )
+          # 15m down move, 15m high, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 40.0) | (df["AROONU_14_15m"] < 70.0) | (df["AROONU_14_4h"] < 80.0)
+          )
+          # 15m down move, 15m still high, 1h high
+          long_entry_logic.append(
+            (df["RSI_3_15m"] > 50.0) | (df["AROONU_14_15m"] < 60.0) | (df["AROONU_14_1h"] < 90.0)
+          )
+          # 1h & 4h down move, 4h still not low enough
+          long_entry_logic.append((df["RSI_3_1h"] > 3.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_4h"] < 25.0))
+          # 1h & 4h down move
+          long_entry_logic.append((df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 10.0))
+          # 1h & 4h down move, drop in the last hour
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 20.0) | (df["close"] > (df["close_max_12"] * 0.90))
+          )
+          # 1h down move, 15m still not low enough, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 5.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 20.0) | (df["AROONU_14_4h"] < 50.0)
+          )
+          # 1h down move, 15m still high
+          long_entry_logic.append((df["RSI_3_1h"] > 5.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0))
+          # 1h & 4h & 1d down move
+          long_entry_logic.append((df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 15.0) | (df["RSI_3_1d"] > 15.0))
+          # 1h & 4h down move, 4h still high
+          long_entry_logic.append((df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 20.0) | (df["AROONU_14_4h"] < 40.0))
+          # 1h & 4h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 25.0) | (df["AROONU_14_1h"] < 50.0))
+          # 1h & 4h down move, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
+          )
+          # 1h & 4h down move, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 45.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 1h & 4h down move, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 45.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
+          )
+          # 1h down move, 15m & 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 10.0) | (df["AROONU_14_15m"] < 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 1h & 4h down move
+          long_entry_logic.append((df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 5.0))
+          # 1h & 4h down move, 15m still high
+          long_entry_logic.append((df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 20.0) | (df["AROONU_14_15m"] < 40.0))
+          # 1h & 4h down move, 1d high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 15.0) | (df["RSI_3_4h"] > 20.0) | (df["STOCHRSIk_14_14_3_3_1d"] < 70.0)
+          )
+          # 1h & 4h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_1h"] > 15.0) | (df["RSI_3_1d"] > 10.0) | (df["AROONU_14_1h"] < 40.0))
+          # 1h down move, 1h still high
+          long_entry_logic.append((df["RSI_3_1h"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0))
+          # 1h & 4h & 1d down move
+          long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 25.0) | (df["RSI_3_1d"] > 5.0))
+          # 1h & 4h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 40.0)
+          )
+          # 1h down move, 15m still not low enough, 4h still high
+          long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["AROONU_14_15m"] < 30.0) | (df["AROONU_14_4h"] < 50.0))
+          # 1h & 4h down move, 4h high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 25.0) | (df["RSI_3_4h"] > 60.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 80.0)
+          )
+          # 1h & 4h down move, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 30.0) | (df["RSI_3_4h"] > 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 1h down move, 15m still high, 1h high
+          long_entry_logic.append((df["RSI_3_1h"] > 30.0) | (df["AROONU_14_15m"] < 40.0) | (df["AROONU_14_1h"] < 70.0))
+          # 1h down move, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (df["RSI_3_1h"] > 30.0)
+            | (df["close"] > (df["high_max_12_4h"] * 0.50))
+            | (df["close"] < (df["low_min_24_4h"] * 1.10))
+          )
+          # 1h & 4h down move, 15m high
+          long_entry_logic.append((df["RSI_3_1h"] > 40.0) | (df["RSI_3_4h"] > 45.0) | (df["AROONU_14_15m"] < 70.0))
+          # 4h down move, 15m still not low enough, 1h still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 10.0) | (df["AROONU_14_15m"] < 20.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+          )
+          # 4h down move, 15m still high, 4h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 10.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0) | (df["AROONU_14_4h"] < 25.0)
+          )
+          # 4h down move. 15m still high, 1h still not low enough
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 10.0) | (df["AROONU_14_15m"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 20.0)
+          )
+          # 4h down move, drop in last 1h
+          long_entry_logic.append((df["RSI_3_4h"] > 15.0) | (df["close"] > (df["close_max_12"] * 0.85)))
+          # 4h & 1d down move, 15m still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 20.0) | (df["RSI_3_1d"] > 20.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0)
+          )
+          # 4h down move, 15m high
+          long_entry_logic.append((df["RSI_3_4h"] > 20.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 70.0))
+          # 4h down move, 15m still high, 1h high
+          long_entry_logic.append((df["RSI_3_4h"] > 30.0) | (df["AROONU_14_15m"] < 30.0) | (df["AROONU_14_1h"] < 90.0))
+          # 4h down move, 15m & 1h still high
+          long_entry_logic.append((df["RSI_3_4h"] > 30.0) | (df["AROONU_14_15m"] < 50.0) | (df["AROONU_14_1h"] < 50.0))
+          # 4h down move, 4h still not low enough, 1d overbought
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 20.0) | (df["ROC_9_1d"] < 50.0)
+          )
+          # 4h & 1d down move, 4h still high
+          long_entry_logic.append(
+            (df["RSI_3_4h"] > 40.0) | (df["RSI_3_1d"] > 10.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
+          )
+          # 15m still high, 1h & 4h high
+          long_entry_logic.append(
+            (df["RSI_14_15m"] < 40.0) | (df["AROONU_14_1h"] < 80.0) | (df["AROONU_14_4h"] < 90.0)
+          )
+          # 15m still not low enough, 1h high, 1d overbought
+          long_entry_logic.append(
+            (df["AROONU_14_15m"] < 40.0) | (df["AROONU_14_1h"] < 80.0) | (df["ROC_9_1d"] < 100.0)
+          )
+          # 15m still not low enough, 1h high, 1d overbought
+          long_entry_logic.append(
+            (df["AROONU_14_15m"] < 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0) | (df["ROC_9_1d"] < 100.0)
+          )
+          # 15m still high, 1h & 4h high
+          long_entry_logic.append(
+            (df["AROONU_14_15m"] < 50.0) | (df["AROONU_14_1h"] < 90.0) | (df["AROONU_14_4h"] < 75.0)
+          )
+          # 5m down move, 1h still high
+          long_entry_logic.append((df["ROC_2"] > -5.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0))
+          # 1d overbought, drop but not yet near the previous lows in last 2 days
+          long_entry_logic.append(
+            (df["ROC_9_1d"] < 60.0)
+            | (df["close"] > (df["high_max_12_4h"] * 0.50))
+            | (df["close"] < (df["low_min_12_4h"] * 1.25))
+          )
+          # pump, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (((df["high_max_6_1d"] - df["low_min_6_1d"]) / df["low_min_6_1d"]) < 6.0)
+            | (df["close"] > (df["high_max_6_4h"] * 0.85))
+            | (df["close"] < (df["low_min_6_1d"] * 1.25))
+          )
+          # pump, drop but not yet near the previous lows
+          long_entry_logic.append(
+            (((df["high_max_12_1d"] - df["low_min_12_1d"]) / df["low_min_12_1d"]) < 2.0)
+            | (df["close"] > (df["high_max_6_1d"] * 0.60))
+            | (df["close"] < (df["low_min_12_1d"] * 1.25))
+          )
+          # 1d overbought, drop but not yet near the previous lows in last 12 days
+          long_entry_logic.append(
+            (df["ROC_9_1d"] < 200.0)
+            | (df["close"] > (df["high_max_12_1d"] * 0.50))
+            | (df["close"] < (df["low_min_12_1d"] * 1.25))
+          )
+          # big drop in last 24 hours, 4h down move
+          long_entry_logic.append((df["close"] > (df["high_max_24_1h"] * 0.50)) | (df["RSI_3_4h"] > 10.0))
+          # big drop in last 4 days, 4h still not low enough
+          long_entry_logic.append(
+            (df["close"] > (df["high_max_24_4h"] * 0.50)) | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
+          )
+          # big drop in last 4 days, 4h down move
+          long_entry_logic.append((df["close"] > (df["high_max_24_4h"] * 0.20)) | (df["RSI_3_4h"] > 20.0))
+          # big drop in the last 6 days, 1d down move
+          long_entry_logic.append((df["close"] > (df["high_max_6_1d"] * 0.30)) | (df["RSI_3_1d"] > 15.0))
+          # big drop in the last 12 days, 4h still high
+          long_entry_logic.append((df["close"] > (df["high_max_12_1d"] * 0.25)) | (df["AROONU_14_4h"] < 50.0))
+          # big drop in the last 30 days, 4h down move
+          long_entry_logic.append((df["close"] > (df["high_max_30_1d"] * 0.10)) | (df["RSI_3_4h"] > 20.0))
+          # big drop in the last 30 days, 4h still high
+          long_entry_logic.append(
+            (df["close"] > (df["high_max_30_1d"] * 0.05)) | (df["STOCHRSIk_14_14_3_3_4h"] < 30.0)
+          )
+          # big drop in the last 30 days, 1d downtrend
+          long_entry_logic.append((df["close"] > (df["high_max_30_1d"] * 0.05)) | (df["ROC_9_1d"] > -40.0))
+          # big drop in the last 30 days
+          long_entry_logic.append((df["close"] > (df["high_max_30_1d"] * 0.01)))
 
           # Logic
-          long_entry_logic.append(
-            (df["RSI_20"] < df["RSI_20"].shift(1))
-            & (df["RSI_4"] < 45.0)
-            & (df["RSI_14"] > 32.0)
-            & (df["AROONU_14"] < 10.0)
-            & (df["STOCHRSIk_14_14_3_3"] < 10.0)
-            & (df["close"] < df["SMA_16"] * 0.965)
-            & (df["close"] < df["SMA_16_1h"] * 0.985)
-          )
+          long_entry_logic.append(df["RSI_20"] < df["RSI_20"].shift(1))
+          long_entry_logic.append(df["RSI_4"] < 46.0)
+          long_entry_logic.append(df["AROONU_14"] < 25.0)
+          long_entry_logic.append(df["close"] < df["SMA_16"] * 0.942)
 
         # Condition #4 - Normal mode (Long).
         if long_entry_condition_index == 4:
           # Protections
           long_entry_logic.append(df["num_empty_288"] <= allowed_empty_candles_288)
-          long_entry_logic.append(df["protections_long_global"] == True)
 
           long_entry_logic.append(df["RSI_3_1h"] <= 95.0)
           long_entry_logic.append(df["RSI_3_4h"] <= 80.0)
@@ -10621,8 +7670,6 @@ class NostalgiaForInfinityX6(IStrategy):
           # 1h down move, 4h high & overbought
           long_entry_logic.append((df["RSI_3_1h"] > 30.0) | (df["AROONU_14_4h"] < 70.0) | (df["ROC_9_4h"] < 50.0))
           # 1h & 4h down move, 4h high
-          long_entry_logic.append((df["RSI_3_1h"] > 35.0) | (df["RSI_3_4h"] > 40.0) | (df["AROONU_14_4h"] < 85.0))
-          # 1h & 4h down move, 4h high
           long_entry_logic.append(
             (df["RSI_3_1h"] > 35.0) | (df["RSI_3_4h"] > 45.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 70.0)
           )
@@ -10947,10 +7994,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append((df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 30.0) | (df["AROONU_14_1h"] < 20.0))
           # 1h & 4h down move, 1d high
           long_entry_logic.append((df["RSI_3_1h"] > 5.0) | (df["RSI_3_4h"] > 30.0) | (df["AROONU_14_1d"] < 85.0))
-          # 15m & 1h & 4h down move, 1d overbought
-          long_entry_logic.append(
-            (df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 20.0) | (df["ROC_9_1d"] < 30.0)
-          )
           # 1h & 4h down move
           long_entry_logic.append((df["RSI_3_1h"] > 10.0) | (df["RSI_3_4h"] > 15.0))
           # 1h & 4h down move, 4h still high
@@ -11100,8 +8143,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append((df["RSI_3_15m"] > 5.0) | (df["AROONU_14_4h"] < 90.0))
           # 15m & 1h & 1d down move
           long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 10.0) | (df["RSI_3_1d"] > 10.0))
-          # 15m & 1h down move, 1d overbought
-          long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 20.0) | (df["ROC_9_1d"] < 30.0))
           # 15m & 1h down move, 1h high
           long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["RSI_3_1h"] > 45.0) | (df["AROONU_14_1h"] < 80.0))
           # 15m & 4h down move, 4h still high
@@ -11304,14 +8345,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append((df["RSI_3_15m"] > 10.0) | (df["AROONU_14_4h"] < 50.0) | (df["AROONU_14_1d"] < 90.0))
           # 15m & 4h down move, 1h still high
           long_entry_logic.append((df["RSI_3_15m"] > 15.0) | (df["RSI_3_4h"] > 15.0) | (df["AROONU_14_1h"] < 40.0))
-          # 15m & 1h & 1d down move, 1h still not low enough, 1d high
-          long_entry_logic.append(
-            (df["RSI_3_15m"] > 20.0)
-            | (df["RSI_3_1h"] > 20.0)
-            | (df["RSI_3_1d"] > 30.0)
-            | (df["RSI_14_1h"] < 30.0)
-            | (df["AROONU_14_1d"] < 80.0)
-          )
           # 15m down move, 1h & 4h still high
           long_entry_logic.append(
             (df["RSI_3_15m"] > 20.0) | (df["AROONU_14_1h"] < 40.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 50.0)
@@ -11380,8 +8413,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 20.0) | (df["RSI_14_4h"] < 40.0))
           # 1h & 4h down move, 4h still high
           long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 20.0) | (df["AROONU_14_4h"] < 50.0))
-          # 1h & 4h down move, 4h high
-          long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["RSI_3_4h"] > 45.0) | (df["AROONU_14_4h"] < 65.0))
           # 1h & 1d down move, 1d high
           long_entry_logic.append((df["RSI_3_1h"] > 20.0) | (df["RSI_3_1d"] > 20.0) | (df["AROONU_14_1d"] < 70.0))
           # 1h down move, 1h still high, 1d high
@@ -12697,7 +9728,7 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append((df["RSI_3_15m"] > 3.0) | (df["RSI_3_4h"] > 30.0) | (df["RSI_14_4h"] < 40.0))
           # 15m & 1h down move, 1h high
           long_entry_logic.append(
-            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 50.0)
+            (df["RSI_3_15m"] > 5.0) | (df["RSI_3_1h"] > 30.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 80.0)
           )
           # 15m & 1h down move, 1h still not low enough
           long_entry_logic.append(
@@ -13338,10 +10369,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append(
             (df["RSI_3_15m"] > 55.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 40.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0)
           )
-          # 15m down move, 15m still high, 4h high
-          long_entry_logic.append(
-            (df["RSI_3_15m"] > 55.0) | (df["STOCHRSIk_14_14_3_3_15m"] < 50.0) | (df["AROONU_14_4h"] < 85.0)
-          )
           # 1h down move, 4h still high, 1d high
           long_entry_logic.append(
             (df["RSI_3_1h"] > 25.0) | (df["AROONU_14_4h"] < 50.0) | (df["STOCHRSIk_14_14_3_3_1d"] < 90.0)
@@ -13523,7 +10550,7 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append(df["AROONU_14_15m"] < 90.0)
           long_entry_logic.append(df["STOCHRSIk_14_14_3_3_15m"] < 90.0)
           long_entry_logic.append(
-            (df["SMA_21"].shift(1) < df["SMA_200"].shift(1).infer_objects(copy=False).fillna(np.nan))
+            (df["SMA_21"].shift(1) < df["SMA_200"].shift(1).fillna(np.nan).infer_objects(copy=False))
             & df["SMA_200"].shift(1).notna()
           )
           long_entry_logic.append(
@@ -13542,7 +10569,6 @@ class NostalgiaForInfinityX6(IStrategy):
         if long_entry_condition_index == 162:
           # Protections
           long_entry_logic.append(df["num_empty_288"] <= allowed_empty_candles_288)
-          long_entry_logic.append(df["protections_long_global"] == True)
 
           long_entry_logic.append(
             (df["RSI_3"] > 5.0) & (df["RSI_3_15m"] > 5.0) & (df["ROC_9_15m"] > -10.0) & (df["ROC_9_1d"] < 200.0)
@@ -13567,8 +10593,6 @@ class NostalgiaForInfinityX6(IStrategy):
             & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 35.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0))
             # 15m & 1h down move, 1h high
             & ((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 25.0) | (df["AROONU_14_1h"] < 70.0))
-            # 15m & 1h down move, 4h high
-            & ((df["RSI_3_15m"] > 25.0) | (df["RSI_3_1h"] > 25.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 90.0))
             # 15m down move, 15m high, 1d overbought
             & ((df["RSI_3_15m"] > 25.0) | (df["AROONU_14_15m"] < 60.0) | (df["ROC_9_1d"] < 150.0))
             # 15m down move, 1h & 4h high
@@ -13655,8 +10679,6 @@ class NostalgiaForInfinityX6(IStrategy):
           long_entry_logic.append(
             # 5m & 15m & 4h down mnove, 4h high
             ((df["RSI_3"] > 15.0) | (df["RSI_3_15m"] > 20.0) | (df["RSI_3_4h"] > 40.0) | (df["AROONU_14_4h"] < 80.0))
-            # 5m & 15m & 1d down move, 1h high
-            & ((df["RSI_3"] > 15.0) | (df["RSI_3_15m"] > 25.0) | (df["RSI_3_1d"] > 25.0) | (df["AROONU_14_1h"] < 90.0))
             # 5m & 1h down move, 15m still high, 4h high
             & (
               (df["RSI_3"] > 20.0) | (df["RSI_3_1h"] > 40.0) | (df["RSI_14_15m"] < 40.0) | (df["AROONU_14_4h"] < 100.0)
@@ -13678,20 +10700,10 @@ class NostalgiaForInfinityX6(IStrategy):
             )
             # 15m & 1h & 4h down move, 1d overbought
             & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 30.0) | (df["RSI_3_4h"] > 35.0) | (df["ROC_9_1d"] < 40.0))
-            # 15m & 1h & 4h down move, 1h downtrend, 4h high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1h"] > 30.0)
-              | (df["RSI_3_4h"] > 55.0)
-              | (df["CMF_20_1h"] > -0.10)
-              | (df["AROONU_14_4h"] < 80.0)
-            )
             # 15m & 1h down move, 15m high
             & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 30.0) | (df["AROONU_14_15m"] < 60.0))
             # 15m & 1h down move, 4h high
             & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 30.0) | (df["RSI_14_4h"] < 85.0))
-            # 15m & 1h down move, 1h high
-            & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 30.0) | (df["AROONU_14_1h"] < 80.0))
             # 15m & 1h & 4h down move, 4h high
             & ((df["RSI_3_15m"] > 15.0) | (df["RSI_3_1h"] > 35.0) | (df["RSI_3_4h"] > 65.0) | (df["MFI_14_4h"] < 85.0))
             # 15m & 1h down move, 1h high
@@ -13719,13 +10731,6 @@ class NostalgiaForInfinityX6(IStrategy):
               | (df["RSI_3_1d"] > 40.0)
               | (df["AROONU_14_15m"] < 60.0)
             )
-            # 15m & 1h down move, 1h & 4h still high
-            & (
-              (df["RSI_3_15m"] > 15.0)
-              | (df["RSI_3_1d"] > 15.0)
-              | (df["AROONU_14_1h"] < 50.0)
-              | (df["AROONU_14_4h"] < 50.0)
-            )
             # 15m down move, 1h high, 1d overbought
             & ((df["RSI_3_15m"] > 15.0) | (df["STOCHRSIk_14_14_3_3_1h"] < 70.0) | (df["ROC_9_1d"] < 150.0))
             # 15m down move, 1h high & overbought
@@ -13743,14 +10748,6 @@ class NostalgiaForInfinityX6(IStrategy):
             & ((df["RSI_3_15m"] > 15.0) | (df["CMF_20_4h"] > -0.2) | (df["AROONU_14_4h"] < 80.0))
             # 15m & 4h down move, 15m high
             & ((df["RSI_3_15m"] > 20.0) | (df["RSI_3_4h"] > 25.0) | (df["AROONU_14_15m"] < 60.0))
-            # 15m & 1h down move, 1h downtrend, 1h downtrend, 15m still high, 1h high
-            & (
-              (df["RSI_3_15m"] > 20.0)
-              | (df["RSI_3_1h"] > 35.0)
-              | (df["CMF_20_1h"] > -0.10)
-              | (df["AROONU_14_15m"] < 40.0)
-              | (df["AROONU_14_1h"] < 85.0)
-            )
             # 15m & 1h down move, 4h high & overbought
             & ((df["RSI_3_15m"] > 20.0) | (df["RSI_3_1h"] > 45.0) | (df["RSI_14_4h"] < 70.0) | (df["ROC_9_4h"] < 50.0))
             # 15m down move, 15m still high, 4h high
@@ -13777,17 +10774,6 @@ class NostalgiaForInfinityX6(IStrategy):
             & ((df["RSI_3_1h"] > 25.0) | (df["CMF_20_4h"] > -0.25) | (df["AROONU_14_4h"] < 70.0))
             # 1h down move, 1h high, 1d downtrend
             & ((df["RSI_3_1h"] > 25.0) | (df["AROONU_14_1h"] < 90.0) | (df["CMF_20_1d"] > -0.2))
-            # 15m & 1h down move, 15m still not low enough, 1h & 4h high
-            & (
-              (df["RSI_3_15m"] > 30.0)
-              | (df["RSI_3_1h"] > 45.0)
-              | (df["RSI_14_15m"] < 30.0)
-              | (df["RSI_14_1h"] < 50.0)
-              | (df["RSI_14_4h"] < 70.0)
-              | (df["AROONU_14_15m"] < 20.0)
-              | (df["AROONU_14_1h"] < 60.0)
-              | (df["AROONU_14_4h"] < 100.0)
-            )
             # 1h down move, 15m & 4h high
             & ((df["RSI_3_1h"] > 30.0) | (df["AROONU_14_15m"] < 60.0) | (df["STOCHRSIk_14_14_3_3_4h"] < 95.0))
             # 1h down move, 1h high
@@ -14827,10 +11813,6 @@ class NostalgiaForInfinityX6(IStrategy):
           # 15m & 1h up move, 1h still moving higher
           short_entry_logic.append(
             (df["RSI_3_15m"] < 95.0) | (df["RSI_3_1h"] < 90.0) | (df["CCI_20_change_pct_1h"] < -0.0)
-          )
-          # 15m & 4h up move, 4h still moving higher
-          short_entry_logic.append(
-            (df["RSI_3_15m"] < 90.0) | (df["RSI_3_4h"] < 95.0) | (df["CCI_20_change_pct_4h"] < -0.0)
           )
           # 15m up move, 15m still not high enough, 1d uptrend
           short_entry_logic.append(
@@ -20698,14 +17680,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_0_131"
-      elif (
-        (last_candle["RSI_3"] > 95.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_0_132"
     elif 0.02 > current_profit >= 0.01:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -21752,14 +18726,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_1_131"
-      elif (
-        (last_candle["RSI_3"] > 80.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_1_132"
     elif 0.03 > current_profit >= 0.02:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -22806,14 +19772,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_2_131"
-      elif (
-        (last_candle["RSI_3"] > 78.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_2_132"
     elif 0.04 > current_profit >= 0.03:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -23860,14 +20818,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_3_131"
-      elif (
-        (last_candle["RSI_3"] > 76.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_3_132"
     elif 0.05 > current_profit >= 0.04:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -24914,14 +21864,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_4_131"
-      elif (
-        (last_candle["RSI_3"] > 74.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_4_132"
     elif 0.06 > current_profit >= 0.05:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -25968,14 +22910,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_5_131"
-      elif (
-        (last_candle["RSI_3"] > 72.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_5_132"
     elif 0.07 > current_profit >= 0.06:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -27022,14 +23956,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_6_131"
-      elif (
-        (last_candle["RSI_3"] > 74.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_6_132"
     elif 0.08 > current_profit >= 0.07:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -28076,14 +25002,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_7_131"
-      elif (
-        (last_candle["RSI_3"] > 76.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_7_132"
     elif 0.09 > current_profit >= 0.08:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -29130,14 +26048,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_8_131"
-      elif (
-        (last_candle["RSI_3"] > 78.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_8_132"
     elif 0.1 > current_profit >= 0.09:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -30184,14 +27094,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_9_131"
-      elif (
-        (last_candle["RSI_3"] > 80.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_9_132"
     elif 0.12 > current_profit >= 0.1:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -31238,14 +28140,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_10_131"
-      elif (
-        (last_candle["RSI_3"] > 82.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_10_132"
     elif 0.2 > current_profit >= 0.12:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -32292,14 +29186,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_11_131"
-      elif (
-        (last_candle["RSI_3"] > 84.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_11_132"
     elif current_profit >= 0.2:
       if (
         (last_candle["WILLR_14"] > -1.0)
@@ -33346,14 +30232,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] > 50.0)
       ):
         return True, f"exit_{mode_name}_d_12_131"
-      elif (
-        (last_candle["RSI_3"] > 86.0)
-        and (last_candle["RSI_3_1h"] < 35.0)
-        and (last_candle["RSI_3_4h"] < 35.0)
-        and (last_candle["AROONU_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] > 40.0)
-      ):
-        return True, f"exit_{mode_name}_d_12_132"
 
     #  Here ends exit signal conditions for long_exit_dec
 
@@ -33519,6 +30397,8 @@ class NostalgiaForInfinityX6(IStrategy):
 
     fee_open_rate = trade.fee_open if self.custom_fee_open_rate is None else self.custom_fee_open_rate
     fee_close_rate = trade.fee_close if self.custom_fee_close_rate is None else self.custom_fee_close_rate
+    is_long_buyback_entry = self.long_buyback_entry_v2(last_candle, previous_candle, slice_profit, True)
+    is_long_grind_entry = self.long_grind_entry_v2(last_candle, previous_candle, slice_profit, True)
 
     grind_1_max_sub_grinds = 0
     grind_1_stakes = (
@@ -33610,29 +30490,6 @@ class NostalgiaForInfinityX6(IStrategy):
       self.grinding_v2_grind_4_profit_threshold_futures
       if self.is_futures_mode
       else self.grinding_v2_grind_4_profit_threshold_spot
-    )
-
-    grind_5_max_sub_grinds = 0
-    grind_5_stakes = (
-      self.grinding_v2_grind_5_stakes_futures.copy()
-      if self.is_futures_mode
-      else self.grinding_v2_grind_5_stakes_spot.copy()
-    )
-    grind_5_sub_thresholds = (
-      self.grinding_v2_grind_5_thresholds_futures if self.is_futures_mode else self.grinding_v2_grind_5_thresholds_spot
-    )
-    if (slice_amount * grind_5_stakes[0] / (trade.leverage if self.is_futures_mode else 1.0)) < min_stake:
-      multi = min_stake / slice_amount / grind_5_stakes[0] * trade.leverage
-      for i, _ in enumerate(grind_5_stakes):
-        grind_5_stakes[i] *= multi
-    grind_5_max_sub_grinds = len(grind_5_stakes)
-    grind_5_derisk_grinds = (
-      self.grinding_v2_grind_5_derisk_futures if self.is_futures_mode else self.grinding_v2_grind_5_derisk_spot
-    )
-    grind_5_profit_threshold = (
-      self.grinding_v2_grind_5_profit_threshold_futures
-      if self.is_futures_mode
-      else self.grinding_v2_grind_5_profit_threshold_spot
     )
 
     is_derisk_1 = False
@@ -33735,19 +30592,6 @@ class NostalgiaForInfinityX6(IStrategy):
     grind_4_distance_ratio = 0.0
     grind_4_exit_order = None
     grind_4_exit_distance_ratio = 0.0
-    grind_5_sub_grind_count = 0
-    grind_5_total_amount = 0.0
-    grind_5_total_cost = 0.0
-    grind_5_current_open_rate = 0.0
-    grind_5_current_grind_stake = 0.0
-    grind_5_current_grind_stake_profit = 0.0
-    grind_5_is_exit_found = False
-    grind_5_found = False
-    grind_5_buy_orders = []
-    grind_5_orders = []
-    grind_5_distance_ratio = 0.0
-    grind_5_exit_order = None
-    grind_5_exit_distance_ratio = 0.0
     for order in reversed(filled_orders):
       if (order.ft_order_side == "buy") and (order is not filled_orders[0]):
         order_tag = ""
@@ -33817,15 +30661,6 @@ class NostalgiaForInfinityX6(IStrategy):
           if not grind_4_found:
             grind_4_distance_ratio = (exit_rate - order.safe_price) / order.safe_price
             grind_4_found = True
-        elif not grind_5_is_exit_found and order_tag == "grind_5_entry":
-          grind_5_sub_grind_count += 1
-          grind_5_total_amount += order.safe_filled
-          grind_5_total_cost += order.safe_filled * order.safe_price
-          grind_5_buy_orders.append(order.id)
-          grind_5_orders.append(order)
-          if not grind_5_found:
-            grind_5_distance_ratio = (exit_rate - order.safe_price) / order.safe_price
-            grind_5_found = True
       elif order.ft_order_side == "sell":
         if (
           order is filled_exits[-1]
@@ -33876,9 +30711,6 @@ class NostalgiaForInfinityX6(IStrategy):
         elif not grind_4_is_exit_found and order_tag in ["grind_4_exit", "grind_4_derisk"]:
           grind_4_is_exit_found = True
           grind_4_exit_order = order
-        elif not grind_5_is_exit_found and order_tag in ["grind_5_exit", "grind_5_derisk"]:
-          grind_5_is_exit_found = True
-          grind_5_exit_order = order
         elif order_tag in ["derisk_global"]:
           if not buyback_1_is_exit_found:
             buyback_1_is_exit_found = True
@@ -33901,9 +30733,6 @@ class NostalgiaForInfinityX6(IStrategy):
           if not grind_4_is_exit_found:
             grind_4_is_exit_found = True
             grind_4_exit_order = order
-          if not grind_5_is_exit_found:
-            grind_5_is_exit_found = True
-            grind_5_exit_order = order
 
     if buyback_1_sub_grind_count > 0:
       buyback_1_current_open_rate = buyback_1_total_cost / buyback_1_total_amount
@@ -33933,10 +30762,6 @@ class NostalgiaForInfinityX6(IStrategy):
       grind_4_current_open_rate = grind_4_total_cost / grind_4_total_amount
       grind_4_current_grind_stake = grind_4_total_amount * exit_rate * (1 - trade.fee_close)
       grind_4_current_grind_stake_profit = grind_4_current_grind_stake - grind_4_total_cost
-    if grind_5_sub_grind_count > 0:
-      grind_5_current_open_rate = grind_5_total_cost / grind_5_total_amount
-      grind_5_current_grind_stake = grind_5_total_amount * exit_rate * (1 - trade.fee_close)
-      grind_5_current_grind_stake_profit = grind_5_current_grind_stake - grind_5_total_cost
 
     if grind_1_is_exit_found:
       grind_1_exit_distance_ratio = (exit_rate - grind_1_exit_order.safe_price) / grind_1_exit_order.safe_price
@@ -33968,7 +30793,6 @@ class NostalgiaForInfinityX6(IStrategy):
       + grind_2_current_grind_stake_profit
       + grind_3_current_grind_stake_profit
       + grind_4_current_grind_stake_profit
-      + grind_5_current_grind_stake_profit
     )
     num_open_grinds_and_buybacks = (
       buyback_1_sub_grind_count
@@ -33978,7 +30802,6 @@ class NostalgiaForInfinityX6(IStrategy):
       + grind_2_sub_grind_count
       + grind_3_sub_grind_count
       + grind_4_sub_grind_count
-      + grind_5_sub_grind_count
     )
 
     # Rebuy mode, the first entry is lower than normal slot stake
@@ -33987,37 +30810,6 @@ class NostalgiaForInfinityX6(IStrategy):
     # not reached the max allowed stake for all grinds
     is_not_trade_max_stake = (current_stake_amount < (slice_amount * self.grinding_v2_max_stake)) and (
       num_open_grinds_and_buybacks < self.grinding_v2_max_grinds_and_buybacks
-    )
-
-    is_long_buyback_entry = self.long_buyback_entry_v2(last_candle, previous_candle, slice_profit, True)
-    is_long_grind_entry = (
-      self.long_grind_entry_v2(last_candle, previous_candle, slice_profit, True)
-      or (
-        (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
-        and (num_open_grinds_and_buybacks == 0)
-        and (
-          (last_candle["RSI_3"] > 10.0)
-          and (last_candle["RSI_3_15m"] > 20.0)
-          and (last_candle["RSI_3_1h"] > 20.0)
-          and (last_candle["RSI_3_1h"] > 20.0)
-          and (last_candle["AROONU_14"] < 50.0)
-          and (last_candle["AROONU_14_15m"] < 50.0)
-        )
-      )
-      or (
-        self.is_futures_mode
-        and trade.liquidation_price is not None
-        and (
-          (trade.is_short and current_rate > trade.liquidation_price * 0.95)
-          or (not trade.is_short and current_rate < trade.liquidation_price * 1.05)
-        )
-        and (last_candle["RSI_3"] > 10.0)
-        and (last_candle["RSI_3_15m"] > 20.0)
-        # and (last_candle["RSI_3_1h"] > 20.0)
-        # and (last_candle["RSI_3_1h"] > 20.0)
-        and (last_candle["AROONU_14"] < 50.0)
-        and (last_candle["AROONU_14_15m"] < 50.0)
-      )
     )
 
     # De-risk level 1
@@ -34053,16 +30845,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 1 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 1 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34102,16 +30885,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 2 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 2 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34151,16 +30925,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 3 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 3 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34185,16 +30950,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Global",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Global [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Global [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34205,10 +30961,10 @@ class NostalgiaForInfinityX6(IStrategy):
 
     if (
       (self.grinding_v2_grind_1_enable)
-      and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
+      # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_long_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -34224,16 +30980,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_1_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_1_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_1_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34255,19 +31002,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_1_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (grind_1_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_1_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -34280,18 +31015,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_1_use_derisk
-    #   and (grind_1_sub_grind_count > 0)
-    #   and (((exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate) < grind_1_derisk_grinds)
-    #   and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_1_use_derisk
       and (grind_1_sub_grind_count > 0)
-      and (grind_1_current_grind_stake_profit < (slice_amount * grind_1_derisk_grinds))
-      and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (((exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate) < grind_1_derisk_grinds)
+      and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_1_use_derisk
+      #   and (grind_1_sub_grind_count > 0)
+      #   and (grind_1_current_grind_stake_profit < (slice_amount * grind_1_derisk_grinds))
+      # ):
       sell_amount = grind_1_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -34305,22 +31039,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_1_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding de-risk (grind_1_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Grinding de-risk (grind_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Grinding de-risk (grind_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "grind_1_derisk"
         for grind_entry_id in grind_1_buy_orders:
@@ -34337,7 +31059,7 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_long_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -34353,16 +31075,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_2_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_2_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_2_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34384,19 +31097,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_2_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (grind_2_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_2_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -34409,18 +31110,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_2_use_derisk
-    #   and (grind_2_sub_grind_count > 0)
-    #   and (((exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate) < grind_2_derisk_grinds)
-    #   and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_2_use_derisk
       and (grind_2_sub_grind_count > 0)
-      and (grind_2_current_grind_stake_profit < (slice_amount * grind_2_derisk_grinds))
-      and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (((exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate) < grind_2_derisk_grinds)
+      and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_2_use_derisk
+      #   and (grind_2_sub_grind_count > 0)
+      #   and (grind_2_current_grind_stake_profit < (slice_amount * grind_2_derisk_grinds))
+      # ):
       sell_amount = grind_2_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -34434,22 +31134,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_2_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding de-risk (grind_2_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Grinding de-risk (grind_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Grinding de-risk (grind_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "grind_2_derisk"
         for grind_entry_id in grind_2_buy_orders:
@@ -34466,7 +31154,7 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_long_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -34482,16 +31170,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_3_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_3_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_3_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34513,19 +31192,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_3_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (grind_3_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_3_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -34538,18 +31205,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_3_use_derisk
-    #   and (grind_3_sub_grind_count > 0)
-    #   and (((exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate) < grind_3_derisk_grinds)
-    #   and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_3_use_derisk
       and (grind_3_sub_grind_count > 0)
-      and (grind_3_current_grind_stake_profit < (slice_amount * grind_3_derisk_grinds))
-      and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (((exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate) < grind_3_derisk_grinds)
+      and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_3_use_derisk
+      #   and (grind_3_sub_grind_count > 0)
+      #   and (grind_3_current_grind_stake_profit < (slice_amount * grind_3_derisk_grinds))
+      # ):
       sell_amount = grind_3_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -34563,22 +31229,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_3_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding de-risk (grind_3_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Grinding de-risk (grind_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Grinding de-risk (grind_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "grind_3_derisk"
         for grind_entry_id in grind_3_buy_orders:
@@ -34595,34 +31249,22 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and (
         is_long_grind_entry
-        # or (
-        #   is_derisk_1_found
-        #   # only queue 4 grinds open
-        #   and (num_open_grinds_and_buybacks == grind_4_sub_grind_count)
-        #   and (last_candle["protections_long_global"] == True)
-        #   and (
-        #     (slice_profit < -0.04)
-        #     and (last_candle["RSI_3"] > 10.0)
-        #     and (last_candle["RSI_3_15m"] > 20.0)
-        #     and (last_candle["AROONU_14"] < 50.0)
-        #     and (last_candle["AROONU_14_15m"] < 50.0)
-        #   )
-        # )
-        # or (
-        #   (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
-        #   and (num_open_grinds_and_buybacks == 0)
-        #   and (
-        #     (last_candle["RSI_3"] > 10.0)
-        #     and (last_candle["RSI_3_15m"] > 20.0)
-        #     and (last_candle["RSI_3_1h"] > 20.0)
-        #     and (last_candle["RSI_3_1h"] > 20.0)
-        #     and (last_candle["AROONU_14"] < 50.0)
-        #     and (last_candle["AROONU_14_15m"] < 50.0)
-        #   )
-        # )
+        or (
+          is_derisk_1_found
+          # only queue 4 grinds open
+          and (num_open_grinds_and_buybacks == grind_4_sub_grind_count)
+          and (last_candle["protections_long_global"] == True)
+          and (
+            (slice_profit < -0.04)
+            and (last_candle["RSI_3"] > 10.0)
+            and (last_candle["RSI_3_15m"] > 20.0)
+            and (last_candle["AROONU_14"] < 50.0)
+            and (last_candle["AROONU_14_15m"] < 50.0)
+          )
+        )
       )
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -34638,16 +31280,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_4_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_4_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_4_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34669,19 +31302,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_4_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (grind_4_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_4_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -34694,18 +31315,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_4_use_derisk
-    #   and (grind_4_sub_grind_count > 0)
-    #   and (((exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate) < grind_4_derisk_grinds)
-    #   and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_4_use_derisk
       and (grind_4_sub_grind_count > 0)
-      and (grind_4_current_grind_stake_profit < (slice_amount * grind_4_derisk_grinds))
-      and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (((exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate) < grind_4_derisk_grinds)
+      and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_4_use_derisk
+      #   and (grind_4_sub_grind_count > 0)
+      #   and (grind_4_current_grind_stake_profit < (slice_amount * grind_4_derisk_grinds))
+      # ):
       sell_amount = grind_4_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -34719,169 +31339,13 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_4_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_4_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding de-risk (grind_4_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Grinding de-risk (grind_4_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Grinding de-risk (grind_4_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "grind_4_derisk"
         for grind_entry_id in grind_4_buy_orders:
-          order_tag += " " + str(grind_entry_id)
-        if has_order_tags:
-          return -ft_sell_amount, order_tag
-        else:
-          return -ft_sell_amount
-
-    # Grinding 5
-
-    if (
-      (self.grinding_v2_grind_5_enable)
-      and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
-      and (
-        is_long_grind_entry
-        or (
-          is_derisk_1_found
-          and (slice_profit_entry < -0.10)
-          and (slice_profit_exit < -0.04)
-          and (last_candle["protections_long_global"] == True)
-          # and (
-          #   (slice_profit < -0.04)
-          #   and (last_candle["RSI_3"] > 10.0)
-          #   and (last_candle["RSI_3_15m"] > 20.0)
-          #   and (last_candle["AROONU_14"] < 50.0)
-          #   and (last_candle["AROONU_14_15m"] < 50.0)
-          # )
-        )
-      )
-      and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
-      and (
-        (current_stake_amount < (filled_entries[0].cost * 0.50))
-        or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
-        or (slice_profit < -0.06)
-      )
-      and (grind_5_sub_grind_count < grind_5_max_sub_grinds)
-      and (grind_5_sub_grind_count == 0 or (grind_5_distance_ratio < grind_5_sub_thresholds[grind_5_sub_grind_count]))
-      and is_not_trade_max_stake
-    ):
-      buy_amount = slice_amount * grind_5_stakes[grind_5_sub_grind_count] / trade.leverage
-      if buy_amount < (min_stake * 1.5):
-        buy_amount = min_stake * 1.5
-      if buy_amount > max_stake:
-        return None
-      self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_5_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
-      )
-      log.info(
-        f"Grinding entry (grind_5_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
-      )
-      order_tag = "grind_5_entry"
-      if has_order_tags:
-        return buy_amount, order_tag
-      else:
-        return buy_amount
-
-    if grind_5_sub_grind_count > 0:
-      grind_profit = (exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
-      if (grind_profit > (grind_5_profit_threshold + fee_open_rate + fee_close_rate)) and self.long_grind_exit_v2(
-        last_candle, previous_candle, slice_profit, True
-      ):
-        sell_amount = grind_5_total_amount * exit_rate / trade.leverage
-        if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
-          sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
-        ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
-        if sell_amount > min_stake and ft_sell_amount > min_stake:
-          self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_5_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
-          )
-          log.info(
-            f"Grinding exit (grind_5_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
-          )
-          order_tag = "grind_5_exit"
-          for grind_entry_id in grind_5_buy_orders:
-            order_tag += " " + str(grind_entry_id)
-          if has_order_tags:
-            return -ft_sell_amount, order_tag
-          else:
-            return -ft_sell_amount
-
-    # if (
-    #   self.grinding_v2_grind_5_use_derisk
-    #   and (grind_5_sub_grind_count > 0)
-    #   and (((exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate) < grind_5_derisk_grinds)
-    #   and (grind_5_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
-    if (
-      self.grinding_v2_grind_5_use_derisk
-      and (grind_5_sub_grind_count > 0)
-      and (grind_5_current_grind_stake_profit < (slice_amount * grind_5_derisk_grinds))
-      and (grind_5_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    ):
-      sell_amount = grind_5_total_amount * exit_rate / trade.leverage
-      if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
-        sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
-      ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
-      if sell_amount > min_stake and ft_sell_amount > min_stake:
-        grind_profit = 0.0
-        if grind_5_current_open_rate > 0.0:
-          grind_profit = (
-            ((exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate)
-            if grind_5_is_exit_found
-            else profit_ratio
-          )
-        self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_5_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_5_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
-        )
-        log.info(
-          f"Grinding de-risk (grind_5_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
-        )
-        order_tag = "grind_5_derisk"
-        for grind_entry_id in grind_5_buy_orders:
           order_tag += " " + str(grind_entry_id)
         if has_order_tags:
           return -ft_sell_amount, order_tag
@@ -34895,7 +31359,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_1_found
       and is_long_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -34922,16 +31386,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_1_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_1_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_1_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -34962,19 +31417,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_1_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_1_total_amount,
-            )
+            f"Buyback exit (buyback_1_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_1_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -34987,33 +31430,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_1_use_derisk
-    #   and (buyback_1_sub_grind_count > 0)
-    #   and (
-    #     ((exit_rate - buyback_1_current_open_rate) / buyback_1_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_1_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_1_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_1_use_derisk
       and (buyback_1_sub_grind_count > 0)
       and (
-        buyback_1_current_grind_stake_profit
+        ((exit_rate - buyback_1_current_open_rate) / buyback_1_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_1_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_1_derisk_spot
-          )
+          self.grinding_v2_buyback_1_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_1_derisk_spot
         )
       )
-      and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_1_use_derisk
+      #   and (buyback_1_sub_grind_count > 0)
+      #   and (
+      #     buyback_1_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_1_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_1_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_1_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -35027,22 +31469,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_1_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=buyback_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=buyback_1_total_amount,
-          )
+          f"Buyback de-risk (buyback_1_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Buyback de-risk (buyback_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({buyback_1_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Buyback de-risk (buyback_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "buyback_1_derisk"
         for grind_entry_id in buyback_1_buy_orders:
@@ -35059,7 +31489,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_2_found
       and is_long_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -35086,16 +31516,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_2_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_2_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_2_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -35126,19 +31547,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_2_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_2_total_amount,
-            )
+            f"Buyback exit (buyback_2_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_2_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -35151,33 +31560,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_2_use_derisk
-    #   and (buyback_2_sub_grind_count > 0)
-    #   and (
-    #     ((exit_rate - buyback_2_current_open_rate) / buyback_2_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_2_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_2_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_2_use_derisk
       and (buyback_2_sub_grind_count > 0)
       and (
-        buyback_2_current_grind_stake_profit
+        ((exit_rate - buyback_2_current_open_rate) / buyback_2_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_2_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_2_derisk_spot
-          )
+          self.grinding_v2_buyback_2_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_2_derisk_spot
         )
       )
-      and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_2_use_derisk
+      #   and (buyback_2_sub_grind_count > 0)
+      #   and (
+      #     buyback_2_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_2_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_2_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_2_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -35191,22 +31599,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_2_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=buyback_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=buyback_2_total_amount,
-          )
+          f"Buyback de-risk (buyback_2_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Buyback de-risk (buyback_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({buyback_2_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Buyback de-risk (buyback_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "buyback_2_derisk"
         for grind_entry_id in buyback_2_buy_orders:
@@ -35223,7 +31619,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_3_found
       and is_long_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit < -0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -35250,16 +31646,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_3_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_3_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_3_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -35290,19 +31677,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_3_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_3_total_amount,
-            )
+            f"Buyback exit (buyback_3_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_3_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -35315,33 +31690,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_3_use_derisk
-    #   and (buyback_3_sub_grind_count > 0)
-    #   and (
-    #     ((exit_rate - buyback_3_current_open_rate) / buyback_3_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_3_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_3_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_3_use_derisk
       and (buyback_3_sub_grind_count > 0)
       and (
-        buyback_3_current_grind_stake_profit
+        ((exit_rate - buyback_3_current_open_rate) / buyback_3_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_3_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_3_derisk_spot
-          )
+          self.grinding_v2_buyback_3_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_3_derisk_spot
         )
       )
-      and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_3_use_derisk
+      #   and (buyback_3_sub_grind_count > 0)
+      #   and (
+      #     buyback_3_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_3_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_3_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_3_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -35355,22 +31729,10 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_3_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=buyback_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-            coin_amount=buyback_3_total_amount,
-          )
+          f"Buyback de-risk (buyback_3_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
-          f"Buyback de-risk (buyback_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({buyback_3_current_grind_stake_profit} {self.config['stake_currency']})"
+          f"Buyback de-risk (buyback_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "buyback_3_derisk"
         for grind_entry_id in buyback_3_buy_orders:
@@ -35708,14 +32070,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_15m"] < 30.0)
         and (last_candle["RSI_14_1h"] < 50.0)
         and (last_candle["RSI_14_4h"] < 50.0)
-      )
-      or (
-        (last_candle["RSI_14"] < 36.0)
-        and (last_candle["RSI_3"] > 5.0)
-        and (last_candle["RSI_3_1h"] > 10.0)
-        and (last_candle["RSI_3_4h"] > 10.0)
-        and (last_candle["close"] < (last_candle["EMA_12"] * 0.999))
-        and (last_candle["close"] < (last_candle["BBL_20_2.0"] * 0.996))
       )
     ):
       return True
@@ -36442,19 +32796,7 @@ class NostalgiaForInfinityX6(IStrategy):
             grind_profit = (exit_rate - first_entry.safe_price) / first_entry.safe_price
             coin_amount = sell_amount / exit_rate
             self.dp.send_msg(
-              self.notification_msg(
-                "grinding-exit",
-                tag="gm0",
-                pair=trade.pair,
-                rate=exit_rate,
-                stake_amount=sell_amount,
-                profit_stake=profit_stake,
-                profit_ratio=profit_ratio,
-                stake_currency=self.config["stake_currency"],
-                grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-                grind_profit_pct=grind_profit,
-                coin_amount=coin_amount,
-              )
+              f"Grinding exit (gm0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
             )
             log.info(
               f"Grinding exit (gm0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -36483,19 +32825,7 @@ class NostalgiaForInfinityX6(IStrategy):
             grind_profit = (exit_rate - first_entry.safe_price) / first_entry.safe_price
             coin_amount = sell_amount / exit_rate
             self.dp.send_msg(
-              self.notification_msg(
-                "grinding-derisk",
-                tag="gmd0",
-                pair=trade.pair,
-                rate=exit_rate,
-                stake_amount=sell_amount,
-                profit_stake=profit_stake,
-                profit_ratio=profit_ratio,
-                stake_currency=self.config["stake_currency"],
-                grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-                grind_profit_pct=grind_profit,
-                coin_amount=coin_amount,
-              )
+              f"Grinding de-risk (gmd0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
             )
             log.info(
               f"Grinding de-risk (gmd0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -36553,18 +32883,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_1_derisk_1_current_open_rate) / grind_1_derisk_1_current_open_rate
           grind_profit_stake = grind_1_derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="dl1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (dl1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (dl1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -36585,19 +32904,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="dl1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_derisk_1_total_amount,
-            )
+            f"Grinding exit (dl1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (dl1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -36636,19 +32943,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="ddl1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_derisk_1_total_amount,
-          )
+          f"Grinding stop exit (ddl1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (ddl1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -36704,18 +32999,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_2_derisk_1_current_open_rate) / grind_2_derisk_1_current_open_rate
           grind_profit_stake = grind_2_derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="dl2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (dl2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (dl2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -36736,19 +33020,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="dl2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_derisk_1_total_amount,
-            )
+            f"Grinding exit (dl2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (dl2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -36787,19 +33059,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="ddl2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_derisk_1_total_amount,
-          )
+          f"Grinding stop exit (ddl2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (ddl2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -36845,18 +33105,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
           grind_profit_stake = grind_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -36888,18 +33137,7 @@ class NostalgiaForInfinityX6(IStrategy):
         grind_profit = (exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
         grind_profit_stake = grind_1_current_grind_stake_profit
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="gd1",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-          grind_profit_stake=grind_1_current_grind_stake_profit,
-          grind_profit_pct=grind_profit,
-        )
+        f"Grinding entry (gd1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
       )
       log.info(
         f"Grinding entry (gd1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -36920,19 +33158,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (gd1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -36970,19 +33196,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding stop exit (dd1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37028,18 +33242,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate
           grind_profit_stake = grind_2_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37060,19 +33263,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (gd2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -37110,19 +33301,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding stop exit (dd2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37168,18 +33347,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate
           grind_profit_stake = grind_3_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd3",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd3) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd3) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37200,19 +33368,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd3",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (gd3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -37250,19 +33406,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding stop exit (dd3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37308,18 +33452,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate
           grind_profit_stake = grind_4_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd4",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_4_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd4) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd4) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37340,19 +33473,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd4",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (gd4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -37390,19 +33511,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd4",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding stop exit (dd4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37448,18 +33557,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
           grind_profit_stake = grind_5_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd5",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_5_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd5) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd5) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37480,19 +33578,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd5",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
+            f"Grinding exit (gd5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -37530,19 +33616,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd5",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
+          f"Grinding stop exit (dd5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37588,18 +33662,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_6_current_open_rate) / grind_6_current_open_rate
           grind_profit_stake = grind_6_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd6",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_6_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd6) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd6) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37620,19 +33683,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd6",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_6_total_amount,
-            )
+            f"Grinding exit (gd6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -37670,19 +33721,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd6",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_6_total_amount,
-          )
+          f"Grinding stop exit (dd6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -37737,18 +33776,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - derisk_1_current_open_rate) / derisk_1_current_open_rate
           grind_profit_stake = derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "re-entry",
-            tag="d1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Re-entry (d1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Re-entry (d1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -37783,16 +33811,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk (d1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk (d1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -38500,16 +34519,7 @@ class NostalgiaForInfinityX6(IStrategy):
         if buy_amount > max_stake:
           return None, "", is_derisk
         self.dp.send_msg(
-          self.notification_msg(
-            "rebuy",
-            tag="r",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"Rebuy (r) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy (r) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -38550,18 +34560,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
           grind_profit_stake = grind_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -38591,18 +34590,7 @@ class NostalgiaForInfinityX6(IStrategy):
         grind_profit = (exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
         grind_profit_stake = grind_1_current_grind_stake_profit
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="g1",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-          grind_profit_stake=grind_1_current_grind_stake_profit,
-          grind_profit_pct=grind_profit,
-        )
+        f"Grinding entry (g1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
       )
       log.info(
         f"Grinding entry (g1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -38620,19 +34608,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (g1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -38665,19 +34641,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding stop exit (sg1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -38720,18 +34684,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate
           grind_profit_stake = grind_2_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -38749,19 +34702,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (g2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -38794,19 +34735,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding stop exit (sg2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -38849,18 +34778,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate
           grind_profit_stake = grind_3_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g3",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g3) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g3) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -38878,19 +34796,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g3",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (g3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -38923,19 +34829,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding stop exit (sg3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -38978,18 +34872,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate
           grind_profit_stake = grind_4_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g4",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_4_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g4) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g4) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -39007,19 +34890,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g4",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (g4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -39052,19 +34923,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg4",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding stop exit (sg4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -39107,18 +34966,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
           grind_profit_stake = grind_5_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g5",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_5_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g5) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g5) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -39136,19 +34984,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g5",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
+            f"Grinding exit (g5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -39181,19 +35017,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg5",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
+          f"Grinding stop exit (sg5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -39236,18 +35060,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = (exit_rate - grind_6_current_open_rate) / grind_6_current_open_rate
           grind_profit_stake = grind_6_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g6",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_6_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g6) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g6) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -39265,19 +35078,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g6",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_6_total_amount,
-            )
+            f"Grinding exit (g6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -39310,19 +35111,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg6",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_6_total_amount,
-          )
+          f"Grinding stop exit (sg6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -39354,16 +35143,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -39402,16 +35182,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk (d1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk (d1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -39559,16 +35330,7 @@ class NostalgiaForInfinityX6(IStrategy):
         if buy_amount > max_stake:
           return None
         self.dp.send_msg(
-          self.notification_msg(
-            "rebuy",
-            tag="r",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"Rebuy (r) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy (r) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -39590,12 +35352,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          f"❌​​ ​**Rebuy De-risk:** `Level 3`\n"
-          f"🪙​ **Pair:** `{trade.pair}`\n"
-          f"〽️​ **Rate:** `{exit_rate}`\n"
-          f"💰 **Stake amount:** `{sell_amount}`\n"
-          f"💵​ **Profit (stake):** `{profit_stake}`\n"
-          f"💸 **Profit (percent):** `{(profit_ratio * 100.0):.2f}%`"
+          f"Rebuy De-risk Level 3 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy De-risk Level 3 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -44670,14 +40427,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_0_131"
-      elif (
-        (last_candle["RSI_3"] < 5.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_0_132"
     elif 0.02 > current_profit >= 0.01:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -45724,14 +41473,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_1_131"
-      elif (
-        (last_candle["RSI_3"] < 20.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_1_132"
     elif 0.03 > current_profit >= 0.02:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -46778,14 +42519,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_2_131"
-      elif (
-        (last_candle["RSI_3"] < 22.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_2_132"
     elif 0.04 > current_profit >= 0.03:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -47832,14 +43565,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_3_131"
-      elif (
-        (last_candle["RSI_3"] < 24.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_3_132"
     elif 0.05 > current_profit >= 0.04:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -48886,14 +44611,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_4_131"
-      elif (
-        (last_candle["RSI_3"] < 26.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_4_132"
     elif 0.06 > current_profit >= 0.05:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -49940,14 +45657,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_5_131"
-      elif (
-        (last_candle["RSI_3"] < 28.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_5_132"
     elif 0.07 > current_profit >= 0.06:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -50994,14 +46703,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_6_131"
-      elif (
-        (last_candle["RSI_3"] < 26.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_6_132"
     elif 0.08 > current_profit >= 0.07:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -52048,14 +47749,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_7_131"
-      elif (
-        (last_candle["RSI_3"] < 24.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_7_132"
     elif 0.09 > current_profit >= 0.08:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -53102,14 +48795,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_8_131"
-      elif (
-        (last_candle["RSI_3"] < 22.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_8_132"
     elif 0.1 > current_profit >= 0.09:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -54156,14 +49841,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_9_131"
-      elif (
-        (last_candle["RSI_3"] < 20.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_9_132"
     elif 0.12 > current_profit >= 0.1:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -55210,14 +50887,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_10_131"
-      elif (
-        (last_candle["RSI_3"] < 18.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_10_132"
     elif 0.2 > current_profit >= 0.12:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -56264,14 +51933,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_11_131"
-      elif (
-        (last_candle["RSI_3"] < 16.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_11_132"
     elif current_profit >= 0.2:
       if (
         (last_candle["WILLR_14"] < -99.0)
@@ -57318,14 +52979,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_4h"] < 50.0)
       ):
         return True, f"exit_{mode_name}_d_12_131"
-      elif (
-        (last_candle["RSI_3"] < 14.0)
-        and (last_candle["RSI_3_1h"] > 65.0)
-        and (last_candle["RSI_3_4h"] > 65.0)
-        and (last_candle["AROOND_14_1h"] > 50.0)
-        and (last_candle["STOCHRSIk_14_14_3_3_1h"] < 60.0)
-      ):
-        return True, f"exit_{mode_name}_d_12_132"
 
     #  Here ends exit signal conditions for short_exit_dec
 
@@ -57492,6 +53145,8 @@ class NostalgiaForInfinityX6(IStrategy):
 
     fee_open_rate = trade.fee_open if self.custom_fee_open_rate is None else self.custom_fee_open_rate
     fee_close_rate = trade.fee_close if self.custom_fee_close_rate is None else self.custom_fee_close_rate
+    is_short_buyback_entry = self.short_buyback_entry_v2(last_candle, previous_candle, slice_profit, True)
+    is_short_grind_entry = self.short_grind_entry_v2(last_candle, previous_candle, slice_profit, True)
 
     grind_1_max_sub_grinds = 0
     grind_1_stakes = (
@@ -57583,29 +53238,6 @@ class NostalgiaForInfinityX6(IStrategy):
       self.grinding_v2_grind_4_profit_threshold_futures
       if self.is_futures_mode
       else self.grinding_v2_grind_4_profit_threshold_spot
-    )
-
-    grind_5_max_sub_grinds = 0
-    grind_5_stakes = (
-      self.grinding_v2_grind_5_stakes_futures.copy()
-      if self.is_futures_mode
-      else self.grinding_v2_grind_5_stakes_spot.copy()
-    )
-    grind_5_sub_thresholds = (
-      self.grinding_v2_grind_5_thresholds_futures if self.is_futures_mode else self.grinding_v2_grind_5_thresholds_spot
-    )
-    if (slice_amount * grind_5_stakes[0] / (trade.leverage if self.is_futures_mode else 1.0)) < min_stake:
-      multi = min_stake / slice_amount / grind_5_stakes[0] * trade.leverage
-      for i, _ in enumerate(grind_5_stakes):
-        grind_5_stakes[i] *= multi
-    grind_5_max_sub_grinds = len(grind_5_stakes)
-    grind_5_derisk_grinds = (
-      self.grinding_v2_grind_5_derisk_futures if self.is_futures_mode else self.grinding_v2_grind_5_derisk_spot
-    )
-    grind_5_profit_threshold = (
-      self.grinding_v2_grind_5_profit_threshold_futures
-      if self.is_futures_mode
-      else self.grinding_v2_grind_5_profit_threshold_spot
     )
 
     is_derisk_1 = False
@@ -57708,19 +53340,6 @@ class NostalgiaForInfinityX6(IStrategy):
     grind_4_distance_ratio = 0.0
     grind_4_exit_order = None
     grind_4_exit_distance_ratio = 0.0
-    grind_5_sub_grind_count = 0
-    grind_5_total_amount = 0.0
-    grind_5_total_cost = 0.0
-    grind_5_current_open_rate = 0.0
-    grind_5_current_grind_stake = 0.0
-    grind_5_current_grind_stake_profit = 0.0
-    grind_5_is_exit_found = False
-    grind_5_found = False
-    grind_5_buy_orders = []
-    grind_5_orders = []
-    grind_5_distance_ratio = 0.0
-    grind_5_exit_order = None
-    grind_5_exit_distance_ratio = 0.0
     for order in reversed(filled_orders):
       if (order.ft_order_side == "sell") and (order is not filled_orders[0]):
         order_tag = ""
@@ -57790,15 +53409,6 @@ class NostalgiaForInfinityX6(IStrategy):
           if not grind_4_found:
             grind_4_distance_ratio = (exit_rate - order.safe_price) / order.safe_price
             grind_4_found = True
-        elif not grind_5_is_exit_found and order_tag == "grind_5_entry":
-          grind_5_sub_grind_count += 1
-          grind_5_total_amount += order.safe_filled
-          grind_5_total_cost += order.safe_filled * order.safe_price
-          grind_5_buy_orders.append(order.id)
-          grind_5_orders.append(order)
-          if not grind_5_found:
-            grind_5_distance_ratio = (exit_rate - order.safe_price) / order.safe_price
-            grind_5_found = True
       elif order.ft_order_side == "buy":
         if (
           order is filled_exits[-1]
@@ -57849,9 +53459,6 @@ class NostalgiaForInfinityX6(IStrategy):
         elif not grind_4_is_exit_found and order_tag in ["grind_4_exit", "grind_4_derisk"]:
           grind_4_is_exit_found = True
           grind_4_exit_order = order
-        elif not grind_5_is_exit_found and order_tag in ["grind_5_exit", "grind_5_derisk"]:
-          grind_5_is_exit_found = True
-          grind_5_exit_order = order
         elif order_tag in ["derisk_global"]:
           if not buyback_1_is_exit_found:
             buyback_1_is_exit_found = True
@@ -57874,9 +53481,6 @@ class NostalgiaForInfinityX6(IStrategy):
           if not grind_4_is_exit_found:
             grind_4_is_exit_found = True
             grind_4_exit_order = order
-          if not grind_5_is_exit_found:
-            grind_5_is_exit_found = True
-            grind_5_exit_order = order
 
     if buyback_1_sub_grind_count > 0:
       buyback_1_current_open_rate = buyback_1_total_cost / buyback_1_total_amount
@@ -57906,10 +53510,6 @@ class NostalgiaForInfinityX6(IStrategy):
       grind_4_current_open_rate = grind_4_total_cost / grind_4_total_amount
       grind_4_current_grind_stake = grind_4_total_amount * exit_rate * (1 - trade.fee_close)
       grind_4_current_grind_stake_profit = grind_4_current_grind_stake - grind_4_total_cost
-    if grind_5_sub_grind_count > 0:
-      grind_5_current_open_rate = grind_5_total_cost / grind_5_total_amount
-      grind_5_current_grind_stake = grind_5_total_amount * exit_rate * (1 - trade.fee_close)
-      grind_5_current_grind_stake_profit = grind_5_current_grind_stake - grind_5_total_cost
 
     if grind_1_is_exit_found:
       grind_1_exit_distance_ratio = (exit_rate - grind_1_exit_order.safe_price) / grind_1_exit_order.safe_price
@@ -57941,7 +53541,6 @@ class NostalgiaForInfinityX6(IStrategy):
       + grind_2_current_grind_stake_profit
       + grind_3_current_grind_stake_profit
       + grind_4_current_grind_stake_profit
-      + grind_5_current_grind_stake_profit
     )
     num_open_grinds_and_buybacks = (
       buyback_1_sub_grind_count
@@ -57951,7 +53550,6 @@ class NostalgiaForInfinityX6(IStrategy):
       + grind_2_sub_grind_count
       + grind_3_sub_grind_count
       + grind_4_sub_grind_count
-      + grind_5_sub_grind_count
     )
 
     # Rebuy mode, the first entry is lower than normal slot stake
@@ -57960,37 +53558,6 @@ class NostalgiaForInfinityX6(IStrategy):
     # not reached the max allowed stake for all grinds
     is_not_trade_max_stake = (current_stake_amount < (slice_amount * self.grinding_v2_max_stake)) and (
       num_open_grinds_and_buybacks < self.grinding_v2_max_grinds_and_buybacks
-    )
-
-    is_short_buyback_entry = self.short_buyback_entry_v2(last_candle, previous_candle, slice_profit, True)
-    is_short_grind_entry = (
-      self.short_grind_entry_v2(last_candle, previous_candle, slice_profit, True)
-      or (
-        (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
-        and (num_open_grinds_and_buybacks == 0)
-        and (
-          (last_candle["RSI_3"] < 90.0)
-          and (last_candle["RSI_3_15m"] < 80.0)
-          and (last_candle["RSI_3_1h"] < 80.0)
-          and (last_candle["RSI_3_1h"] < 80.0)
-          and (last_candle["AROOND_14"] < 50.0)
-          and (last_candle["AROOND_14_15m"] < 50.0)
-        )
-      )
-      or (
-        self.is_futures_mode
-        and trade.liquidation_price is not None
-        and (
-          (trade.is_short and current_rate > trade.liquidation_price * 0.95)
-          or (not trade.is_short and current_rate < trade.liquidation_price * 1.05)
-        )
-        and (last_candle["RSI_3"] < 90.0)
-        and (last_candle["RSI_3_15m"] < 80.0)
-        # and (last_candle["RSI_3_1h"] < 80.0)
-        # and (last_candle["RSI_3_1h"] < 80.0)
-        and (last_candle["AROOND_14"] < 50.0)
-        and (last_candle["AROOND_14_15m"] < 50.0)
-      )
     )
 
     # De-risk level 1
@@ -58026,16 +53593,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 1 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 1 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58075,16 +53633,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 2 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 2 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58124,16 +53673,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Level 3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Level 3 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Level 3 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58158,16 +53698,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="Global",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk Global [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk Global [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58178,10 +53709,10 @@ class NostalgiaForInfinityX6(IStrategy):
 
     if (
       (self.grinding_v2_grind_1_enable)
-      and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
+      # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_short_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -58197,16 +53728,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_1_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_1_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_1_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58228,19 +53750,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_1_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (grind_1_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_1_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -58253,18 +53763,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_1_use_derisk
-    #   and (grind_1_sub_grind_count > 0)
-    #   and ((-(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate) < grind_1_derisk_grinds)
-    #   and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_1_use_derisk
       and (grind_1_sub_grind_count > 0)
-      and (grind_1_current_grind_stake_profit < (slice_amount * grind_1_derisk_grinds))
-      and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and ((-(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate) < grind_1_derisk_grinds)
+      and (grind_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_1_use_derisk
+      #   and (grind_1_sub_grind_count > 0)
+      #   and (grind_1_current_grind_stake_profit < (slice_amount * grind_1_derisk_grinds))
+      # ):
       sell_amount = grind_1_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -58278,19 +53787,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_1_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding de-risk (grind_1_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding de-risk (grind_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -58310,7 +53807,7 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_short_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -58326,16 +53823,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_2_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_2_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_2_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58357,19 +53845,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_2_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (grind_2_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_2_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -58382,18 +53858,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_2_use_derisk
-    #   and (grind_2_sub_grind_count > 0)
-    #   and ((-(exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate) < grind_2_derisk_grinds)
-    #   and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_2_use_derisk
       and (grind_2_sub_grind_count > 0)
-      and (grind_2_current_grind_stake_profit < (slice_amount * grind_2_derisk_grinds))
-      and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and ((-(exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate) < grind_2_derisk_grinds)
+      and (grind_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_2_use_derisk
+      #   and (grind_2_sub_grind_count > 0)
+      #   and (grind_2_current_grind_stake_profit < (slice_amount * grind_2_derisk_grinds))
+      # ):
       sell_amount = grind_2_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -58407,19 +53882,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_2_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding de-risk (grind_2_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding de-risk (grind_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -58439,7 +53902,7 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and is_short_grind_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -58455,16 +53918,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_3_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_3_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_3_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58486,19 +53940,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_3_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (grind_3_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_3_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -58511,18 +53953,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_3_use_derisk
-    #   and (grind_3_sub_grind_count > 0)
-    #   and ((-(exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate) < grind_3_derisk_grinds)
-    #   and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_3_use_derisk
       and (grind_3_sub_grind_count > 0)
-      and (grind_3_current_grind_stake_profit < (slice_amount * grind_3_derisk_grinds))
-      and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and ((-(exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate) < grind_3_derisk_grinds)
+      and (grind_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_3_use_derisk
+      #   and (grind_3_sub_grind_count > 0)
+      #   and (grind_3_current_grind_stake_profit < (slice_amount * grind_3_derisk_grinds))
+      # ):
       sell_amount = grind_3_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -58536,19 +53977,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_3_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding de-risk (grind_3_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding de-risk (grind_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -58568,22 +53997,22 @@ class NostalgiaForInfinityX6(IStrategy):
       # and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
       and (
         is_short_grind_entry
-        # or (
-        #   is_derisk_1_found
-        #   # only queue 4 grinds open
-        #   and (num_open_grinds_and_buybacks == grind_4_sub_grind_count)
-        #   and (last_candle["protections_short_global"] == True)
-        #   and (
-        #     (slice_profit > 0.04)
-        #     and (last_candle["RSI_3"] < 90.0)
-        #     and (last_candle["RSI_3_15m"] < 80.0)
-        #     and (last_candle["AROOND_14"] < 50.0)
-        #     and (last_candle["AROOND_14_15m"] < 50.0)
-        #   )
-        # )
+        or (
+          is_derisk_1_found
+          # only queue 4 grinds open
+          and (num_open_grinds_and_buybacks == grind_4_sub_grind_count)
+          and (last_candle["protections_short_global"] == True)
+          and (
+            (slice_profit > 0.04)
+            and (last_candle["RSI_3"] < 90.0)
+            and (last_candle["RSI_3_15m"] < 80.0)
+            and (last_candle["AROOND_14"] < 50.0)
+            and (last_candle["AROOND_14_15m"] < 50.0)
+          )
+        )
       )
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -58599,16 +54028,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_4_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Grinding entry (grind_4_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Grinding entry (grind_4_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58630,19 +54050,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_4_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (grind_4_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (grind_4_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -58655,18 +54063,17 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_grind_4_use_derisk
-    #   and (grind_4_sub_grind_count > 0)
-    #   and ((-(exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate) < grind_4_derisk_grinds)
-    #   and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_grind_4_use_derisk
       and (grind_4_sub_grind_count > 0)
-      and (grind_4_current_grind_stake_profit < (slice_amount * grind_4_derisk_grinds))
-      and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and ((-(exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate) < grind_4_derisk_grinds)
+      and (grind_4_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_grind_4_use_derisk
+      #   and (grind_4_sub_grind_count > 0)
+      #   and (grind_4_current_grind_stake_profit < (slice_amount * grind_4_derisk_grinds))
+      # ):
       sell_amount = grind_4_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -58680,169 +54087,13 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_4_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding de-risk (grind_4_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding de-risk (grind_4_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         order_tag = "grind_4_derisk"
         for grind_entry_id in grind_4_buy_orders:
-          order_tag += " " + str(grind_entry_id)
-        if has_order_tags:
-          return -ft_sell_amount, order_tag
-        else:
-          return -ft_sell_amount
-
-    # Grinding 5
-
-    if (
-      (self.grinding_v2_grind_5_enable)
-      and (is_derisk_1_found or is_derisk_2_found or is_derisk_3_found)
-      and (
-        is_short_grind_entry
-        or (
-          is_derisk_1_found
-          and (slice_profit_entry > 0.10)
-          and (slice_profit_exit > 0.04)
-          and (last_candle["protections_short_global"] == True)
-          # and (
-          #   (slice_profit > 0.04)
-          #   and (last_candle["RSI_3"] < 90.0)
-          #   and (last_candle["RSI_3_15m"] < 80.0)
-          #   and (last_candle["AROOND_14"] < 50.0)
-          #   and (last_candle["AROOND_14_15m"] < 50.0)
-          # )
-        )
-      )
-      and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
-      and (
-        (current_stake_amount < (filled_entries[0].cost * 0.50))
-        or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
-        or (slice_profit > 0.06)
-      )
-      and (grind_5_sub_grind_count < grind_5_max_sub_grinds)
-      and (grind_5_sub_grind_count == 0 or (-grind_5_distance_ratio < grind_5_sub_thresholds[grind_5_sub_grind_count]))
-      and is_not_trade_max_stake
-    ):
-      buy_amount = slice_amount * grind_5_stakes[grind_5_sub_grind_count] / trade.leverage
-      if buy_amount < (min_stake * 1.5):
-        buy_amount = min_stake * 1.5
-      if buy_amount > max_stake:
-        return None
-      self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="grind_5_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
-      )
-      log.info(
-        f"Grinding entry (grind_5_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
-      )
-      order_tag = "grind_5_entry"
-      if has_order_tags:
-        return buy_amount, order_tag
-      else:
-        return buy_amount
-
-    if grind_5_sub_grind_count > 0:
-      grind_profit = -(exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
-      if (grind_profit > (grind_5_profit_threshold + fee_open_rate + fee_close_rate)) and self.short_grind_exit_v2(
-        last_candle, previous_candle, slice_profit, True
-      ):
-        sell_amount = grind_5_total_amount * exit_rate / trade.leverage
-        if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
-          sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
-        ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
-        if sell_amount > min_stake and ft_sell_amount > min_stake:
-          self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="grind_5_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
-          )
-          log.info(
-            f"Grinding exit (grind_5_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
-          )
-          order_tag = "grind_5_exit"
-          for grind_entry_id in grind_5_buy_orders:
-            order_tag += " " + str(grind_entry_id)
-          if has_order_tags:
-            return -ft_sell_amount, order_tag
-          else:
-            return -ft_sell_amount
-
-    # if (
-    #   self.grinding_v2_grind_5_use_derisk
-    #   and (grind_5_sub_grind_count > 0)
-    #   and ((-(exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate) < grind_5_derisk_grinds)
-    #   and (grind_5_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
-    if (
-      self.grinding_v2_grind_5_use_derisk
-      and (grind_5_sub_grind_count > 0)
-      and (grind_5_current_grind_stake_profit < (slice_amount * grind_5_derisk_grinds))
-      and (grind_5_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    ):
-      sell_amount = grind_5_total_amount * exit_rate / trade.leverage
-      if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
-        sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
-      ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
-      if sell_amount > min_stake and ft_sell_amount > min_stake:
-        grind_profit = 0.0
-        if grind_5_current_open_rate > 0.0:
-          grind_profit = (
-            -((exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate)
-            if grind_5_is_exit_found
-            else profit_ratio
-          )
-        self.dp.send_msg(
-          self.notification_msg(
-            "grinding-derisk",
-            tag="grind_5_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
-        )
-        log.info(
-          f"Grinding de-risk (grind_5_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
-        )
-        order_tag = "grind_5_derisk"
-        for grind_entry_id in grind_5_buy_orders:
           order_tag += " " + str(grind_entry_id)
         if has_order_tags:
           return -ft_sell_amount, order_tag
@@ -58856,7 +54107,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_1_found
       and is_short_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -58883,16 +54134,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_1_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_1_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_1_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -58923,19 +54165,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_1_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_1_total_amount,
-            )
+            f"Buyback exit (buyback_1_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_1_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -58948,33 +54178,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_1_use_derisk
-    #   and (buyback_1_sub_grind_count > 0)
-    #   and (
-    #     (-(exit_rate - buyback_1_current_open_rate) / buyback_1_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_1_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_1_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_1_use_derisk
       and (buyback_1_sub_grind_count > 0)
       and (
-        buyback_1_current_grind_stake_profit
+        (-(exit_rate - buyback_1_current_open_rate) / buyback_1_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_1_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_1_derisk_spot
-          )
+          self.grinding_v2_buyback_1_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_1_derisk_spot
         )
       )
-      and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_1_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_1_use_derisk
+      #   and (buyback_1_sub_grind_count > 0)
+      #   and (
+      #     buyback_1_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_1_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_1_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_1_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -58988,17 +54217,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_1_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            coin_amount=buyback_1_total_amount,
-          )
+          f"Buyback de-risk (buyback_1_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Buyback de-risk (buyback_1_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -59018,7 +54237,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_2_found
       and is_short_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -59045,16 +54264,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_2_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_2_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_2_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -59085,19 +54295,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_2_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_2_total_amount,
-            )
+            f"Buyback exit (buyback_2_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_2_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -59110,33 +54308,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_2_use_derisk
-    #   and (buyback_2_sub_grind_count > 0)
-    #   and (
-    #     (-(exit_rate - buyback_2_current_open_rate) / buyback_2_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_2_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_2_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_2_use_derisk
       and (buyback_2_sub_grind_count > 0)
       and (
-        buyback_2_current_grind_stake_profit
+        (-(exit_rate - buyback_2_current_open_rate) / buyback_2_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_2_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_2_derisk_spot
-          )
+          self.grinding_v2_buyback_2_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_2_derisk_spot
         )
       )
-      and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_2_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_2_use_derisk
+      #   and (buyback_2_sub_grind_count > 0)
+      #   and (
+      #     buyback_2_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_2_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_2_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_2_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -59150,17 +54347,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_2_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            coin_amount=buyback_2_total_amount,
-          )
+          f"Buyback de-risk (buyback_2_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Buyback de-risk (buyback_2_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -59180,7 +54367,7 @@ class NostalgiaForInfinityX6(IStrategy):
       and is_derisk_3_found
       and is_short_buyback_entry
       and (current_time - timedelta(minutes=5) > filled_entries[-1].order_filled_utc)
-      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.06))
+      and ((current_time - timedelta(hours=2) > filled_orders[-1].order_filled_utc) or (slice_profit > 0.02))
       and (
         (current_stake_amount < (filled_entries[0].cost * 0.50))
         or (current_time - timedelta(hours=6) > filled_orders[-1].order_filled_utc)
@@ -59207,16 +54394,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if buy_amount > max_stake:
         return None
       self.dp.send_msg(
-        self.notification_msg(
-          "buyback-entry",
-          tag="buyback_3_entry",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-        )
+        f"Buyback entry (buyback_3_entry) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
       )
       log.info(
         f"Buyback entry (buyback_3_entry) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -59247,19 +54425,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "buyback-exit",
-              tag="buyback_3_exit",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=buyback_3_total_amount,
-            )
+            f"Buyback exit (buyback_3_exit) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Buyback exit (buyback_3_exit) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -59272,33 +54438,32 @@ class NostalgiaForInfinityX6(IStrategy):
           else:
             return -ft_sell_amount
 
-    # if (
-    #   self.grinding_v2_buyback_3_use_derisk
-    #   and (buyback_3_sub_grind_count > 0)
-    #   and (
-    #     (-(exit_rate - buyback_3_current_open_rate) / buyback_3_current_open_rate)
-    #     < (
-    #       self.grinding_v2_buyback_3_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_3_derisk_spot
-    #     )
-    #   )
-    #   and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
-    # ):
     if (
       self.grinding_v2_buyback_3_use_derisk
       and (buyback_3_sub_grind_count > 0)
       and (
-        buyback_3_current_grind_stake_profit
+        (-(exit_rate - buyback_3_current_open_rate) / buyback_3_current_open_rate)
         < (
-          slice_amount
-          * (
-            self.grinding_v2_buyback_3_derisk_futures
-            if self.is_futures_mode
-            else self.grinding_v2_buyback_3_derisk_spot
-          )
+          self.grinding_v2_buyback_3_derisk_futures if self.is_futures_mode else self.grinding_v2_buyback_3_derisk_spot
         )
       )
-      and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 8, 3) or is_backtest)
+      and (buyback_3_orders[-1].order_date_utc.replace(tzinfo=None) >= datetime(2025, 6, 20) or is_backtest)
     ):
+      # if (
+      #   self.grinding_v2_buyback_3_use_derisk
+      #   and (buyback_3_sub_grind_count > 0)
+      #   and (
+      #     buyback_3_current_grind_stake_profit
+      #     < (
+      #       slice_amount
+      #       * (
+      #         self.grinding_v2_buyback_3_derisk_futures
+      #         if self.is_futures_mode
+      #         else self.grinding_v2_buyback_3_derisk_spot
+      #       )
+      #     )
+      #   )
+      # ):
       sell_amount = buyback_3_total_amount * exit_rate / trade.leverage
       if ((current_stake_amount / trade.leverage) - sell_amount) < (min_stake * 1.55):
         sell_amount = (trade.amount * exit_rate / trade.leverage) - (min_stake * 1.55)
@@ -59312,17 +54477,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "buyback-derisk",
-            tag="buyback_3_derisk",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            coin_amount=buyback_3_total_amount,
-          )
+          f"Buyback de-risk (buyback_3_derisk) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Buyback de-risk (buyback_3_derisk) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {buyback_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -59663,14 +54818,6 @@ class NostalgiaForInfinityX6(IStrategy):
         and (last_candle["STOCHRSIk_14_14_3_3_15m"] > 70.0)
         and (last_candle["RSI_14_1h"] > 50.0)
         and (last_candle["RSI_14_4h"] > 50.0)
-      )
-      or (
-        (last_candle["RSI_14"] > 64.0)
-        and (last_candle["RSI_3"] < 95.0)
-        and (last_candle["RSI_3_1h"] < 90.0)
-        and (last_candle["RSI_3_4h"] < 90.0)
-        and (last_candle["close"] > (last_candle["EMA_12"] * 1.001))
-        and (last_candle["close"] > (last_candle["BBL_20_2.0"] * 1.004))
       )
     ):
       return True
@@ -60397,19 +55544,7 @@ class NostalgiaForInfinityX6(IStrategy):
             grind_profit = -(exit_rate - first_entry.safe_price) / first_entry.safe_price
             coin_amount = sell_amount / exit_rate
             self.dp.send_msg(
-              self.notification_msg(
-                "grinding-exit",
-                tag="gm0",
-                pair=trade.pair,
-                rate=exit_rate,
-                stake_amount=sell_amount,
-                profit_stake=profit_stake,
-                profit_ratio=profit_ratio,
-                stake_currency=self.config["stake_currency"],
-                grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-                grind_profit_pct=grind_profit,
-                coin_amount=coin_amount,
-              )
+              f"Grinding exit (gm0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
             )
             log.info(
               f"Grinding exit (gm0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -60438,19 +55573,7 @@ class NostalgiaForInfinityX6(IStrategy):
             grind_profit = -(exit_rate - first_entry.safe_price) / first_entry.safe_price
             coin_amount = sell_amount / exit_rate
             self.dp.send_msg(
-              self.notification_msg(
-                "grinding-derisk",
-                tag="gmd0",
-                pair=trade.pair,
-                rate=exit_rate,
-                stake_amount=sell_amount,
-                profit_stake=profit_stake,
-                profit_ratio=profit_ratio,
-                stake_currency=self.config["stake_currency"],
-                grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-                grind_profit_pct=grind_profit,
-                coin_amount=coin_amount,
-              )
+              f"Grinding de-risk (gmd0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
             )
             log.info(
               f"Grinding de-risk (gmd0) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {coin_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -60508,18 +55631,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_1_derisk_1_current_open_rate) / grind_1_derisk_1_current_open_rate
           grind_profit_stake = grind_1_derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="dl1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (dl1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (dl1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -60540,19 +55652,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="dl1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_derisk_1_total_amount,
-            )
+            f"Grinding exit (dl1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (dl1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -60591,19 +55691,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="ddl1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_derisk_1_total_amount,
-          )
+          f"Grinding stop exit (ddl1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (ddl1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -60659,18 +55747,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_2_derisk_1_current_open_rate) / grind_2_derisk_1_current_open_rate
           grind_profit_stake = grind_2_derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="dl2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (dl2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (dl2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -60691,19 +55768,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="dl2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_derisk_1_total_amount,
-            )
+            f"Grinding exit (dl2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (dl2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -60742,19 +55807,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="ddl2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_derisk_1_total_amount,
-          )
+          f"Grinding stop exit (ddl2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (ddl2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_derisk_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -60800,18 +55853,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
           grind_profit_stake = grind_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -60843,18 +55885,7 @@ class NostalgiaForInfinityX6(IStrategy):
         grind_profit = -(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
         grind_profit_stake = grind_1_current_grind_stake_profit
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="gd1",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-          grind_profit_stake=grind_1_current_grind_stake_profit,
-          grind_profit_pct=grind_profit,
-        )
+        f"Grinding entry (gd1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
       )
       log.info(
         f"Grinding entry (gd1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -60875,19 +55906,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (gd1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -60925,19 +55944,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding stop exit (dd1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -60983,18 +55990,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate
           grind_profit_stake = grind_2_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61015,19 +56011,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (gd2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -61065,19 +56049,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding stop exit (dd2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -61123,18 +56095,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate
           grind_profit_stake = grind_3_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd3",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd3) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd3) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61155,19 +56116,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd3",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (gd3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -61205,19 +56154,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding stop exit (dd3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -61263,18 +56200,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate
           grind_profit_stake = grind_4_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd4",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_4_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd4) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd4) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61295,19 +56221,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd4",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (gd4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -61345,19 +56259,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd4",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding stop exit (dd4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -61403,18 +56305,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
           grind_profit_stake = grind_5_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd5",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_5_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd5) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd5) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61435,19 +56326,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd5",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
+            f"Grinding exit (gd5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -61485,19 +56364,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd5",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
+          f"Grinding stop exit (dd5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -61543,18 +56410,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_6_current_open_rate) / grind_6_current_open_rate
           grind_profit_stake = grind_6_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="gd6",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_6_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (gd6) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (gd6) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61575,19 +56431,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="gd6",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_6_total_amount,
-            )
+            f"Grinding exit (gd6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (gd6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -61625,19 +56469,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="dd6",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_6_total_amount,
-          )
+          f"Grinding stop exit (dd6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (dd6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -61692,18 +56524,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - derisk_1_current_open_rate) / derisk_1_current_open_rate
           grind_profit_stake = derisk_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "re-entry",
-            tag="d1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=derisk_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Re-entry (d1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Re-entry (d1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({derisk_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -61738,16 +56559,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk (d1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk (d1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -62393,16 +57205,7 @@ class NostalgiaForInfinityX6(IStrategy):
         if buy_amount > max_stake:
           return None, "", is_derisk
         self.dp.send_msg(
-          self.notification_msg(
-            "rebuy",
-            tag="r",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"Rebuy (r) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy (r) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -62443,18 +57246,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
           grind_profit_stake = grind_1_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g1",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_1_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -62484,18 +57276,7 @@ class NostalgiaForInfinityX6(IStrategy):
         grind_profit = -(exit_rate - grind_1_current_open_rate) / grind_1_current_open_rate
         grind_profit_stake = grind_1_current_grind_stake_profit
       self.dp.send_msg(
-        self.notification_msg(
-          "grinding-entry",
-          tag="g1",
-          pair=trade.pair,
-          rate=current_rate,
-          stake_amount=buy_amount,
-          profit_stake=profit_stake,
-          profit_ratio=profit_ratio,
-          stake_currency=self.config["stake_currency"],
-          grind_profit_stake=grind_1_current_grind_stake_profit,
-          grind_profit_pct=grind_profit,
-        )
+        f"Grinding entry (g1) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
       )
       log.info(
         f"Grinding entry (g1) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_1_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -62513,19 +57294,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g1",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_1_total_amount,
-            )
+            f"Grinding exit (g1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -62558,19 +57327,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_1_total_amount,
-          )
+          f"Grinding stop exit (sg1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_1_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -62613,18 +57370,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_2_current_open_rate) / grind_2_current_open_rate
           grind_profit_stake = grind_2_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g2",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_2_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g2) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g2) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_2_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -62642,19 +57388,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g2",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_2_total_amount,
-            )
+            f"Grinding exit (g2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -62687,19 +57421,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg2",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_2_total_amount,
-          )
+          f"Grinding stop exit (sg2) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg2) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_2_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -62742,18 +57464,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_3_current_open_rate) / grind_3_current_open_rate
           grind_profit_stake = grind_3_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g3",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_3_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g3) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g3) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_3_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -62771,19 +57482,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g3",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_3_total_amount,
-            )
+            f"Grinding exit (g3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -62816,19 +57515,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg3",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_3_total_amount,
-          )
+          f"Grinding stop exit (sg3) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg3) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_3_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -62871,18 +57558,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_4_current_open_rate) / grind_4_current_open_rate
           grind_profit_stake = grind_4_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g4",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_4_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g4) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g4) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_4_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -62900,19 +57576,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g4",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_4_total_amount,
-            )
+            f"Grinding exit (g4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -62945,19 +57609,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg4",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_4_total_amount,
-          )
+          f"Grinding stop exit (sg4) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg4) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_4_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -63000,18 +57652,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_5_current_open_rate) / grind_5_current_open_rate
           grind_profit_stake = grind_5_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g5",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_5_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g5) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g5) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_5_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -63029,19 +57670,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g5",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_5_total_amount,
-            )
+            f"Grinding exit (g5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -63074,19 +57703,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg5",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_5_total_amount,
-          )
+          f"Grinding stop exit (sg5) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg5) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_5_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -63129,18 +57746,7 @@ class NostalgiaForInfinityX6(IStrategy):
           grind_profit = -(exit_rate - grind_6_current_open_rate) / grind_6_current_open_rate
           grind_profit_stake = grind_6_current_grind_stake_profit
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-entry",
-            tag="g6",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_6_current_grind_stake_profit,
-            grind_profit_pct=grind_profit,
-          )
+          f"Grinding entry (g6) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
         )
         log.info(
           f"Grinding entry (g6) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_6_current_grind_stake_profit} {self.config['stake_currency']})"
@@ -63158,19 +57764,7 @@ class NostalgiaForInfinityX6(IStrategy):
         ft_sell_amount = sell_amount * trade.leverage * (trade.stake_amount / trade.amount) / exit_rate
         if sell_amount > min_stake and ft_sell_amount > min_stake:
           self.dp.send_msg(
-            self.notification_msg(
-              "grinding-exit",
-              tag="g6",
-              pair=trade.pair,
-              rate=exit_rate,
-              stake_amount=sell_amount,
-              profit_stake=profit_stake,
-              profit_ratio=profit_ratio,
-              stake_currency=self.config["stake_currency"],
-              grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-              grind_profit_pct=grind_profit,
-              coin_amount=grind_6_total_amount,
-            )
+            f"Grinding exit (g6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
           )
           log.info(
             f"Grinding exit (g6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}% ({grind_profit * sell_amount * trade.leverage} {self.config['stake_currency']})"
@@ -63203,19 +57797,7 @@ class NostalgiaForInfinityX6(IStrategy):
             else profit_ratio
           )
         self.dp.send_msg(
-          self.notification_msg(
-            "grinding-stop",
-            tag="sg6",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-            grind_profit_stake=grind_profit * sell_amount * trade.leverage,
-            grind_profit_pct=grind_profit,
-            coin_amount=grind_6_total_amount,
-          )
+          f"Grinding stop exit (sg6) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
         )
         log.info(
           f"Grinding stop exit (sg6) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Coin amount: {grind_6_total_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}% | Grind profit: {(grind_profit * 100.0):.2f}%"
@@ -63247,16 +57829,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -63295,16 +57868,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          self.notification_msg(
-            "de-risk",
-            tag="d1",
-            pair=trade.pair,
-            rate=exit_rate,
-            stake_amount=sell_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"De-risk (d1) [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"De-risk (d1) [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -63442,16 +58006,7 @@ class NostalgiaForInfinityX6(IStrategy):
         if buy_amount > max_stake:
           return None
         self.dp.send_msg(
-          self.notification_msg(
-            "rebuy",
-            tag="r",
-            pair=trade.pair,
-            rate=current_rate,
-            stake_amount=buy_amount,
-            profit_stake=profit_stake,
-            profit_ratio=profit_ratio,
-            stake_currency=self.config["stake_currency"],
-          )
+          f"Rebuy (r) [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy (r) [{current_time}] [{trade.pair}] | Rate: {current_rate} | Stake amount: {buy_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
@@ -63473,12 +58028,7 @@ class NostalgiaForInfinityX6(IStrategy):
       if sell_amount > min_stake and ft_sell_amount > min_stake:
         grind_profit = 0.0
         self.dp.send_msg(
-          f"❌​​ ​**Rebuy De-risk:** `Level 3`\n"
-          f"🪙​ **Pair:** `{trade.pair}`\n"
-          f"〽️​ **Rate:** `{exit_rate}`\n"
-          f"💰 **Stake amount:** `{sell_amount}`\n"
-          f"💵​ **Profit (stake):** `{profit_stake}`\n"
-          f"💸 **Profit (percent):** `{(profit_ratio * 100.0):.2f}%`"
+          f"Rebuy De-risk Level 3 [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"
         )
         log.info(
           f"Rebuy De-risk Level 3 [{current_time}] [{trade.pair}] | Rate: {exit_rate} | Stake amount: {sell_amount} | Profit (stake): {profit_stake} | Profit: {(profit_ratio * 100.0):.2f}%"

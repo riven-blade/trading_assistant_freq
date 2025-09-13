@@ -86,7 +86,7 @@ func (fc *Controller) pairRefresher() {
 
 	go func() {
 		logrus.Info("交易对刷新器已启动")
-		ticker := time.NewTicker(1 * time.Minute)
+		ticker := time.NewTicker(60 * time.Minute)
 		defer ticker.Stop()
 
 		for {

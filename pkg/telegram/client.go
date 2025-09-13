@@ -23,6 +23,7 @@ const (
 type TelegramClient struct {
 	bot    *tgbotapi.BotAPI
 	chatID int64
+	userID int64 // 允许的用户ID
 }
 
 var GlobalTelegramClient *TelegramClient
@@ -168,6 +169,7 @@ func InitTelegram() error {
 	GlobalTelegramClient = &TelegramClient{
 		bot:    bot,
 		chatID: chatID,
+		userID: chatID, // 使用chatID作为允许的用户ID
 	}
 
 	GlobalTelegramClient.setupCustomKeyboard()
@@ -247,8 +249,14 @@ func (t *TelegramClient) startCommandListener() {
 	for update := range updates {
 		// 处理消息命令
 		if update.Message != nil {
-			// 检查消息是否来自指定的聊天ID
-			if update.Message.Chat.ID != t.chatID {
+			// 验证用户ID是否匹配
+			if update.Message.From.ID != t.userID {
+				logrus.WithFields(logrus.Fields{
+					"user_id":  update.Message.From.ID,
+					"username": update.Message.From.UserName,
+					"expected": t.userID,
+					"message":  update.Message.Text,
+				}).Warn("未授权的用户尝试发送命令")
 				continue
 			}
 
@@ -256,7 +264,6 @@ func (t *TelegramClient) startCommandListener() {
 				t.handleCommand(update.Message)
 			}
 		}
-
 	}
 }
 
