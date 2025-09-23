@@ -374,13 +374,13 @@ class NostalgiaForInfinityX6(IStrategy):
 
   grinding_v2_derisk_level_1_enable = True
   grinding_v2_derisk_level_1_spot = -0.12
-  grinding_v2_derisk_level_1_futures = -0.24
+  grinding_v2_derisk_level_1_futures = -0.18
   grinding_v2_derisk_level_2_enable = True
   grinding_v2_derisk_level_2_spot = -0.14
-  grinding_v2_derisk_level_2_futures = -0.32
+  grinding_v2_derisk_level_2_futures = -0.24
   grinding_v2_derisk_level_3_enable = True
   grinding_v2_derisk_level_3_spot = -0.15
-  grinding_v2_derisk_level_3_futures = -0.36
+  grinding_v2_derisk_level_3_futures = -0.26
   grinding_v2_derisk_level_1_stake_spot = 0.20
   grinding_v2_derisk_level_1_stake_futures = 0.50
   grinding_v2_derisk_level_2_stake_spot = 0.30
@@ -4803,6 +4803,9 @@ class NostalgiaForInfinityX6(IStrategy):
     # Force Entry
     if entry_tag == "force_entry":
       return True
+
+    if entry_tag != "manual":
+      return False
 
     # Long/Short Slot Validation (only in futures mode)
     if self.is_futures_mode and (self.futures_max_open_trades_long != 0 or self.futures_max_open_trades_short != 0):

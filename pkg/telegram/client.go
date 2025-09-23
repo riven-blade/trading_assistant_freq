@@ -693,13 +693,13 @@ func (t *TelegramClient) handleUnknownCommand(command string) {
 func (t *TelegramClient) getActionText(actionType string) string {
 	switch actionType {
 	case models.ActionTypeOpen:
-		return "🔵  开仓"
+		return "开仓"
 	case models.ActionTypeAddition:
-		return "🔷  加仓"
+		return "加仓"
 	case models.ActionTypeTakeProfit:
-		return "✅  止盈"
+		return "止盈"
 	default:
-		return "⚫  交易"
+		return "交易"
 	}
 }
 
@@ -707,11 +707,11 @@ func (t *TelegramClient) getActionText(actionType string) string {
 func (t *TelegramClient) getPositionText(side string) string {
 	switch side {
 	case types.PositionSideLong:
-		return "🟢  做多"
+		return "做多"
 	case types.PositionSideShort:
-		return "🔴  做空"
+		return "做空"
 	default:
-		return "🟡  未知"
+		return "未知"
 	}
 }
 
@@ -719,19 +719,19 @@ func (t *TelegramClient) getPositionText(side string) string {
 func (t *TelegramClient) getCombinedStatusText(status string, enabled bool) string {
 	if !enabled {
 		// 如果未启用，显示禁用状态
-		return "🔴  已禁用"
+		return "已禁用"
 	}
 
 	// 如果启用，根据状态显示
 	switch status {
 	case models.EstimateStatusListening:
-		return "👁️  监听中"
+		return "监听中"
 	case models.EstimateStatusTriggered:
-		return "✅  已触发"
+		return "已触发"
 	case models.EstimateStatusFailed:
-		return "❌  触发失败"
+		return "触发失败"
 	default:
-		return "❓  未知状态"
+		return "未知状态"
 	}
 }
 
