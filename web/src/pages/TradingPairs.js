@@ -70,6 +70,11 @@ const TradingPairs = () => {
   const [targetPrice, setTargetPrice] = useState(0);
   const [orderType, setOrderType] = useState(DEFAULT_CONFIG.orderType);
   const [entryTag, setEntryTag] = useState('manual'); // 入场标签
+  // 从localStorage读取上次的开仓金额
+  const [stakeAmount, setStakeAmount] = useState(() => {
+    const savedAmount = localStorage.getItem('trading_stake_amount');
+    return savedAmount ? parseFloat(savedAmount) : 2;
+  }); // 开仓金额
 
   // 监控抽屉相关状态
   const [monitorDrawerVisible, setMonitorDrawerVisible] = useState(false);
@@ -288,7 +293,6 @@ const TradingPairs = () => {
     setSelectedLeverage(DEFAULT_CONFIG.leverage);
     setOrderType(DEFAULT_CONFIG.orderType);
     setEntryTag('manual');
-    
     setTradeModalVisible(true);
   };
 
@@ -337,6 +341,12 @@ const TradingPairs = () => {
     setEntryTag(value);
   };
 
+  const handleStakeAmountChange = (value) => {
+    const amount = value || 2;
+    setStakeAmount(amount);
+    localStorage.setItem('trading_stake_amount', amount.toString());
+  };
+
   // 创建交易
   const createTrade = async (selectedEntryTag) => {
     // 使用传入的entryTag参数，如果没有则使用状态中的值
@@ -348,6 +358,12 @@ const TradingPairs = () => {
         return;
       }
 
+
+      // 检查开仓金额
+      if (!stakeAmount || stakeAmount <= 0) {
+        message.error('请输入有效的开仓金额');
+        return;
+      }
 
       // 检查入场标签
       if (!tagToUse) {
@@ -375,7 +391,8 @@ const TradingPairs = () => {
         tag: tagToUse,
         margin_mode: 'ISOLATED',
         order_type: orderType,
-        trigger_type: 'condition'
+        trigger_type: 'condition',
+        stake_amount: stakeAmount
       };
 
       await api.post('/estimates', orderData);
@@ -384,7 +401,7 @@ const TradingPairs = () => {
       const orderTypeText = orderType === 'market' ? '市价' : '限价';
       
       const baseAsset = selectedTradeSymbol.replace('USDT', '');
-      message.success(`${actionText}预估价已创建 | ${orderTypeText}单 ${selectedLeverage}x杠杆 逐仓 标签${tagToUse} ${baseAsset}`);
+      message.success(`${actionText}预估价已创建 | ${orderTypeText}单 ${selectedLeverage}x杠杆 逐仓 标签${tagToUse} ${baseAsset} (${stakeAmount} USDT)`);
       setTradeModalVisible(false);
     } catch (error) {
       message.error('创建订单失败: ' + (error.response?.data?.error || error.message));
@@ -828,6 +845,8 @@ const TradingPairs = () => {
         onLeverageChange={handleLeverageChange}
         entryTag={entryTag}
         onEntryTagChange={handleEntryTagChange}
+        stakeAmount={stakeAmount}
+        onStakeAmountChange={handleStakeAmountChange}
       />
 
       {/* 监控抽屉 */}
