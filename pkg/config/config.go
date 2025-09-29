@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
@@ -15,19 +16,13 @@ type Config struct {
 	RedisPassword string
 	RedisDB       int
 
-	// Telegram配置
-	TelegramBotToken string
-	TelegramChatID   string
-
 	// 服务配置
 	LogLevel string
 	BaseURL  string
 
-	// 交易配置
-	PositionMode string // both: 双向持仓, single: 单向持仓
+	ExchangeType string // 交易所类型: binance, bybit
 
 	// 风险管理配置
-	BalanceRatioThreshold     float64 // 余额比例阈值，低于此比例不开仓
 	ShortFundingRateThreshold float64 // 做空资金费率阈值，低于此阈值不开空仓
 
 	// 认证配置
@@ -38,6 +33,9 @@ type Config struct {
 	FreqtradeBaseURL  string // Freqtrade API 基础URL
 	FreqtradeUsername string // Freqtrade 用户名
 	FreqtradePassword string // Freqtrade 密码
+
+	// 价格管理配置
+	PriceUpdateInterval time.Duration // 价格更新间隔
 }
 
 var GlobalConfig *Config
@@ -53,16 +51,11 @@ func LoadConfig() {
 		RedisPort:     getEnv("REDIS_PORT", "6379"),
 		RedisPassword: getEnv("REDIS_PASSWORD", ""),
 		RedisDB:       getEnvInt("REDIS_DB", 0),
+		LogLevel:      getEnv("LOG_LEVEL", "info"),
+		BaseURL:       getEnv("BASE_URL", "localhost"),
 
-		TelegramBotToken: getEnv("TELEGRAM_BOT_TOKEN", ""),
-		TelegramChatID:   getEnv("TELEGRAM_CHAT_ID", ""),
+		ExchangeType: getEnv("EXCHANGE_TYPE", "binance"), // 默认使用 binance
 
-		LogLevel: getEnv("LOG_LEVEL", "info"),
-		BaseURL:  getEnv("BASE_URL", "localhost"),
-
-		PositionMode: getEnv("POSITION_MODE", "single"), // 默认单向持仓以兼容 freqtrade
-
-		BalanceRatioThreshold:     getEnvFloat("BALANCE_RATIO_THRESHOLD", 20.0),
 		ShortFundingRateThreshold: getEnvFloat("SHORT_FUNDING_RATE_THRESHOLD", -0.002), // 默认-0.2%
 
 		AdminUsername: getEnv("ADMIN_USERNAME", "admin"),
@@ -72,6 +65,8 @@ func LoadConfig() {
 		FreqtradeBaseURL:  getEnv("FREQTRADE_BASE_URL", "http://localhost:8080"),
 		FreqtradeUsername: getEnv("FREQTRADE_USERNAME", ""),
 		FreqtradePassword: getEnv("FREQTRADE_PASSWORD", ""),
+
+		PriceUpdateInterval: getEnvDuration("PRICE_UPDATE_INTERVAL", "15s"), // 默认15秒
 	}
 
 	// 设置日志级别
@@ -116,4 +111,20 @@ func getEnvFloat(key string, defaultValue float64) float64 {
 		}
 	}
 	return defaultValue
+}
+
+func getEnvDuration(key, defaultValue string) time.Duration {
+	if value := os.Getenv(key); value != "" {
+		if duration, err := time.ParseDuration(value); err == nil {
+			return duration
+		}
+		logrus.Warnf("无法解析环境变量 %s 的时间间隔值: %s，使用默认值: %s", key, value, defaultValue)
+	}
+
+	if duration, err := time.ParseDuration(defaultValue); err == nil {
+		return duration
+	}
+
+	logrus.Errorf("无法解析默认时间间隔值: %s，使用15秒", defaultValue)
+	return 15 * time.Second
 }

@@ -1,18 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 	"trading_assistant/core"
 	"trading_assistant/pkg/config"
-	"trading_assistant/pkg/exchanges/binance"
-	"trading_assistant/pkg/exchanges/types"
+	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/freqtrade"
 	"trading_assistant/pkg/redis"
-	"trading_assistant/pkg/telegram"
 	"trading_assistant/servers"
 
 	"github.com/sirupsen/logrus"
@@ -28,31 +24,19 @@ func main() {
 
 	// 初始化Redis
 	if err := redis.InitRedis(); err != nil {
-		// 发送错误通知
-		if telegram.GlobalTelegramClient != nil {
-			telegram.GlobalTelegramClient.SendServiceStatus("error", fmt.Sprintf("Redis初始化失败\n错误: %v\n服务即将停止", err))
-		}
 		logrus.Fatalf("Redis init fail: %v", err)
 	}
 
-	// 初始化Binance客户端
-	binanceConfig := binance.DefaultConfig()
-	// 不设置API凭据，仅用于公开数据获取
-	binanceConfig.MarketType = types.MarketTypeFuture // 期货市场
-
-	binanceClient, err := binance.New(binanceConfig)
+	// 初始化交易所客户端
+	factory := exchange_factory.NewExchangeFactory()
+	exchangeClient, err := factory.CreateFromConfig()
 	if err != nil {
-		logrus.Fatalf("Binance客户端初始化失败: %v", err)
+		logrus.Fatalf("交易所客户端初始化失败: %v", err)
 	}
-	logrus.Info("Binance客户端已初始化")
-
-	// 初始化Telegram客户端
-	if err := telegram.InitTelegram(); err != nil {
-		logrus.Errorf("Telegram init fail: %v", err)
-	}
+	logrus.Infof("%s 客户端已初始化", exchangeClient.GetName())
 
 	// 初始化市场数据管理器并同步数据
-	marketManager := core.NewMarketManager(binanceClient)
+	marketManager := core.NewMarketManager(exchangeClient)
 	if err := marketManager.SyncMarketAndPriceData(); err != nil {
 		logrus.Errorf("同步市场数据和价格数据失败: %v", err)
 	}
@@ -72,10 +56,8 @@ func main() {
 	// 创建消息通道用于 freqtrade 通知
 	freqtradeMessageChan := make(chan string, 100)
 	go func() {
-		for message := range freqtradeMessageChan {
-			if telegram.GlobalTelegramClient != nil {
-				telegram.GlobalTelegramClient.SendMessage(message)
-			}
+		for range freqtradeMessageChan {
+			// Telegram通知已移除
 		}
 	}()
 
@@ -88,14 +70,6 @@ func main() {
 	// 初始化核心组件
 	core.InitPriceMonitor(freqtradeController)
 
-	// 启动WebSocket连接
-	if err := binanceClient.StartWebSocket(); err != nil {
-		logrus.Errorf("启动WebSocket失败: %v", err)
-	}
-
-	// 等待WebSocket连接稳定
-	time.Sleep(3 * time.Second)
-
 	// 启动价格订阅
 	if err := marketManager.StartPriceSubscriptions(); err != nil {
 		logrus.Errorf("启动价格订阅失败: %v", err)
@@ -105,7 +79,7 @@ func main() {
 	core.GlobalPriceMonitor.Start()
 
 	// 创建HTTP服务器
-	server := servers.NewHTTPServer(binanceClient, marketManager, freqtradeController)
+	server := servers.NewHTTPServer(exchangeClient, marketManager, freqtradeController)
 	go func() {
 		server.Start()
 	}()
@@ -113,11 +87,11 @@ func main() {
 	logrus.Info("交易助手启动完成!")
 
 	// 优雅关闭
-	gracefulShutdown(server, binanceClient, marketManager, freqtradeController)
+	gracefulShutdown(server, exchangeClient, marketManager, freqtradeController)
 }
 
 // gracefulShutdown 优雅关闭
-func gracefulShutdown(server *servers.HTTPServer, binanceClient *binance.Binance, marketManager *core.MarketManager, freqtradeController *freqtrade.Controller) {
+func gracefulShutdown(server *servers.HTTPServer, exchangeClient exchange_factory.ExchangeInterface, marketManager *core.MarketManager, freqtradeController *freqtrade.Controller) {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
@@ -140,18 +114,6 @@ func gracefulShutdown(server *servers.HTTPServer, binanceClient *binance.Binance
 	// 停止核心组件
 	if core.GlobalPriceMonitor != nil {
 		core.GlobalPriceMonitor.Stop()
-	}
-
-	// 停止WebSocket连接
-	if binanceClient != nil {
-		binanceClient.StopWebSocket()
-	}
-
-	// 发送服务完全停止的Telegram通知
-	if telegram.GlobalTelegramClient != nil {
-		if err := telegram.GlobalTelegramClient.SendServiceStatus("stopped", "交易助手已关闭"); err != nil {
-			logrus.Errorf("发送关闭完成通知失败: %v", err)
-		}
 	}
 
 	logrus.Info("交易助手已关闭")

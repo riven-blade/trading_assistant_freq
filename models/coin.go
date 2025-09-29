@@ -88,6 +88,7 @@ type PriceEstimate struct {
 	Status      string  `json:"status"`       // 状态：listening(监听状态), triggered(已触发成功), failed(触发失败)
 	Enabled     bool    `json:"enabled"`      // 监听开关：true=实际监听, false=暂不监听
 	Tag         string  `json:"tag"`          // 交易标签
+	StakeAmount float64 `json:"stake_amount"` // 开仓金额 (USDT)
 	// CreatedBy字段已移除，改用ActionType明确标识操作类型
 	TriggerType string    `json:"trigger_type"` // 触发条件：immediate(立即执行), condition(条件触发)
 	CreatedAt   time.Time `json:"created_at"`

@@ -260,6 +260,19 @@ type Position struct {
 	IsolatedMargin              float64                `json:"isolated_margin"`               // 逐仓保证金
 }
 
+// MarkPrice 标记价格信息 (REST API)
+type MarkPrice struct {
+	Symbol               string                 `json:"symbol"`               // 交易对
+	MarkPrice            float64                `json:"markPrice"`            // 标记价格
+	IndexPrice           float64                `json:"indexPrice"`           // 指数价格
+	FundingRate          float64                `json:"fundingRate"`          // 资金费率
+	NextFundingTime      int64                  `json:"nextFundingTime"`      // 下次资金费率时间
+	InterestRate         float64                `json:"interestRate"`         // 利率
+	EstimatedSettlePrice float64                `json:"estimatedSettlePrice"` // 预估结算价
+	Timestamp            int64                  `json:"timestamp"`            // 时间戳
+	Info                 map[string]interface{} `json:"info"`                 // 原始信息
+}
+
 // FundingRate 资金费率信息
 type FundingRate struct {
 	Symbol               string                 `json:"symbol"`               // 交易对

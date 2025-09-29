@@ -20,7 +20,6 @@ type Controller struct {
 	AccessToken    string
 	RefreshToken   string
 	stopChan       chan struct{}
-	stopChanPair   chan struct{}
 	httpClient     *http.Client
 	PositionStatus models.PositionStatus
 	TradeStatus    []models.TradePosition
@@ -47,11 +46,6 @@ func (fc *Controller) Stop() {
 		fc.stopChan = nil
 	}
 
-	if fc.stopChanPair != nil {
-		close(fc.stopChanPair)
-		fc.stopChanPair = nil
-	}
-
 	logrus.Info("Freqtrade控制器已停止")
 }
 
@@ -72,29 +66,6 @@ func (fc *Controller) startTokenRefresher() {
 				go fc.refreshToken()
 			case <-fc.stopChan:
 				logrus.Info("Token 刷新器已停止")
-				return
-			}
-		}
-	}()
-}
-
-func (fc *Controller) pairRefresher() {
-	if fc.stopChanPair != nil {
-		close(fc.stopChanPair) // 防止重复启动
-	}
-	fc.stopChanPair = make(chan struct{})
-
-	go func() {
-		logrus.Info("交易对刷新器已启动")
-		ticker := time.NewTicker(60 * time.Minute)
-		defer ticker.Stop()
-
-		for {
-			select {
-			case <-ticker.C:
-				go fc.setPairWhiteList()
-			case <-fc.stopChanPair:
-				logrus.Info("交易对刷新器已停止")
 				return
 			}
 		}
@@ -155,9 +126,7 @@ func (fc *Controller) Init(messageChan chan string) error {
 
 	logrus.Info("freq 首次登录成功")
 
-	// 启动交易对刷新器和token刷新器
-	go fc.setPairWhiteList()
-	go fc.pairRefresher()
+	// 只启动token刷新器
 	go fc.startTokenRefresher()
 
 	return nil
@@ -329,39 +298,6 @@ func (fc *Controller) CheckForceBuy(pair string) bool {
 	}
 
 	return len(tradeStatus) < fc.PositionStatus.Max
-}
-
-// GetWhitelist 获取交易对白名单
-func (fc *Controller) getWhitelist() ([]string, error) {
-	url := fmt.Sprintf("%s/api/v1/whitelist", fc.BaseUrl)
-	body, err := fc.doRequest("GET", url, nil, true)
-	if err != nil {
-		logrus.Errorf("获取whitelist失败: %v", err)
-		return nil, err
-	}
-
-	var whitelistResp models.WhitelistResponse
-	if err := json.Unmarshal(body, &whitelistResp); err != nil {
-		logrus.Errorf("解析whitelist响应失败: %v", err)
-		return nil, err
-	}
-
-	logrus.Infof("获取whitelist成功，共 %d 个交易对", whitelistResp.Length)
-	return whitelistResp.Whitelist, nil
-}
-
-func (fc *Controller) setPairWhiteList() {
-	whitelist, err := fc.getWhitelist()
-	if err != nil {
-		logrus.Errorf("获取交易对白名单失败: %v", err)
-		return
-	}
-	err = fc.SetWatchedPairs(whitelist)
-	if err != nil {
-		logrus.Errorf("设置交易对白名单失败: %v", err)
-		return
-	}
-	logrus.Info("交易对白名单已刷新")
 }
 
 // GetPositions 获取当前持仓数据，直接返回freqtrade格式

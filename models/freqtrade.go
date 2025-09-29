@@ -1,7 +1,5 @@
 package models
 
-import "time"
-
 // FreqtradeController 相关模型定义
 
 // LoginResponse Freqtrade 登录响应
@@ -119,20 +117,4 @@ type FreqtradeOrder struct {
 	Status               string   `json:"status"`
 	Fee                  *float64 `json:"fee"`
 	IsOpen               bool     `json:"is_open"`
-}
-
-// WhitelistResponse 白名单响应
-type WhitelistResponse struct {
-	Whitelist []string `json:"whitelist"`
-	Length    int      `json:"length"`
-	Method    []string `json:"method"`
-}
-
-// FreqtradeMonitorPair 监控交易对 (用于 Redis 存储)
-type FreqtradeMonitorPair struct {
-	Symbol    string    `json:"symbol"` // 交易对符号
-	Side      string    `json:"side"`   // long, short
-	Price     float64   `json:"price"`  // 目标价格
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }

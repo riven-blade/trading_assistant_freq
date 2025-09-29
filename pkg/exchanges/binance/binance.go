@@ -14,8 +14,6 @@ import (
 	"trading_assistant/pkg/exchanges/types"
 
 	"trading_assistant/pkg/exchanges"
-
-	"github.com/sirupsen/logrus"
 )
 
 // ========== Binance 交易所实现 ==========
@@ -28,10 +26,6 @@ type Binance struct {
 
 	// API端点缓存
 	endpoints map[string]string
-
-	// WebSocket连接池
-	wsClient       *WebSocket
-	userDataStream *UserDataStream // 独立的期货用户数据流管理器
 
 	// 缓存字段
 	lastServerTimeRequest int64
@@ -68,15 +62,6 @@ func New(config *Config) (*Binance, error) {
 
 	// 初始同步服务器时间
 	go binance.updateServerTimeOffset()
-
-	// 初始化WebSocket (如果启用)
-	if config.EnableWebSocket {
-		wsConfig := DefaultWebSocketConfig()
-		binance.wsClient = NewWebSocket(binance, wsConfig)
-
-		// 初始化独立的期货用户数据流管理器
-		binance.userDataStream = NewUserDataStream(binance)
-	}
 
 	return binance, nil
 }
@@ -355,148 +340,6 @@ func (b *Binance) updateServerTimeOffset() {
 	localTime := time.Now().UnixMilli()
 	b.serverTimeOffset = timeResp.ServerTime - localTime
 	b.lastServerTimeRequest = localTime
-}
-
-// ========== HTTP通用方法 ==========
-
-// post 发送POST请求
-func (b *Binance) post(endpoint string, params map[string]interface{}, signed bool) (map[string]interface{}, error) {
-	var url string
-	var headers map[string]string
-	var body interface{}
-	var err error
-
-	if signed {
-		// 签名请求
-		params["timestamp"] = b.GetServerTime()
-		var path string
-		path, headers, body, err = b.signRequest("POST", endpoint, params)
-		if err != nil {
-			return nil, fmt.Errorf("签名请求失败: %w", err)
-		}
-		url = b.getAPIURL() + path
-	} else {
-		headers = map[string]string{
-			"X-MBX-APIKEY": b.GetApiKey(),
-			"Content-Type": "application/x-www-form-urlencoded",
-		}
-		url = b.getAPIURL() + endpoint
-
-		// 构建body
-		if len(params) > 0 {
-			values := make([]string, 0, len(params))
-			for k, v := range params {
-				values = append(values, fmt.Sprintf("%s=%v", k, v))
-			}
-			body = strings.Join(values, "&")
-		}
-	}
-
-	response, err := b.Request(context.Background(), url, "POST", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("发送POST请求失败: %w", err)
-	}
-
-	var result map[string]interface{}
-	if err := json.Unmarshal(response.Body, &result); err != nil {
-		return nil, fmt.Errorf("解析响应失败: %w", err)
-	}
-
-	return result, nil
-}
-
-// put 发送PUT请求
-func (b *Binance) put(endpoint string, params map[string]interface{}, signed bool) (map[string]interface{}, error) {
-	var url string
-	var headers map[string]string
-	var body interface{}
-	var err error
-
-	if signed {
-		// 签名请求
-		params["timestamp"] = b.GetServerTime()
-		var path string
-		path, headers, body, err = b.signRequest("PUT", endpoint, params)
-		if err != nil {
-			return nil, fmt.Errorf("签名请求失败: %w", err)
-		}
-		url = b.getAPIURL() + path
-	} else {
-		// 未签名请求，只需要API Key
-		headers = map[string]string{
-			"X-MBX-APIKEY": b.GetApiKey(),
-			"Content-Type": "application/x-www-form-urlencoded",
-		}
-		url = b.getAPIURL() + endpoint
-
-		// 构建body
-		if len(params) > 0 {
-			values := make([]string, 0, len(params))
-			for k, v := range params {
-				values = append(values, fmt.Sprintf("%s=%v", k, v))
-			}
-			body = strings.Join(values, "&")
-		}
-	}
-
-	response, err := b.Request(context.Background(), url, "PUT", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("发送PUT请求失败: %w", err)
-	}
-
-	var result map[string]interface{}
-	if err := json.Unmarshal(response.Body, &result); err != nil {
-		return nil, fmt.Errorf("解析响应失败: %w", err)
-	}
-
-	return result, nil
-}
-
-// delete 发送DELETE请求
-func (b *Binance) delete(endpoint string, params map[string]interface{}, signed bool) (map[string]interface{}, error) {
-	var url string
-	var headers map[string]string
-	var body interface{}
-	var err error
-
-	if signed {
-		// 签名请求
-		params["timestamp"] = b.GetServerTime()
-		var path string
-		path, headers, body, err = b.signRequest("DELETE", endpoint, params)
-		if err != nil {
-			return nil, fmt.Errorf("签名请求失败: %w", err)
-		}
-		url = b.getAPIURL() + path
-	} else {
-		// 未签名请求，只需要API Key
-		headers = map[string]string{
-			"X-MBX-APIKEY": b.GetApiKey(),
-			"Content-Type": "application/x-www-form-urlencoded",
-		}
-		url = b.getAPIURL() + endpoint
-
-		// 构建body
-		if len(params) > 0 {
-			values := make([]string, 0, len(params))
-			for k, v := range params {
-				values = append(values, fmt.Sprintf("%s=%v", k, v))
-			}
-			body = strings.Join(values, "&")
-		}
-	}
-
-	response, err := b.Request(context.Background(), url, "DELETE", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("发送DELETE请求失败: %w", err)
-	}
-
-	var result map[string]interface{}
-	if err := json.Unmarshal(response.Body, &result); err != nil {
-		return nil, fmt.Errorf("解析响应失败: %w", err)
-	}
-
-	return result, nil
 }
 
 // ========== 市场数据API ==========
@@ -908,679 +751,91 @@ func (b *Binance) parseKline(data []interface{}, symbol, interval string) *types
 	}
 }
 
-// FetchOrders 获取订单信息
-func (b *Binance) FetchOrders(ctx context.Context, symbol string, since int64, limit int, params map[string]interface{}) ([]*types.Order, error) {
-	// 构建请求参数
-	requestParams := map[string]interface{}{}
+// ========== 标记价格API ==========
 
-	// 如果指定了交易对
-	if symbol != "" {
-		requestParams["symbol"] = symbol
-	}
-
-	// 如果指定了起始时间
-	if since > 0 {
-		requestParams["startTime"] = since
-	}
-
-	// 如果指定了限制数量
-	if limit > 0 {
-		if limit > 1000 {
-			limit = 1000 // Binance最大限制
-		}
-		requestParams["limit"] = limit
-	}
-
-	// 合并用户参数
-	for k, v := range params {
-		requestParams[k] = v
-	}
-
-	// 添加时间戳（API要求）
-	requestParams["timestamp"] = b.GetServerTime()
-
-	// 选择正确的端点
-	var endpoint string
-	if b.marketType == types.MarketTypeFuture {
-		endpoint = "/fapi/v1/allOrders"
-	} else {
-		endpoint = "/api/v3/allOrders"
-	}
-
-	// 签名请求
-	path, headers, body, err := b.signRequest("GET", endpoint, requestParams)
-	if err != nil {
-		return nil, fmt.Errorf("签名请求失败: %w", err)
-	}
-
-	// 发送请求
-	response, err := b.Request(ctx, b.getAPIURL()+path, "GET", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("获取订单数据失败: %w", err)
-	}
-
-	// 解析响应
-	var rawOrders []map[string]interface{}
-	if err := json.Unmarshal(response.Body, &rawOrders); err != nil {
-		return nil, fmt.Errorf("解析订单数据失败: %w", err)
-	}
-
-	// 转换为标准格式
-	orders := make([]*types.Order, 0, len(rawOrders))
-	for _, rawOrder := range rawOrders {
-		order := b.parseOrder(rawOrder)
-		if order != nil {
-			orders = append(orders, order)
-		}
-	}
-
-	return orders, nil
-}
-
-// CancelOrder 取消订单
-func (b *Binance) CancelOrder(ctx context.Context, symbol string, orderID string, clientOrderID string) error {
-	if orderID == "" && clientOrderID == "" {
-		return fmt.Errorf("订单ID或客户端订单ID不能为空")
-	}
-
-	// 构建请求参数
-	params := map[string]interface{}{
-		"timestamp": b.GetServerTime(),
-	}
-
-	if symbol != "" {
-		params["symbol"] = symbol
-	}
-
-	if orderID != "" {
-		params["orderId"] = orderID
-	}
-
-	if clientOrderID != "" {
-		params["origClientOrderId"] = clientOrderID
-	}
-
-	// 选择正确的端点
-	var endpoint string
-	if b.marketType == types.MarketTypeFuture {
-		endpoint = "/fapi/v1/order"
-	} else {
-		endpoint = "/api/v3/order"
-	}
-
-	// 使用DELETE方法取消订单
-	result, err := b.delete(endpoint, params, true)
-	if err != nil {
-		return fmt.Errorf("取消订单请求失败: %w", err)
-	}
-
-	// 检查响应中是否有错误
-	if code, ok := result["code"]; ok {
-		if msg, ok := result["msg"]; ok {
-			return fmt.Errorf("取消订单失败 (code: %v): %v", code, msg)
-		}
-	}
-
-	logrus.Infof("订单取消成功: orderID=%s, clientOrderID=%s", orderID, clientOrderID)
-	return nil
-}
-
-// parseOrder 解析订单数据
-func (b *Binance) parseOrder(data map[string]interface{}) *types.Order {
-	orderID := b.SafeString(data, "orderId", "")
-	if orderID == "" {
-		return nil
-	}
-
-	// 解析时间戳
-	timestamp := b.SafeInteger(data, "time", 0)
-	updateTime := b.SafeInteger(data, "updateTime", timestamp)
-
-	// 期货和现货的字段可能不同
-	var executedQty, cummulativeQuoteQty float64
-	if b.marketType == types.MarketTypeFuture {
-		executedQty = b.SafeFloat(data, "executedQty", 0)
-		cummulativeQuoteQty = b.SafeFloat(data, "cumQuote", 0)
-	} else {
-		executedQty = b.SafeFloat(data, "executedQty", 0)
-		cummulativeQuoteQty = b.SafeFloat(data, "cummulativeQuoteQty", 0)
-	}
-
-	return &types.Order{
-		ID:                 orderID,
-		ClientOrderId:      b.SafeString(data, "clientOrderId", ""),
-		Timestamp:          timestamp,
-		Datetime:           b.ISO8601(timestamp),
-		LastTradeTimestamp: updateTime,
-		Symbol:             b.SafeString(data, "symbol", ""),
-		Type:               strings.ToLower(b.SafeString(data, "type", "")),
-		TimeInForce:        b.SafeString(data, "timeInForce", ""),
-		Side:               strings.ToLower(b.SafeString(data, "side", "")),
-		PositionSide:       b.SafeString(data, "positionSide", ""),
-		Amount:             b.SafeFloat(data, "origQty", 0),
-		Price:              b.SafeFloat(data, "price", 0),
-		Average:            0, // 需要根据已成交金额和数量计算
-		Filled:             executedQty,
-		Remaining:          b.SafeFloat(data, "origQty", 0) - executedQty,
-		Cost:               cummulativeQuoteQty,
-		Status:             strings.ToLower(b.SafeString(data, "status", "")),
-		Fee: types.Fee{
-			Currency: "", // Binance返回的订单信息中没有手续费信息
-			Cost:     0,
-		},
-		Trades: []types.Trade{}, // 单独获取交易记录
-		Info:   data,
-	}
-}
-
-// ========== 账户数据API ==========
-
-// FetchBalance 获取账户余额信息
-func (b *Binance) FetchBalance(ctx context.Context, params map[string]interface{}) (*types.Account, error) {
-	var endpoint string
-	if b.marketType == types.MarketTypeFuture {
-		endpoint = "/fapi/v2/account"
-	} else {
-		endpoint = "/api/v3/account"
-	}
-
-	// 签名请求
-	path, headers, body, err := b.signRequest("GET", endpoint, params)
-	if err != nil {
-		return nil, fmt.Errorf("签名请求失败: %w", err)
-	}
-
-	// 发送请求
-	response, err := b.Request(ctx, b.getAPIURL()+path, "GET", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("获取账户余额失败: %w", err)
-	}
-
-	// 解析响应
-	var accountResp map[string]interface{}
-	if err := json.Unmarshal(response.Body, &accountResp); err != nil {
-		return nil, fmt.Errorf("解析账户余额响应失败: %w", err)
-	}
-
-	return b.parseBalance(accountResp), nil
-}
-
-// parseBalance 解析余额数据
-func (b *Binance) parseBalance(data map[string]interface{}) *types.Account {
-	account := &types.Account{
-		Free:      make(map[string]float64),
-		Used:      make(map[string]float64),
-		Total:     make(map[string]float64),
-		Balances:  make(map[string]types.Balance),
-		Info:      data,
-		Timestamp: time.Now().UnixMilli(),
-	}
-
-	// 解析余额数组
-	var balancesKey string
-	if b.marketType == types.MarketTypeFuture {
-		balancesKey = "assets"
-	} else {
-		balancesKey = "balances"
-	}
-
-	if balancesData, ok := data[balancesKey].([]interface{}); ok {
-		for _, balanceItem := range balancesData {
-			if balanceMap, ok := balanceItem.(map[string]interface{}); ok {
-				asset := b.SafeString(balanceMap, "asset", "")
-				if asset == "" {
-					continue
-				}
-
-				var free, locked, total float64
-				if b.marketType == types.MarketTypeFuture {
-					total = b.SafeFloat(balanceMap, "walletBalance", 0)
-					free = b.SafeFloat(balanceMap, "availableBalance", 0)
-
-					// 如果没有availableBalance字段，回退到marginBalance
-					if free == 0 {
-						free = b.SafeFloat(balanceMap, "marginBalance", 0)
-					}
-
-					locked = total - free
-					if locked < 0 {
-						locked = 0
-					}
-				} else {
-					free = b.SafeFloat(balanceMap, "free", 0)
-					locked = b.SafeFloat(balanceMap, "locked", 0)
-					total = free + locked
-				}
-
-				// 只保存有余额的资产
-				if total > 0 {
-					account.Free[asset] = free
-					account.Used[asset] = locked
-					account.Total[asset] = total
-					account.Balances[asset] = types.Balance{
-						Free:  free,
-						Used:  locked,
-						Total: total,
-					}
-				}
-			}
-		}
-	}
-
-	return account
-}
-
-// FetchPositions 获取持仓信息
-func (b *Binance) FetchPositions(ctx context.Context, symbols []string, params map[string]interface{}) ([]*types.Position, error) {
+// FetchMarkPrice 获取单个交易对的标记价格
+func (b *Binance) FetchMarkPrice(ctx context.Context, symbol string) (*types.MarkPrice, error) {
 	if b.marketType != types.MarketTypeFuture {
-		return nil, fmt.Errorf("仓位信息仅在期货模式下可用")
+		return nil, fmt.Errorf("标记价格仅在期货模式下可用")
 	}
 
-	endpoint := "/fapi/v2/positionRisk"
-	requestParams := make(map[string]interface{})
-
-	// 如果指定了交易对
-	if len(symbols) == 1 {
-		requestParams["symbol"] = symbols[0]
+	endpoint := b.endpoints["futures"] + "/fapi/v1/premiumIndex"
+	if symbol != "" {
+		endpoint += "?symbol=" + symbol
 	}
 
-	// 合并用户参数
-	for k, v := range params {
-		requestParams[k] = v
-	}
-
-	// 签名请求
-	path, headers, body, err := b.signRequest("GET", endpoint, requestParams)
+	respStr, err := b.FetchWithRetry(ctx, endpoint, "GET", nil, "")
 	if err != nil {
-		return nil, fmt.Errorf("签名请求失败: %w", err)
+		return nil, err
 	}
 
-	// 发送请求
-	response, err := b.Request(ctx, b.getAPIURL()+path, "GET", headers, body, nil)
+	var data map[string]interface{}
+	if err := json.Unmarshal([]byte(respStr), &data); err != nil {
+		return nil, err
+	}
+
+	return b.parseMarkPrice(data), nil
+}
+
+// FetchMarkPrices 获取多个交易对的标记价格
+func (b *Binance) FetchMarkPrices(ctx context.Context, symbols []string) (map[string]*types.MarkPrice, error) {
+	if b.marketType != types.MarketTypeFuture {
+		return nil, fmt.Errorf("标记价格仅在期货模式下可用")
+	}
+
+	endpoint := b.endpoints["futures"] + "/fapi/v1/premiumIndex"
+
+	respStr, err := b.FetchWithRetry(ctx, endpoint, "GET", nil, "")
 	if err != nil {
-		return nil, fmt.Errorf("获取持仓信息失败: %w", err)
+		return nil, err
 	}
 
-	// 解析响应
-	var positionsResp []map[string]interface{}
-	if err := json.Unmarshal(response.Body, &positionsResp); err != nil {
-		return nil, fmt.Errorf("解析持仓响应失败: %w", err)
+	var dataArray []map[string]interface{}
+	if err := json.Unmarshal([]byte(respStr), &dataArray); err != nil {
+		return nil, err
 	}
 
-	// 转换为标准格式
-	positions := make([]*types.Position, 0)
-	for i := range positionsResp {
-		positionData := positionsResp[i]
-		position := b.parsePosition(positionData)
-		if position != nil && position.Size != 0 { // 只返回有持仓的记录
-			positions = append(positions, position)
+	markPrices := make(map[string]*types.MarkPrice)
+	symbolsMap := make(map[string]bool)
+
+	// 如果指定了symbols，创建查找map
+	if len(symbols) > 0 {
+		for _, symbol := range symbols {
+			symbolsMap[symbol] = true
 		}
 	}
 
-	return positions, nil
-}
-
-// parsePosition 解析持仓数据
-func (b *Binance) parsePosition(data map[string]interface{}) *types.Position {
-	symbol := b.SafeString(data, "symbol", "")
-	if symbol == "" {
-		return nil
-	}
-
-	positionAmt := b.SafeFloat(data, "positionAmt", 0)
-	if positionAmt == 0 {
-		return nil // 忽略无持仓的记录
-	}
-
-	// 确定持仓方向和数量
-	var side string
-	var size float64
-	positionSide := b.SafeString(data, "positionSide", "")
-
-	if positionSide == "BOTH" {
-		// 单向持仓模式：通过数量正负判断方向
-		if positionAmt > 0 {
-			side = types.PositionSideLong
-			size = positionAmt
-		} else {
-			side = types.PositionSideShort
-			size = -positionAmt // 转为正数
+	for _, data := range dataArray {
+		symbol := b.SafeString(data, "symbol", "")
+		if symbol == "" {
+			continue
 		}
-	} else {
-		// 双向持仓模式：方向已确定，数量取绝对值
-		side = strings.ToLower(positionSide)
-		if positionAmt < 0 {
-			size = -positionAmt
-		} else {
-			size = positionAmt
+
+		// 如果指定了symbols，只处理指定的symbols
+		if len(symbols) > 0 && !symbolsMap[symbol] {
+			continue
 		}
+
+		markPrice := b.parseMarkPrice(data)
+		markPrices[symbol] = markPrice
 	}
 
-	// 计算名义价值 (notional)
-	markPrice := b.SafeFloat(data, "markPrice", 0)
-	notional := b.SafeFloat(data, "notional", 0)
-	if notional < 0 {
-		notional = -notional // 确保notional为正数
-	}
-	if notional == 0 && markPrice > 0 {
-		notional = size * markPrice
-	}
-
-	return &types.Position{
-		Symbol:            symbol,
-		Size:              size,
-		Side:              side,
-		EntryPrice:        b.SafeFloat(data, "entryPrice", 0),
-		MarkPrice:         markPrice,
-		NotionalValue:     notional,
-		UnrealizedPnl:     b.SafeFloat(data, "unRealizedProfit", 0),
-		Timestamp:         b.SafeInt(data, "updateTime", time.Now().UnixMilli()),
-		Leverage:          b.SafeFloat(data, "leverage", 1),
-		MarginType:        b.SafeString(data, "marginType", ""),
-		IsolatedMargin:    b.SafeFloat(data, "isolatedMargin", 0),
-		InitialMargin:     b.SafeFloat(data, "initialMargin", 0),
-		MaintenanceMargin: b.SafeFloat(data, "maintMargin", 0),
-		Info:              data,
-	}
+	return markPrices, nil
 }
 
-// ========== WebSocket相关方法 ==========
-
-// StartWebSocket 启动WebSocket连接
-func (b *Binance) StartWebSocket() error {
-	if b.wsClient == nil {
-		return fmt.Errorf("websocket not initialized")
+// parseMarkPrice 解析标记价格数据
+func (b *Binance) parseMarkPrice(data map[string]interface{}) *types.MarkPrice {
+	return &types.MarkPrice{
+		Symbol:               b.SafeString(data, "symbol", ""),
+		MarkPrice:            b.SafeFloat(data, "markPrice", 0),
+		IndexPrice:           b.SafeFloat(data, "indexPrice", 0),
+		FundingRate:          b.SafeFloat(data, "lastFundingRate", 0),
+		NextFundingTime:      b.SafeInteger(data, "nextFundingTime", 0),
+		InterestRate:         b.SafeFloat(data, "interestRate", 0),
+		EstimatedSettlePrice: b.SafeFloat(data, "estimatedSettlePrice", 0),
+		Timestamp:            time.Now().UnixMilli(),
+		Info:                 data,
 	}
-	return b.wsClient.Start()
-}
-
-// ========== 用户数据流相关方法 ==========
-
-// CreateListenKey 创建用户数据流监听密钥
-func (b *Binance) CreateListenKey() (string, error) {
-	endpoint := "/fapi/v1/listenKey"
-
-	params := make(map[string]interface{})
-	result, err := b.post(endpoint, params, false) // 不需要签名，但需要API key
-	if err != nil {
-		logrus.Errorf("创建listenKey失败: %v", err)
-		return "", fmt.Errorf("创建listenKey失败: %w", err)
-	}
-
-	if listenKey, ok := result["listenKey"].(string); ok {
-		logrus.Infof("成功创建listenKey: %s", listenKey[:16]+"...")
-		return listenKey, nil
-	}
-
-	logrus.Errorf("listenKey响应格式错误，响应内容: %+v", result)
-	return "", fmt.Errorf("listenKey响应格式错误")
-}
-
-// KeepaliveListenKey 延长listenKey有效期
-func (b *Binance) KeepaliveListenKey(listenKey string) error {
-	endpoint := "/fapi/v1/listenKey"
-
-	params := map[string]interface{}{
-		"listenKey": listenKey,
-	}
-
-	_, err := b.put(endpoint, params, false) // 不需要签名，但需要API key
-	if err != nil {
-		return fmt.Errorf("延长listenKey失败: %w", err)
-	}
-
-	return nil
-}
-
-// CloseListenKey 关闭用户数据流
-func (b *Binance) CloseListenKey(listenKey string) error {
-	endpoint := "/fapi/v1/listenKey"
-
-	params := map[string]interface{}{
-		"listenKey": listenKey,
-	}
-
-	_, err := b.delete(endpoint, params, false) // 不需要签名，但需要API key
-	if err != nil {
-		return fmt.Errorf("关闭listenKey失败: %w", err)
-	}
-
-	return nil
-}
-
-// StopWebSocket 停止WebSocket连接
-func (b *Binance) StopWebSocket() {
-	if b.wsClient != nil {
-		b.wsClient.Stop()
-	}
-}
-
-// SubscribeToOrderbook 订阅订单簿
-func (b *Binance) SubscribeToOrderbook(symbol string, publishFunc func(types.MetaData, interface{}) error) error {
-	if b.wsClient == nil {
-		return fmt.Errorf("websocket not initialized")
-	}
-
-	b.wsClient.publishFunc = publishFunc
-	streamName := fmt.Sprintf("%s@depth", strings.ToLower(strings.Replace(symbol, "/", "", -1)))
-	return b.wsClient.UnsubscribeStream(streamName) // 注意：当前WebSocket实现主要专注于MarkPrice，此功能可能需要扩展
-}
-
-// UnsubscribeFromOrderbook 取消订阅订单簿
-func (b *Binance) UnsubscribeFromOrderbook(symbol string) error {
-	if b.wsClient == nil {
-		return fmt.Errorf("websocket not initialized")
-	}
-
-	streamName := fmt.Sprintf("%s@depth", strings.ToLower(strings.Replace(symbol, "/", "", -1)))
-	return b.wsClient.UnsubscribeStream(streamName)
-}
-
-// SubscribeToMarkPrice 订阅所有币种的标记价格数组流
-func (b *Binance) SubscribeToMarkPrice(publishFunc func(types.MetaData, interface{}) error) error {
-	if b.wsClient == nil {
-		return fmt.Errorf("websocket not initialized")
-	}
-
-	// 设置发布函数
-	if publishFunc != nil {
-		b.wsClient.SetPublishFunc(publishFunc)
-	}
-
-	// 订阅所有币种的标记价格流
-	return b.wsClient.SubscribeMarkPrice()
-}
-
-// UnsubscribeFromMarkPrice 取消订阅标记价格数组流
-func (b *Binance) UnsubscribeFromMarkPrice() error {
-	if b.wsClient == nil {
-		return fmt.Errorf("websocket not initialized")
-	}
-
-	return b.wsClient.UnsubscribeStream(StreamMarkPriceArray1s)
-}
-
-// ========== 用户数据流订阅方法 ==========
-
-// SubscribeToUserData 订阅用户数据流
-func (b *Binance) SubscribeToUserData(publishFunc func(types.MetaData, interface{}) error) error {
-	if b.userDataStream == nil {
-		return fmt.Errorf("user data stream not initialized")
-	}
-
-	return b.userDataStream.Start(publishFunc)
-}
-
-// UnsubscribeFromUserData 取消订阅用户数据流
-func (b *Binance) UnsubscribeFromUserData() error {
-	if b.userDataStream == nil {
-		return fmt.Errorf("user data stream not initialized")
-	}
-
-	return b.userDataStream.Stop()
-}
-
-// GetWebSocketClient 获取WebSocket客户端
-func (b *Binance) GetWebSocketClient() *WebSocket {
-	return b.wsClient
-}
-
-// SetWebSocketReconnectHandler 设置WebSocket重连处理器
-func (b *Binance) SetWebSocketReconnectHandler(handler func(int, error)) {
-	// 为普通连接池设置重连处理器
-	if b.wsClient != nil {
-		b.wsClient.SetReconnectHandler(handler)
-	}
-}
-
-// SetUserDataReconnectHandler 设置用户数据流重连处理器
-func (b *Binance) SetUserDataReconnectHandler(handler func(int, error)) {
-	if b.userDataStream != nil {
-		b.userDataStream.SetReconnectHandler(handler)
-	}
-}
-
-// SetUserDataErrorHandler 设置用户数据流错误处理器
-func (b *Binance) SetUserDataErrorHandler(handler func(error)) {
-	if b.userDataStream != nil {
-		b.userDataStream.SetErrorHandler(handler)
-	}
-}
-
-// GetUserDataStats 获取用户数据流统计信息
-func (b *Binance) GetUserDataStats() map[string]interface{} {
-	if b.userDataStream != nil {
-		return b.userDataStream.GetStats()
-	}
-	return nil
-}
-
-// ========== 期货交易API ==========
-
-// FuturesNewOrder 期货下单 - 支持双向持仓
-func (b *Binance) FuturesNewOrder(params map[string]interface{}) (*FuturesOrderResponse, error) {
-	endpoint := "/fapi/v1/order"
-
-	// 添加时间戳
-	params["timestamp"] = b.GetServerTime()
-
-	// 签名请求
-	path, headers, body, err := b.signRequest("POST", endpoint, params)
-	if err != nil {
-		return nil, fmt.Errorf("签名请求失败: %v", err)
-	}
-
-	// 发送请求
-	response, err := b.Request(context.Background(), b.getAPIURL()+path, "POST", headers, body, nil)
-	if err != nil {
-		return nil, fmt.Errorf("发送下单请求失败: %v", err)
-	}
-
-	// 检查HTTP状态码
-	if response.StatusCode != 200 && response.StatusCode != 201 {
-		// 尝试解析错误响应
-		var errorResp struct {
-			Code int    `json:"code"`
-			Msg  string `json:"msg"`
-		}
-		if err := json.Unmarshal(response.Body, &errorResp); err == nil {
-			return nil, fmt.Errorf("binance下单失败 [%d]: %s (HTTP %d)",
-				errorResp.Code, errorResp.Msg, response.StatusCode)
-		}
-		return nil, fmt.Errorf("binance下单失败: HTTP %d, 响应: %s",
-			response.StatusCode, string(response.Body))
-	}
-
-	var orderResp FuturesOrderResponse
-	if err := json.Unmarshal(response.Body, &orderResp); err != nil {
-		return nil, fmt.Errorf("解析下单响应失败: %v, 响应内容: %s", err, string(response.Body))
-	}
-
-	// 验证订单ID
-	if orderResp.OrderID == 0 {
-		return nil, fmt.Errorf("下单失败: 返回的OrderID为0, 响应: %+v", orderResp)
-	}
-
-	return &orderResp, nil
-}
-
-// SetLeverage 设置杠杆
-func (b *Binance) SetLeverage(symbol string, leverage int) error {
-	params := map[string]interface{}{
-		"symbol":    symbol,
-		"leverage":  leverage,
-		"timestamp": b.GetServerTime(),
-	}
-
-	endpoint := "/fapi/v1/leverage"
-	path, headers, body, err := b.signRequest("POST", endpoint, params)
-	if err != nil {
-		return fmt.Errorf("签名设置杠杆请求失败: %v", err)
-	}
-
-	_, err = b.Request(context.Background(), b.getAPIURL()+path, "POST", headers, body, nil)
-	if err != nil {
-		return fmt.Errorf("设置杠杆失败: %v", err)
-	}
-
-	return nil
-}
-
-// SetMarginType 设置保证金模式
-func (b *Binance) SetMarginType(symbol string, marginType string) error {
-	params := map[string]interface{}{
-		"symbol":     symbol,
-		"marginType": marginType, // ISOLATED 或 CROSSED
-		"timestamp":  time.Now().UnixMilli(),
-	}
-
-	endpoint := "/fapi/v1/marginType"
-	path, headers, body, err := b.signRequest("POST", endpoint, params)
-	if err != nil {
-		return fmt.Errorf("签名设置保证金模式请求失败: %v", err)
-	}
-
-	_, err = b.Request(context.Background(), b.getAPIURL()+path, "POST", headers, body, nil)
-	if err != nil {
-		return fmt.Errorf("设置保证金模式失败: %v", err)
-	}
-
-	return nil
-}
-
-// getAPIURL 获取API基础URL
-func (b *Binance) getAPIURL() string {
-	// 使用config中的URL配置，保证与其他方法一致
-	return b.config.GetFuturesURL()
-}
-
-// ========== 响应结构体 ==========
-
-// FuturesOrderResponse 期货订单响应
-type FuturesOrderResponse struct {
-	ClientOrderID string `json:"clientOrderId"`
-	CumQty        string `json:"cumQty"`
-	CumQuote      string `json:"cumQuote"`
-	ExecutedQty   string `json:"executedQty"`
-	OrderID       int64  `json:"orderId"`
-	AvgPrice      string `json:"avgPrice"`
-	OrigQty       string `json:"origQty"`
-	Price         string `json:"price"`
-	ReduceOnly    bool   `json:"reduceOnly"`
-	Side          string `json:"side"`
-	PositionSide  string `json:"positionSide"`
-	Status        string `json:"status"`
-	StopPrice     string `json:"stopPrice"`
-	ClosePosition bool   `json:"closePosition"`
-	Symbol        string `json:"symbol"`
-	TimeInForce   string `json:"timeInForce"`
-	Type          string `json:"type"`
-	OrigType      string `json:"origType"`
-	ActivatePrice string `json:"activatePrice"`
-	PriceRate     string `json:"priceRate"`
-	UpdateTime    int64  `json:"updateTime"`
-	WorkingType   string `json:"workingType"`
-	PriceProtect  bool   `json:"priceProtect"`
 }
 
 // ========== 实用方法 ==========

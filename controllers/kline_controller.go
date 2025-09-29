@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"trading_assistant/pkg/exchanges/binance"
+	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/redis"
 
@@ -13,21 +13,21 @@ import (
 )
 
 type KlineController struct {
-	binanceClient *binance.Binance
+	exchangeClient exchange_factory.ExchangeInterface
 }
 
 // NewKlineController 创建K线控制器
-func NewKlineController(binanceClient *binance.Binance) *KlineController {
+func NewKlineController(exchangeClient exchange_factory.ExchangeInterface) *KlineController {
 	return &KlineController{
-		binanceClient: binanceClient,
+		exchangeClient: exchangeClient,
 	}
 }
 
 // GetKlines 获取K线数据
 func (k *KlineController) GetKlines(ctx *gin.Context) {
-	if k.binanceClient == nil {
+	if k.exchangeClient == nil {
 		ctx.JSON(http.StatusServiceUnavailable, gin.H{
-			"error": "Binance客户端未初始化",
+			"error": "交易所客户端未初始化",
 		})
 		return
 	}
@@ -88,7 +88,7 @@ func (k *KlineController) GetKlines(ctx *gin.Context) {
 	logrus.Infof("缓存中无K线数据，实时获取: symbol=%s, interval=%s, limit=%d, since=%d", symbol, interval, limit, since)
 
 	// 从Binance获取K线数据
-	klines, err := k.binanceClient.FetchKlines(ctx.Request.Context(), symbol, interval, since, limit, nil)
+	klines, err := k.exchangeClient.FetchKlines(ctx.Request.Context(), symbol, interval, since, limit, nil)
 	if err != nil {
 		logrus.Errorf("获取K线数据失败: %v", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -99,12 +99,14 @@ func (k *KlineController) GetKlines(ctx *gin.Context) {
 	}
 
 	// 缓存K线数据
-	if redis.GlobalRedisClient != nil {
+	if redis.GlobalRedisClient != nil && len(klines) > 0 {
 		if err := redis.GlobalRedisClient.SetCache(cacheKey, klines); err != nil {
 			logrus.Errorf("缓存K线数据失败: %v", err)
 		} else {
 			logrus.Debugf("已缓存K线数据5分钟: %s", cacheKey)
 		}
+	} else if len(klines) == 0 {
+		logrus.Warnf("K线数据为空，不进行缓存: symbol=%s, interval=%s", symbol, interval)
 	}
 
 	logrus.Infof("成功获取K线数据: %d条", len(klines))

@@ -7,7 +7,6 @@ import (
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/freqtrade"
 	"trading_assistant/pkg/redis"
-	"trading_assistant/pkg/telegram"
 	"trading_assistant/pkg/utils"
 
 	"github.com/sirupsen/logrus"
@@ -50,9 +49,6 @@ func (oe *OrderExecutor) ExecuteOrder(estimate *models.PriceEstimate, currentPri
 	if err := oe.updateEstimateStatus(estimate, "triggered"); err != nil {
 		logrus.Errorf("更新预估状态失败: %v", err)
 	}
-
-	// 发送通知
-	oe.sendFreqtradeOrderNotification(estimate, currentPrice)
 
 	logrus.WithFields(logrus.Fields{
 		"symbol":        estimate.Symbol,
@@ -205,7 +201,7 @@ func (oe *OrderExecutor) executeTakeProfit(estimate *models.PriceEstimate, curre
 	return oe.executeSellOperation(estimate, currentPrice, "take_profit")
 }
 
-// executeSellOperation 执行卖出操作（止盈）
+// executeSellOperation 执行卖出操作
 func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, currentPrice float64, operation string) error {
 	// 获取当前交易状态
 	trades, err := oe.freqtradeClient.GetTradeStatus()
@@ -288,31 +284,9 @@ func (oe *OrderExecutor) updateEstimateStatus(estimate *models.PriceEstimate, st
 		return err
 	}
 
-	// 通过WebSocket广播价格预估更新
+	// 广播价格预估更新
 	go utils.BroadcastSymbolEstimatesUpdate()
 	return nil
-}
-
-// sendFreqtradeOrderNotification 发送 Freqtrade 订单通知
-func (oe *OrderExecutor) sendFreqtradeOrderNotification(estimate *models.PriceEstimate, currentPrice float64) {
-	if telegram.GlobalTelegramClient == nil {
-		return
-	}
-
-	actionText := oe.getActionText(estimate.ActionType)
-	positionText := oe.getPositionText(estimate.Side)
-
-	message := fmt.Sprintf("%s %s %s\n比例: %.2f%%\n目标价: %.4f\n当前价: %.4f",
-		estimate.Symbol,
-		actionText,
-		positionText,
-		estimate.Percentage,
-		estimate.TargetPrice,
-		currentPrice)
-
-	if err := telegram.GlobalTelegramClient.SendMessage(message); err != nil {
-		logrus.Errorf("发送Freqtrade订单通知失败: %v", err)
-	}
 }
 
 // getActionText 获取操作类型的中文描述（freqtrade的3种核心操作）

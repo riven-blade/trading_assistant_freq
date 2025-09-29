@@ -1,16 +1,13 @@
 package core
 
 import (
-	"fmt"
 	"time"
 	"trading_assistant/models"
 	"trading_assistant/pkg/config"
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/freqtrade"
 	"trading_assistant/pkg/redis"
-	"trading_assistant/pkg/telegram"
 	"trading_assistant/pkg/utils"
-	"trading_assistant/pkg/websocket"
 
 	"github.com/sirupsen/logrus"
 )
@@ -56,14 +53,6 @@ func (pm *PriceMonitor) Stop() {
 	pm.running = false
 	pm.stopChan <- true
 	logrus.Info("价格监控已停止")
-
-	// 发送Telegram通知
-	if telegram.GlobalTelegramClient != nil {
-		err := telegram.GlobalTelegramClient.SendMessage("监控停止")
-		if err != nil {
-			logrus.Errorf("发送Telegram通知失败: %v", err)
-		}
-	}
 }
 
 // IsRunning 检查是否在运行
@@ -166,18 +155,11 @@ func (pm *PriceMonitor) triggerEstimate(estimate *models.PriceEstimate, currentP
 	if err != nil {
 		logrus.Errorf("订单执行失败: %v", err)
 
-		// 发送错误通知，包含详细的交易信息
-		if telegram.GlobalTelegramClient != nil {
-			// 构建详细的错误消息
-			actionText := getActionText(estimate.ActionType)
-			positionText := getPositionText(estimate.Side)
-
-			errorMessage := fmt.Sprintf("%s %s %s\n比例: %.2f%%\n目标价: %.4f\n当前价: %.6f",
-				estimate.Symbol, actionText, positionText,
-				estimate.Percentage, estimate.TargetPrice, currentPrice)
-
-			telegram.GlobalTelegramClient.SendError(errorMessage, err)
-		}
+		// 记录错误信息到日志
+		actionText := getActionText(estimate.ActionType)
+		positionText := getPositionText(estimate.Side)
+		logrus.Errorf("订单执行失败: %s %s %s, 比例: %.2f%%, 目标价: %.4f, 当前价: %.6f, 错误: %v",
+			estimate.Symbol, actionText, positionText, estimate.Percentage, estimate.TargetPrice, currentPrice, err)
 
 		// 更新预估状态为失败
 		estimate.Status = models.EstimateStatusFailed
@@ -193,7 +175,7 @@ func (pm *PriceMonitor) triggerEstimate(estimate *models.PriceEstimate, currentP
 		return
 	}
 
-	// 通过WebSocket广播价格预估更新
+	// 广播价格预估更新
 	go utils.BroadcastSymbolEstimatesUpdate()
 }
 
@@ -242,16 +224,10 @@ func (pm *PriceMonitor) checkFundingRateForShort(estimate *models.PriceEstimate,
 			logrus.Errorf("更新价格预估状态失败: %v", err)
 		}
 
-		// 发送Telegram通知
-		if telegram.GlobalTelegramClient != nil {
-			actionText := getActionText(estimate.ActionType)
-			message := fmt.Sprintf("做空触发失败 - 资金费率检查\n交易对: %s\n操作: %s\n当前资金费率: %.4f%%\n阈值: %.4f%%\n原因: 资金费率过低，不允许开空仓",
-				estimate.Symbol, actionText, currentFundingRate*100, threshold*100)
-			err := telegram.GlobalTelegramClient.SendMessage(message)
-			if err != nil {
-				logrus.Errorf("发送Telegram通知失败: %v", err)
-			}
-		}
+		// 记录资金费率检查失败信息到日志
+		actionText := getActionText(estimate.ActionType)
+		logrus.Warnf("做空触发失败 - 资金费率检查: 交易对=%s, 操作=%s, 当前资金费率=%.4f%%, 阈值=%.4f%%, 原因=资金费率过低",
+			estimate.Symbol, actionText, currentFundingRate*100, threshold*100)
 
 		// 通过WebSocket广播失败事件
 		go pm.broadcastFundingRateFailEvent(estimate, currentFundingRate, threshold)
@@ -267,15 +243,9 @@ func (pm *PriceMonitor) checkFundingRateForShort(estimate *models.PriceEstimate,
 	return true
 }
 
-// broadcastFundingRateFailEvent 广播资金费率检查失败事件到WebSocket客户端
+// broadcastFundingRateFailEvent 记录资金费率检查失败事件
 func (pm *PriceMonitor) broadcastFundingRateFailEvent(estimate *models.PriceEstimate, currentFundingRate, threshold float64) {
-	// 获取WebSocket管理器
-	wsManager := websocket.GetGlobalWebSocketManager()
-	if wsManager == nil {
-		return
-	}
-
-	// 事件广播功能已移除
+	// 记录资金费率检查失败事件
 	logrus.Infof("资金费率检查失败事件: %s 资金费率 %.4f%%",
 		estimate.Symbol, currentFundingRate*100)
 }

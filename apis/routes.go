@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"trading_assistant/controllers"
 	"trading_assistant/core"
-	"trading_assistant/pkg/exchanges/binance"
+	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/freqtrade"
 	"trading_assistant/pkg/middleware"
 	"trading_assistant/pkg/websocket"
@@ -12,12 +12,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, binanceClient *binance.Binance, marketManager *core.MarketManager, freqtradeController *freqtrade.Controller) {
+func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterface, marketManager *core.MarketManager, freqtradeController *freqtrade.Controller) {
 	// 创建控制器实例
-	coinController := controllers.NewCoinController(binanceClient, marketManager)
+	coinController := controllers.NewCoinController(exchangeClient, marketManager)
 	priceController := &controllers.PriceController{}
 	authController := &controllers.AuthController{}
-	klineController := controllers.NewKlineController(binanceClient)
+	klineController := controllers.NewKlineController(exchangeClient)
 	positionController := controllers.NewPositionController(freqtradeController)
 
 	// 初始化WebSocket管理器

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 	"trading_assistant/models"
-	"trading_assistant/pkg/exchanges/binance"
+	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/redis"
 
 	"github.com/sirupsen/logrus"
@@ -13,15 +13,15 @@ import (
 
 // MarketManager 市场数据管理器
 type MarketManager struct {
-	binanceClient *binance.Binance
-	priceManager  *PriceManager
+	exchangeClient exchange_factory.ExchangeInterface
+	priceManager   *PriceManager
 }
 
 // NewMarketManager 创建市场数据管理器
-func NewMarketManager(binanceClient *binance.Binance) *MarketManager {
+func NewMarketManager(exchangeClient exchange_factory.ExchangeInterface) *MarketManager {
 	return &MarketManager{
-		binanceClient: binanceClient,
-		priceManager:  NewPriceManager(binanceClient),
+		exchangeClient: exchangeClient,
+		priceManager:   NewPriceManager(exchangeClient),
 	}
 }
 
@@ -57,13 +57,6 @@ func (mm *MarketManager) GetPriceSubscriptionStatus() map[string]interface{} {
 	return mm.priceManager.GetStatus()
 }
 
-// RefreshSelectedCoinsCache 刷新价格管理器的选中币种缓存
-func (mm *MarketManager) RefreshSelectedCoinsCache() {
-	if mm.priceManager != nil {
-		mm.priceManager.RefreshSelectedCoinsCache()
-	}
-}
-
 // SyncMarketAndPriceData 同步市场数据和价格数据
 func (mm *MarketManager) SyncMarketAndPriceData() error {
 	logrus.Info("开始同步市场数据和价格数据...")
@@ -85,7 +78,7 @@ func (mm *MarketManager) syncMarketData() error {
 	logrus.Info("开始同步市场数据...")
 
 	// 获取所有USDT期货交易对
-	markets, err := mm.binanceClient.FetchMarkets(context.Background(), nil)
+	markets, err := mm.exchangeClient.FetchMarkets(context.Background(), nil)
 	if err != nil {
 		return fmt.Errorf("获取市场数据失败: %v", err)
 	}
@@ -222,7 +215,7 @@ func (mm *MarketManager) syncPriceData() error {
 		logrus.Warnf("symbols和marketIDMap数量不一致: symbols=%d, marketIDMap=%d", len(symbols), len(marketIDMap))
 	}
 
-	tickers, err := mm.binanceClient.FetchTickers(context.Background(), symbols, nil)
+	tickers, err := mm.exchangeClient.FetchTickers(context.Background(), symbols, nil)
 	if err != nil {
 		logrus.Errorf("批量获取ticker数据失败: %v", err)
 		return fmt.Errorf("批量获取ticker数据失败: %v", err)
@@ -254,7 +247,7 @@ func (mm *MarketManager) syncPriceData() error {
 		coin.QuoteVolume = fmt.Sprintf("%.8f", ticker.QuoteVolume)
 		coin.UpdatedAt = now
 
-		// 确保精度信息仍然正确（防止被覆盖）
+		// 确保精度信息仍然正确
 		if coin.PricePrecision == 0 {
 			coin.PricePrecision = coin.GetPricePrecisionFromTickSize()
 		}

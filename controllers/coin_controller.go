@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"trading_assistant/core"
 	"trading_assistant/models"
-	"trading_assistant/pkg/exchanges/binance"
+	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/redis"
 
 	"github.com/gin-gonic/gin"
@@ -12,15 +12,15 @@ import (
 )
 
 type CoinController struct {
-	binanceClient *binance.Binance
-	marketManager *core.MarketManager
+	exchangeClient exchange_factory.ExchangeInterface
+	marketManager  *core.MarketManager
 }
 
 // NewCoinController 创建币种控制器
-func NewCoinController(binanceClient *binance.Binance, marketManager *core.MarketManager) *CoinController {
+func NewCoinController(exchangeClient exchange_factory.ExchangeInterface, marketManager *core.MarketManager) *CoinController {
 	return &CoinController{
-		binanceClient: binanceClient,
-		marketManager: marketManager,
+		exchangeClient: exchangeClient,
+		marketManager:  marketManager,
 	}
 }
 
@@ -39,7 +39,7 @@ func (c *CoinController) SelectCoin(ctx *gin.Context) {
 		return
 	}
 
-	// 验证币种是否存在 (req.Symbol现在存储的就是MarketID)
+	// 验证币种是否存在
 	coin, err := redis.GlobalRedisClient.GetCoin(req.Symbol)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
@@ -56,7 +56,7 @@ func (c *CoinController) SelectCoin(ctx *gin.Context) {
 		status = models.CoinSelectionInactive
 	}
 
-	// 直接使用Symbol作为MarketID (现在Symbol字段存储的就是MarketID)
+	// 直接使用Symbol作为MarketID
 	err = redis.GlobalRedisClient.SetCoinSelection(req.Symbol, status)
 	if err != nil {
 		logrus.Errorf("更新币种选择状态失败: %v", err)
@@ -70,11 +70,6 @@ func (c *CoinController) SelectCoin(ctx *gin.Context) {
 		logrus.Infof("币种 %s 已标记为选中", req.Symbol)
 	} else {
 		logrus.Infof("币种 %s 已取消选中", req.Symbol)
-	}
-
-	// 刷新价格管理器的选中币种缓存
-	if c.marketManager != nil {
-		c.marketManager.RefreshSelectedCoinsCache()
 	}
 
 	// 获取选择状态用于响应
