@@ -29,6 +29,7 @@ type PriceEstimateRequest struct {
 	MarginMode  string      `json:"margin_mode"`                   // CROSS, ISOLATED (默认CROSS)
 	TriggerType string      `json:"trigger_type"`                  // 触发类型
 	Tag         interface{} `json:"tag"`                           // 交易标签（支持字符串和数字）
+	StakeAmount float64     `json:"stake_amount"`                  // 开仓金额 (USDT)
 }
 
 // validatePriceEstimateRequest 验证价格预估请求
@@ -170,6 +171,7 @@ func (p *PriceController) createPriceEstimateModel(req *PriceEstimateRequest) *m
 		MarginMode:  req.MarginMode,
 		TriggerType: req.TriggerType,
 		Tag:         tagStr,                         // 交易标签（转换为字符串）
+		StakeAmount: req.StakeAmount,                // 开仓金额 (USDT)
 		Status:      models.EstimateStatusListening, // 初始状态为监听状态
 		Enabled:     false,                          // 默认未启用，需要用户手动启用
 		CreatedAt:   time.Now(),

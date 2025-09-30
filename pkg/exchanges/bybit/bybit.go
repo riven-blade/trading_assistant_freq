@@ -326,6 +326,11 @@ func (b *Bybit) FetchMarkets(ctx context.Context, params map[string]interface{})
 	}
 	params["category"] = b.category
 
+	// 设置limit参数以获取更多数据
+	if _, hasLimit := params["limit"]; !hasLimit {
+		params["limit"] = 1000
+	}
+
 	// 构建查询参数
 	query := b.buildQuery(params)
 	if query != "" {
@@ -341,8 +346,9 @@ func (b *Bybit) FetchMarkets(ctx context.Context, params map[string]interface{})
 		RetCode int    `json:"retCode"`
 		RetMsg  string `json:"retMsg"`
 		Result  struct {
-			Category string                   `json:"category"`
-			List     []map[string]interface{} `json:"list"`
+			Category       string                   `json:"category"`
+			List           []map[string]interface{} `json:"list"`
+			NextPageCursor string                   `json:"nextPageCursor"`
 		} `json:"result"`
 	}
 	if err := json.Unmarshal([]byte(respStr), &resp); err != nil {

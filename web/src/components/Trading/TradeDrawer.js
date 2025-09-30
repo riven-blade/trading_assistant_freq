@@ -46,8 +46,8 @@ const TradeDrawer = ({
   const [pricePercentage, setPricePercentage] = useState(0);
   
   // 定义入场标签选项
-  const longEntryTags = [1, 2, 3, 4, 5, 6, 21, 41, 42, 43, 44, 45, 46, 61, 62, 101, 102, 103, 104, 120, 141, 142, 143, 144, 161, 162, 163];
-  const shortEntryTags = [501, 502, 542];
+  const longEntryTags = [120];
+  const shortEntryTags = [620];
   
   // 获取当前方向对应的标签选项
   const availableTags = side === 'long' ? longEntryTags : shortEntryTags;

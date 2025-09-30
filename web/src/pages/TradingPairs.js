@@ -2,11 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Drawer, 
   Input, 
-  Typography, 
   message,
   Spin,
   Empty,
-  Badge,
   Tag,
   Select,
   Table,
@@ -30,8 +28,6 @@ import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
 import { DEFAULT_CONFIG } from '../utils/constants';
 
-const { Text } = Typography;
-
 const { Option } = Select;
 
 const TradingPairs = () => {
@@ -44,6 +40,7 @@ const TradingPairs = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false); // 刷新状态
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [coinFilter, setCoinFilter] = useState([]); // 币种筛选
   
   // 监听窗口大小变化
   useEffect(() => {
@@ -493,6 +490,28 @@ const TradingPairs = () => {
 
   // 页面操作配置
   const headerActions = [
+    <Select
+      key="filter"
+      mode="multiple"
+      placeholder="筛选币种"
+      value={coinFilter}
+      onChange={setCoinFilter}
+      style={{ width: isMobile ? 150 : 300, minWidth: 150 }}
+      allowClear
+      maxTagCount={1}
+      maxTagPlaceholder={(omittedValues) => `+${omittedValues.length}个币种`}
+      showSearch
+      filterOption={(input, option) =>
+        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+      }
+      virtual={false}
+      listHeight={256}
+      getPopupContainer={(trigger) => trigger.parentElement}
+      options={selectedPairs.map(pair => ({
+        label: pair.symbol,
+        value: pair.symbol
+      }))}
+    />,
     <button 
       key="refresh"
       className="control-btn primary-btn trading-pairs-header-btn"
@@ -532,17 +551,17 @@ const TradingPairs = () => {
         actions={headerActions}
       />
 
-      <div style={{ marginBottom: 16 }}>
-        <Badge count={selectedPairs.length} offset={[10, 0]}>
-          <Text strong>已选中的交易对</Text>
-        </Badge>
-      </div>
-
       {selectedPairs.length === 0 ? (
         <Empty description="暂无选中的交易对" />
       ) : (
         <Row gutter={[16, 16]}>
           {selectedPairs
+            .filter(pair => {
+              // 如果没有选择筛选条件，显示全部
+              if (coinFilter.length === 0) return true;
+              // 否则只显示选中的币种
+              return coinFilter.includes(pair.symbol);
+            })
             .sort((a, b) => {
               // 按交易额降序排序
               const aVolume = parseFloat(a.quote_volume || '0');

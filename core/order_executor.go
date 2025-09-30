@@ -103,11 +103,12 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 	}
 
 	payload := models.ForceBuyPayload{
-		Pair:      futureSymbol,
-		OrderType: orderType,
-		EntryTag:  entryTag,
-		Side:      side, // 设置开仓方向
-		Leverage:  estimate.Leverage,
+		Pair:        futureSymbol,
+		OrderType:   orderType,
+		EntryTag:    entryTag,
+		StakeAmount: estimate.StakeAmount,
+		Side:        side, // 设置开仓方向
+		Leverage:    estimate.Leverage,
 	}
 
 	// 设置订单价格
@@ -120,6 +121,7 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 		"side":          side,
 		"order_type":    orderType,
 		"leverage":      estimate.Leverage,
+		"stake_amount":  estimate.StakeAmount,
 		"current_price": currentPrice,
 		"order_price":   orderPrice,
 		"target_price":  estimate.TargetPrice,
