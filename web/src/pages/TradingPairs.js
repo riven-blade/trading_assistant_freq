@@ -67,11 +67,7 @@ const TradingPairs = () => {
   const [targetPrice, setTargetPrice] = useState(0);
   const [orderType, setOrderType] = useState(DEFAULT_CONFIG.orderType);
   const [entryTag, setEntryTag] = useState('manual'); // 入场标签
-  // 从localStorage读取上次的开仓金额
-  const [stakeAmount, setStakeAmount] = useState(() => {
-    const savedAmount = localStorage.getItem('trading_stake_amount');
-    return savedAmount ? parseFloat(savedAmount) : 2;
-  }); // 开仓金额
+  const [stakeAmount, setStakeAmount] = useState(0); // 开仓金额，默认为0
 
   // 监控抽屉相关状态
   const [monitorDrawerVisible, setMonitorDrawerVisible] = useState(false);
@@ -290,6 +286,7 @@ const TradingPairs = () => {
     setSelectedLeverage(DEFAULT_CONFIG.leverage);
     setOrderType(DEFAULT_CONFIG.orderType);
     setEntryTag('manual');
+    setStakeAmount(0); // 重置开仓金额为0
     setTradeModalVisible(true);
   };
 
@@ -339,9 +336,7 @@ const TradingPairs = () => {
   };
 
   const handleStakeAmountChange = (value) => {
-    const amount = value || 2;
-    setStakeAmount(amount);
-    localStorage.setItem('trading_stake_amount', amount.toString());
+    setStakeAmount(value || 0);
   };
 
   // 创建交易
@@ -355,12 +350,6 @@ const TradingPairs = () => {
         return;
       }
 
-
-      // 检查开仓金额
-      if (!stakeAmount || stakeAmount <= 0) {
-        message.error('请输入有效的开仓金额');
-        return;
-      }
 
       // 检查入场标签
       if (!tagToUse) {
@@ -866,6 +855,7 @@ const TradingPairs = () => {
         onEntryTagChange={handleEntryTagChange}
         stakeAmount={stakeAmount}
         onStakeAmountChange={handleStakeAmountChange}
+        pricePrecision={selectedPairs.find(p => p.symbol === selectedTradeSymbol)?.price_precision}
       />
 
       {/* 监控抽屉 */}

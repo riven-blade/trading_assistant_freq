@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Drawer, Form, Typography, Tag, Select, Button, InputNumber } from 'antd';
 import PriceSlider from './PriceSlider';
 import { ACTIONS } from '../../utils/constants';
+import { formatPrice } from '../../utils/precision';
 
 const { Text } = Typography;
 
@@ -23,6 +24,7 @@ const { Text } = Typography;
  * @param {Function} onEntryTagChange - 入场标签变化回调
  * @param {number} stakeAmount - 开仓金额
  * @param {Function} onStakeAmountChange - 开仓金额变化回调
+ * @param {number} pricePrecision - 价格精度（小数位数）
  */
 const TradeDrawer = ({
   visible,
@@ -40,7 +42,8 @@ const TradeDrawer = ({
   entryTag,
   onEntryTagChange,
   stakeAmount,
-  onStakeAmountChange
+  onStakeAmountChange,
+  pricePrecision
 }) => {
   // 百分比状态管理
   const [pricePercentage, setPricePercentage] = useState(0);
@@ -94,7 +97,6 @@ const TradeDrawer = ({
         <Button 
           type="primary" 
           onClick={() => onSubmit(entryTag)}
-          disabled={!stakeAmount || stakeAmount <= 0}
         >
           确认{side === 'long' ? '开多' : '开空'}
         </Button>
@@ -122,7 +124,7 @@ const TradeDrawer = ({
           {/* 价格信息 */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <Text type="secondary">当前价格:</Text>
-            <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>${markPrice?.toFixed(4) || '0.0000'}</Text>
+            <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>${formatPrice(markPrice, pricePrecision)}</Text>
           </div>
           
           {/* 交易参数 */}
@@ -151,7 +153,7 @@ const TradeDrawer = ({
           {orderType === 'limit' && (
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
               <Text type="secondary">限价价格:</Text>
-              <Text strong>${targetPrice?.toFixed(4) || markPrice?.toFixed(4)}</Text>
+              <Text strong>${formatPrice(targetPrice || markPrice, pricePrecision)}</Text>
             </div>
           )}
         </div>
@@ -159,15 +161,12 @@ const TradeDrawer = ({
         {/* 开仓金额设置 */}
         <Form.Item
           label="开仓金额 (USDT)"
-          required
-          validateStatus={!stakeAmount || stakeAmount <= 0 ? 'error' : ''}
-          help={!stakeAmount || stakeAmount <= 0 ? '请输入开仓金额' : ''}
         >
           <InputNumber
             value={stakeAmount}
             onChange={onStakeAmountChange}
             placeholder="请输入开仓金额"
-            min={1}
+            min={0}
             max={100000}
             step={1}
             precision={2}
@@ -202,6 +201,7 @@ const TradeDrawer = ({
               onPercentageChange={handlePricePercentageChange}
               targetPrice={targetPrice || markPrice}
               config={ACTIONS.open}
+              pricePrecision={pricePrecision}
             />
           </Form.Item>
         )}

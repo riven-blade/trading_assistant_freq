@@ -580,9 +580,13 @@ func (b *Bybit) FetchKlines(ctx context.Context, symbol, interval string, since 
 		requestParams["limit"] = 200 // 默认值
 	}
 
-	// 如果指定了起始时间
+	// 如果指定了起始时间，使用start参数从该时间往后获取
 	if since > 0 {
 		requestParams["start"] = since
+	} else {
+		// 如果没有指定起始时间，使用end参数设置为当前时间，从当前时间往前获取最近的数据
+		// 这样可以确保获取到最近的limit条K线数据
+		requestParams["end"] = time.Now().UnixMilli()
 	}
 
 	// 合并用户参数
@@ -621,8 +625,9 @@ func (b *Bybit) FetchKlines(ctx context.Context, symbol, interval string, since 
 	}
 
 	// 转换为标准格式
+	// 注意：Bybit返回的K线数据是倒序的（从新到旧），需要反转为正序（从旧到新）
 	klines := make([]*types.Kline, 0, len(resp.Result.List))
-	for i := range resp.Result.List {
+	for i := len(resp.Result.List) - 1; i >= 0; i-- {
 		rawKline := resp.Result.List[i]
 		kline := b.parseKline(rawKline, symbol, interval)
 		if kline != nil {

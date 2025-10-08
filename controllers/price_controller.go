@@ -158,7 +158,7 @@ func (p *PriceController) createPriceEstimateModel(req *PriceEstimateRequest) *m
 		tagStr = fmt.Sprintf("%v", req.Tag)
 	}
 
-	// 初始状态为待激活，等待用户手动启用
+	// 初始状态为已启用，自动开始监听
 	return &models.PriceEstimate{
 		ID:          uuid.New().String(),
 		Symbol:      req.Symbol,
@@ -173,7 +173,7 @@ func (p *PriceController) createPriceEstimateModel(req *PriceEstimateRequest) *m
 		Tag:         tagStr,                         // 交易标签（转换为字符串）
 		StakeAmount: req.StakeAmount,                // 开仓金额 (USDT)
 		Status:      models.EstimateStatusListening, // 初始状态为监听状态
-		Enabled:     false,                          // 默认未启用，需要用户手动启用
+		Enabled:     true,                           // 默认启用，自动开始监听
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}
