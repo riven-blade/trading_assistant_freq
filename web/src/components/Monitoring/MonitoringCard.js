@@ -145,10 +145,20 @@ const MonitoringCard = ({ estimate, currentPosition, onDelete, onToggle }) => {
 
       {/* 交易详情 */}
       <div className="monitoring-details">
+        {/* 下单金额 - 只对开仓操作显示 */}
+        {!isPositionBasedAction && estimate.stake_amount > 0 && (
+          <div className="detail-row">
+            <span className="detail-label">下单金额</span>
+            <span className="detail-value">
+              ${estimate.stake_amount.toFixed(2)}
+            </span>
+          </div>
+        )}
+        
         {/* 仓位比例 - 只对基于仓位的操作显示 */}
         {isPositionBasedAction && (
           <div className="detail-row">
-            <span className="detail-label">仓位比例</span>
+            <span className="detail-label">下单比例</span>
             <span className="detail-value">
               {positionRatio ? `${positionRatio}%` : 'N/A'}
             </span>

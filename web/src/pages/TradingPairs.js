@@ -67,6 +67,14 @@ const TradingPairs = () => {
   const [targetPrice, setTargetPrice] = useState(0);
   const [orderType, setOrderType] = useState(DEFAULT_CONFIG.orderType);
   const [entryTag, setEntryTag] = useState('manual'); // 入场标签
+  
+  // 从 sessionStorage 读取开仓金额，为开多和开空分别保存
+  const getStoredStakeAmount = (side) => {
+    const key = `stakeAmount_${side}`;
+    const stored = sessionStorage.getItem(key);
+    return stored ? parseFloat(stored) : 0;
+  };
+  
   const [stakeAmount, setStakeAmount] = useState(0); // 开仓金额，默认为0
 
   // 监控抽屉相关状态
@@ -286,7 +294,11 @@ const TradingPairs = () => {
     setSelectedLeverage(DEFAULT_CONFIG.leverage);
     setOrderType(DEFAULT_CONFIG.orderType);
     setEntryTag('manual');
-    setStakeAmount(0); // 重置开仓金额为0
+    
+    // 从 sessionStorage 读取对应方向的开仓金额
+    const storedAmount = getStoredStakeAmount(side);
+    setStakeAmount(storedAmount);
+    
     setTradeModalVisible(true);
   };
 
@@ -294,6 +306,32 @@ const TradingPairs = () => {
   const getCurrentPrice = () => {
     const price = getPriceBySymbol(selectedTradeSymbol);
     return price?.markPrice || 0;
+  };
+
+  // 删除/取消选中交易对
+  const removePair = async (symbol) => {
+    // 检查是否有仓位
+    if (hasAnyPosition(symbol)) {
+      message.error(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 存在仓位，无法删除`);
+      return;
+    }
+    
+    // 检查是否有监听
+    if (hasAnyEstimate(symbol)) {
+      message.error(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 存在监听，无法删除`);
+      return;
+    }
+    
+    try {
+      await api.post('/coins/select', {
+        symbol,
+        is_selected: false
+      });
+      message.success(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 已取消选中`);
+      await fetchSelectedPairs();
+    } catch (error) {
+      message.error(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 删除失败`);
+    }
   };
 
   // 统一的卡片操作处理
@@ -307,11 +345,14 @@ const TradingPairs = () => {
         break;
       case 'kline':
         // 在新窗口打开K线页面
-        const klineUrl = `${window.location.origin}/klines?symbol=${symbol}&interval=4h`;
+        const klineUrl = `${window.location.origin}/klines?symbol=${symbol}&interval=15m`;
         window.open(klineUrl, '_blank', 'noopener,noreferrer');
         break;
       case 'monitor':
         openMonitorDrawer(symbol);
+        break;
+      case 'remove':
+        removePair(symbol);
         break;
       default:
         break;
@@ -336,7 +377,11 @@ const TradingPairs = () => {
   };
 
   const handleStakeAmountChange = (value) => {
-    setStakeAmount(value || 0);
+    const amount = value || 0;
+    setStakeAmount(amount);
+    // 保存到 sessionStorage，区分开多和开空
+    const key = `stakeAmount_${tradeSide}`;
+    sessionStorage.setItem(key, amount.toString());
   };
 
   // 创建交易

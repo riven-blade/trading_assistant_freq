@@ -76,19 +76,20 @@ type CoinSelection struct {
 
 // PriceEstimate 价格预估
 type PriceEstimate struct {
-	ID          string  `json:"id"`
-	Symbol      string  `json:"symbol"`       // MarketID (统一使用MarketID)
-	Side        string  `json:"side"`         // 方向：long, short
-	ActionType  string  `json:"action_type"`  // 操作类型：open(开仓), addition(加仓), take_profit(止盈)
-	TargetPrice float64 `json:"target_price"` // 目标价格
-	Percentage  float64 `json:"percentage"`   // 仓位比例 (0-100)
-	Leverage    int     `json:"leverage"`     // 杠杆倍数
-	OrderType   string  `json:"order_type"`   // 订单类型：market, limit
-	MarginMode  string  `json:"margin_mode"`  // 保证金模式：CROSS, ISOLATED
-	Status      string  `json:"status"`       // 状态：listening(监听状态), triggered(已触发成功), failed(触发失败)
-	Enabled     bool    `json:"enabled"`      // 监听开关：true=实际监听, false=暂不监听
-	Tag         string  `json:"tag"`          // 交易标签
-	StakeAmount float64 `json:"stake_amount"` // 开仓金额 (USDT)
+	ID           string  `json:"id"`
+	Symbol       string  `json:"symbol"`        // MarketID (统一使用MarketID)
+	Side         string  `json:"side"`          // 方向：long, short
+	ActionType   string  `json:"action_type"`   // 操作类型：open(开仓), addition(加仓), take_profit(止盈)
+	TargetPrice  float64 `json:"target_price"`  // 目标价格
+	Percentage   float64 `json:"percentage"`    // 仓位比例 (0-100)
+	Leverage     int     `json:"leverage"`      // 杠杆倍数
+	OrderType    string  `json:"order_type"`    // 订单类型：market, limit
+	MarginMode   string  `json:"margin_mode"`   // 保证金模式：CROSS, ISOLATED
+	Status       string  `json:"status"`        // 状态：listening(监听状态), triggered(已触发成功), failed(触发失败)
+	Enabled      bool    `json:"enabled"`       // 监听开关：true=实际监听, false=暂不监听
+	Tag          string  `json:"tag"`           // 交易标签
+	StakeAmount  float64 `json:"stake_amount"`  // 开仓金额 (USDT)
+	ErrorMessage string  `json:"error_message"` // 失败原因（仅在status=failed时有值）
 	// CreatedBy字段已移除，改用ActionType明确标识操作类型
 	TriggerType string    `json:"trigger_type"` // 触发条件：immediate(立即执行), condition(条件触发)
 	CreatedAt   time.Time `json:"created_at"`

@@ -11,7 +11,8 @@ import {
   Popconfirm,
   Statistic,
   Space,
-  Select
+  Select,
+  Tooltip
 } from 'antd';
 import {
   ReloadOutlined,
@@ -199,7 +200,7 @@ const Orders = () => {
       dataIndex: 'status',
       key: 'status',
       width: 80,
-      render: (status) => {
+      render: (status, record) => {
         const statusMap = {
           'listening': '监听中',
           'triggered': '已触发',
@@ -210,7 +211,25 @@ const Orders = () => {
           'triggered': 'success',
           'failed': 'error'
         };
-        return <Tag color={colorMap[status]}>{statusMap[status] || status}</Tag>;
+        
+        const tag = <Tag color={colorMap[status]}>{statusMap[status] || status}</Tag>;
+        
+        // 如果是失败状态且有错误信息，显示悬浮提示
+        if (status === 'failed' && record.error_message) {
+          return (
+            <Tooltip 
+              title={record.error_message}
+              styles={{ body: { maxWidth: 400 } }}
+              placement="topLeft"
+            >
+              <span style={{ cursor: 'help' }}>
+                {tag}
+              </span>
+            </Tooltip>
+          );
+        }
+
+        return tag;
       }
     },
     {

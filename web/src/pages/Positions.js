@@ -137,7 +137,7 @@ const Positions = () => {
     
     // 处理K线图跳转
     if (action === 'kline') {
-      const klineUrl = `${window.location.origin}/klines?symbol=${position.symbol}&interval=4h`;
+      const klineUrl = `${window.location.origin}/klines?symbol=${position.symbol}&interval=15m`;
       window.open(klineUrl, '_blank', 'noopener,noreferrer');
       return;
     }

@@ -366,7 +366,7 @@ type WatchMiniTicker struct {
 	QuoteVolume float64 `json:"quote_volume"` // 计价资产成交量
 }
 
-// WatchMarkPrice WebSocket 标记价格数据 (仅期货)
+// WatchMarkPrice WebSocket 标记价格数据
 type WatchMarkPrice struct {
 	Symbol               string  `json:"symbol"`                 // 交易对符号
 	TimeStamp            int64   `json:"timestamp"`              // 时间戳
@@ -375,6 +375,8 @@ type WatchMarkPrice struct {
 	FundingRate          float64 `json:"funding_rate"`           // 资金费率
 	FundingTime          int64   `json:"funding_time"`           // 下次资金费用时间
 	EstimatedSettlePrice float64 `json:"estimated_settle_price"` // 预估结算价
+	BidPrice             float64 `json:"bid_price"`              // 最优买价（实时）
+	AskPrice             float64 `json:"ask_price"`              // 最优卖价（实时）
 }
 
 // WatchBookTicker WebSocket 最优买卖价数据

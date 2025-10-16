@@ -272,6 +272,16 @@ code {
   color: #15803d;
 }
 
+.info-btn {
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.info-btn:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
 .danger-btn {
   background: #fef2f2;
   color: #991b1b;
@@ -537,6 +547,25 @@ code {
   border-radius: 4px;
   font-size: 9px;
   font-weight: 600;
+}
+
+/* 删除按钮样式 - 圆形红色按钮（桌面版） */
+.trading-header-clean .control-btn.kline-btn-icon[title="取消选中"] {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+  transform: scale(1.05);
+}
+
+.trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
 .delete-btn-clean {
@@ -1075,7 +1104,7 @@ code {
   
   /* 通用K线图标按钮样式 */
   .kline-btn-icon {
-    transition: all 0.2s ease !important;
+    transition: all 0.15s ease !important;
     aspect-ratio: 1 !important; /* 强制1:1比例 */
     border-radius: 50% !important;
     box-sizing: border-box !important;
@@ -1090,6 +1119,25 @@ code {
   }
   
   .kline-btn-icon:active {
+    transform: scale(0.95) !important;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
+  }
+  
+  /* 删除按钮样式 - 圆形红色按钮 */
+  .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"] {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #dc2626 !important;
+  }
+  
+  .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:hover {
+    background: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    color: #b91c1c !important;
+    transform: scale(1.05) !important;
+  }
+  
+  .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:active {
     transform: scale(0.95) !important;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
   }

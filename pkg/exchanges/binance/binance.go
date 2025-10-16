@@ -138,6 +138,7 @@ func (b *Binance) setEndpoints() {
 	// 现货端点
 	b.endpoints["exchangeInfo"] = baseURL + "/api/v3/exchangeInfo"
 	b.endpoints["ticker24hr"] = baseURL + "/api/v3/ticker/24hr"
+	b.endpoints["bookTicker"] = baseURL + "/api/v3/ticker/bookTicker"
 	b.endpoints["klines"] = baseURL + "/api/v3/klines"
 	b.endpoints["trades"] = baseURL + "/api/v3/trades"
 	b.endpoints["depth"] = baseURL + "/api/v3/depth"
@@ -150,6 +151,7 @@ func (b *Binance) setEndpoints() {
 	if b.marketType == types.MarketTypeFuture {
 		b.endpoints["futuresExchangeInfo"] = futuresURL + "/fapi/v1/exchangeInfo"
 		b.endpoints["futuresTicker24hr"] = futuresURL + "/fapi/v1/ticker/24hr"
+		b.endpoints["futuresBookTicker"] = futuresURL + "/fapi/v1/ticker/bookTicker"
 		b.endpoints["futuresKlines"] = futuresURL + "/fapi/v1/klines"
 		b.endpoints["futuresDepth"] = futuresURL + "/fapi/v1/depth"
 		b.endpoints["futuresAccount"] = futuresURL + "/fapi/v2/account"
@@ -533,6 +535,71 @@ func (b *Binance) FetchTickers(ctx context.Context, symbols []string, params map
 		}
 
 		ticker := b.parseTicker(tickerMap, symbol)
+		tickers[symbol] = ticker
+	}
+
+	return tickers, nil
+}
+
+// FetchBookTickers 获取最优买卖价（bookTicker）- 轻量级接口
+func (b *Binance) FetchBookTickers(ctx context.Context, symbols []string, params map[string]interface{}) (map[string]*types.Ticker, error) {
+	var endpoint string
+	if b.marketType == types.MarketTypeFuture {
+		endpoint = b.endpoints["futuresBookTicker"]
+	} else {
+		endpoint = b.endpoints["bookTicker"]
+	}
+
+	// 不传symbol参数，获取所有bookTicker数据
+	respStr, err := b.FetchWithRetry(ctx, endpoint, "GET", nil, "")
+	if err != nil {
+		return nil, err
+	}
+
+	// 尝试解析为数组（所有bookTicker）
+	var dataArray []interface{}
+	if err := json.Unmarshal([]byte(respStr), &dataArray); err != nil {
+		return nil, fmt.Errorf("解析bookTicker数组失败: %v", err)
+	}
+
+	// 转换为map，便于查找
+	tickers := make(map[string]*types.Ticker)
+	symbolsMap := make(map[string]bool)
+
+	// 如果指定了symbols，创建查找map
+	if len(symbols) > 0 {
+		for _, symbol := range symbols {
+			symbolsMap[symbol] = true
+		}
+	}
+
+	for _, tickerData := range dataArray {
+		tickerMap, ok := tickerData.(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		// 获取symbol
+		symbol := b.SafeString(tickerMap, "symbol", "")
+		if symbol == "" {
+			continue
+		}
+
+		// 如果指定了symbols，只处理指定的symbols
+		if len(symbols) > 0 && !symbolsMap[symbol] {
+			continue
+		}
+
+		// 解析bookTicker数据
+		ticker := &types.Ticker{
+			Symbol:    symbol,
+			TimeStamp: b.SafeInteger(tickerMap, "time", time.Now().UnixMilli()),
+			Bid:       b.SafeFloat(tickerMap, "bidPrice", 0),
+			BidVolume: b.SafeFloat(tickerMap, "bidQty", 0),
+			Ask:       b.SafeFloat(tickerMap, "askPrice", 0),
+			AskVolume: b.SafeFloat(tickerMap, "askQty", 0),
+			Info:      tickerMap,
+		}
 		tickers[symbol] = ticker
 	}
 

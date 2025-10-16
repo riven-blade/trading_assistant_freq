@@ -140,10 +140,18 @@ func (pm *PriceManager) fetchPricesOnce() {
 		return
 	}
 
-	// 获取标记价格
+	// 获取实时买卖价（bookTicker）和资金费率（premiumIndex）
 	ctx, cancel := context.WithTimeout(pm.ctx, 10*time.Second)
 	defer cancel()
 
+	// 1. 获取实时BookTicker数据（只包含bid/ask价格，权重更低）
+	tickers, err := pm.exchangeClient.FetchBookTickers(ctx, selectedSymbols, nil)
+	if err != nil {
+		logrus.Errorf("获取BookTicker数据失败: %v", err)
+		return
+	}
+
+	// 2. 获取资金费率数据
 	markPrices, err := pm.exchangeClient.FetchMarkPrices(ctx, selectedSymbols)
 	if err != nil {
 		logrus.Errorf("获取标记价格失败: %v", err)
@@ -154,20 +162,48 @@ func (pm *PriceManager) fetchPricesOnce() {
 	processedCount := 0
 	pricesData := make(map[string]interface{}) // 用于广播的价格数据
 
-	// 处理每个标记价格
-	for symbol, markPrice := range markPrices {
-		if markPrice == nil || markPrice.MarkPrice <= 0 {
+	// 3. 合并两个数据源
+	for _, symbol := range selectedSymbols {
+		ticker := tickers[symbol]
+		markPrice := markPrices[symbol]
+
+		// 确保至少有一个数据源有效
+		if ticker == nil && markPrice == nil {
 			continue
 		}
 
-		// 转换为 WatchMarkPrice 格式以兼容现有逻辑
+		// 构建完整的价格数据结构
 		watchMarkPrice := &types.WatchMarkPrice{
-			Symbol:      symbol,
-			MarkPrice:   markPrice.MarkPrice,
-			IndexPrice:  markPrice.IndexPrice,
-			FundingRate: markPrice.FundingRate,
-			FundingTime: markPrice.NextFundingTime,
-			TimeStamp:   markPrice.Timestamp,
+			Symbol:    symbol,
+			TimeStamp: time.Now().UnixMilli(),
+		}
+
+		// 从 Ticker 获取实时买卖价（优先使用）
+		if ticker != nil {
+			watchMarkPrice.BidPrice = ticker.Bid // 最优买价（实时）
+			watchMarkPrice.AskPrice = ticker.Ask // 最优卖价（实时）
+		}
+
+		// 从 MarkPrice 获取资金费率等信息
+		if markPrice != nil {
+			watchMarkPrice.MarkPrice = markPrice.MarkPrice         // 标记价格（作为参考）
+			watchMarkPrice.IndexPrice = markPrice.IndexPrice       // 指数价格
+			watchMarkPrice.FundingRate = markPrice.FundingRate     // 资金费率
+			watchMarkPrice.FundingTime = markPrice.NextFundingTime // 下次资金费时间
+		}
+
+		// 如果没有bid/ask，降级使用标记价格
+		if watchMarkPrice.BidPrice <= 0 && watchMarkPrice.MarkPrice > 0 {
+			watchMarkPrice.BidPrice = watchMarkPrice.MarkPrice
+		}
+		if watchMarkPrice.AskPrice <= 0 && watchMarkPrice.MarkPrice > 0 {
+			watchMarkPrice.AskPrice = watchMarkPrice.MarkPrice
+		}
+
+		// 验证数据有效性
+		if watchMarkPrice.BidPrice <= 0 || watchMarkPrice.AskPrice <= 0 {
+			logrus.Warnf("跳过 %s: 买卖价无效 (bid=%f, ask=%f)", symbol, watchMarkPrice.BidPrice, watchMarkPrice.AskPrice)
+			continue
 		}
 
 		// 保存到Redis缓存
@@ -187,14 +223,16 @@ func (pm *PriceManager) fetchPricesOnce() {
 			}
 		}
 
-		// 构建广播数据
+		// 构建广播数据（包含实时买卖价）
 		pricesData[symbol] = map[string]interface{}{
 			"symbol":             symbol,
-			"markPrice":          markPrice.MarkPrice,
-			"indexPrice":         markPrice.IndexPrice,
-			"fundingRate":        markPrice.FundingRate,
-			"fundingTime":        markPrice.NextFundingTime,
-			"updateTime":         markPrice.Timestamp,
+			"bidPrice":           watchMarkPrice.BidPrice,    // 实时买价
+			"askPrice":           watchMarkPrice.AskPrice,    // 实时卖价
+			"markPrice":          watchMarkPrice.MarkPrice,   // 标记价格（参考）
+			"indexPrice":         watchMarkPrice.IndexPrice,  // 指数价格
+			"fundingRate":        watchMarkPrice.FundingRate, // 资金费率
+			"fundingTime":        watchMarkPrice.FundingTime, // 下次资金费时间
+			"updateTime":         watchMarkPrice.TimeStamp,   // 更新时间
 			"priceChange":        priceChange,
 			"priceChangePercent": priceChangePercent,
 		}

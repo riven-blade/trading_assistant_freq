@@ -23,6 +23,7 @@ type ExchangeInterface interface {
 	// 核心市场数据功能
 	FetchMarkets(ctx context.Context, params map[string]interface{}) ([]*types.Market, error)
 	FetchTickers(ctx context.Context, symbols []string, params map[string]interface{}) (map[string]*types.Ticker, error)
+	FetchBookTickers(ctx context.Context, symbols []string, params map[string]interface{}) (map[string]*types.Ticker, error) // 获取最优买卖价
 	FetchKlines(ctx context.Context, symbol, interval string, since int64, limit int, params map[string]interface{}) ([]*types.Kline, error)
 
 	FetchMarkPrice(ctx context.Context, symbol string) (*types.MarkPrice, error)

@@ -456,6 +456,12 @@ func (b *Bybit) parseMarketLimits(data map[string]interface{}) types.MarketLimit
 	return limits
 }
 
+// FetchBookTickers 获取最优买卖价（bookTicker）- 轻量级接口
+func (b *Bybit) FetchBookTickers(ctx context.Context, symbols []string, params map[string]interface{}) (map[string]*types.Ticker, error) {
+	// Bybit 暂时使用 FetchTickers 实现（包含 bid/ask）
+	return b.FetchTickers(ctx, symbols, params)
+}
+
 // FetchTickers 批量获取24小时价格统计
 func (b *Bybit) FetchTickers(ctx context.Context, symbols []string, params map[string]interface{}) (map[string]*types.Ticker, error) {
 	endpoint := b.endpoints["tickers"]

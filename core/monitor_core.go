@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"time"
 	"trading_assistant/models"
 	"trading_assistant/pkg/config"
@@ -26,7 +27,7 @@ func InitPriceMonitor(freqtradeClient *freqtrade.Controller) {
 	GlobalPriceMonitor = &PriceMonitor{
 		running:       false,
 		stopChan:      make(chan bool),
-		tickInterval:  1 * time.Second,
+		tickInterval:  500 * time.Millisecond, // 0.5秒检查一次，更快响应价格变化
 		orderExecutor: NewOrderExecutor(freqtradeClient),
 	}
 }
@@ -98,22 +99,42 @@ func (pm *PriceMonitor) checkPriceTargets() {
 
 // checkSingleEstimate 检查单个价格预估
 func (pm *PriceMonitor) checkSingleEstimate(estimate *models.PriceEstimate) {
-	// 获取标记价格 (estimate.Symbol现在存储的就是MarketID)
+	// 获取价格数据 (estimate.Symbol现在存储的就是MarketID)
 	markPriceData, err := redis.GlobalRedisClient.GetMarkPrice(estimate.Symbol)
 	if err != nil {
-		logrus.Debugf("未找到 %s 的标记价格数据", estimate.Symbol)
+		logrus.Debugf("未找到 %s 的价格数据", estimate.Symbol)
 		return
 	}
 
 	if markPriceData == nil {
-		logrus.Debugf("标记价格数据为空 %s", estimate.Symbol)
+		logrus.Debugf("价格数据为空 %s", estimate.Symbol)
 		return
 	}
 
-	// 使用标记价格作为当前价格
-	currentPrice := markPriceData.MarkPrice
+	// 根据交易方向选择合适的实时价格
+	// long（做多）- 需要买入，使用卖价（askPrice）
+	// short（做空）- 需要卖出，使用买价（bidPrice）
+	var currentPrice float64
+	switch estimate.Side {
+	case types.PositionSideLong:
+		currentPrice = markPriceData.AskPrice // 做多使用卖价（买入时的成本）
+		if currentPrice <= 0 {
+			// 降级到标记价格
+			currentPrice = markPriceData.MarkPrice
+			logrus.Debugf("%s 卖价无效，降级使用标记价格: %f", estimate.Symbol, currentPrice)
+		}
+	case types.PositionSideShort:
+		currentPrice = markPriceData.BidPrice // 做空使用买价（卖出时的价格）
+		if currentPrice <= 0 {
+			// 降级到标记价格
+			currentPrice = markPriceData.MarkPrice
+			logrus.Debugf("%s 买价无效，降级使用标记价格: %f", estimate.Symbol, currentPrice)
+		}
+	}
+
 	if currentPrice <= 0 {
-		logrus.Errorf("无效的标记价格 %s: %f", estimate.Symbol, currentPrice)
+		logrus.Errorf("无效的价格 %s: bid=%f, ask=%f, mark=%f",
+			estimate.Symbol, markPriceData.BidPrice, markPriceData.AskPrice, markPriceData.MarkPrice)
 		return
 	}
 
@@ -121,7 +142,7 @@ func (pm *PriceMonitor) checkSingleEstimate(estimate *models.PriceEstimate) {
 	actionType := estimate.ActionType
 	triggerType := estimate.TriggerType
 
-	// 统一使用markPrice
+	// 使用实时买卖价判断触发
 	var shouldTrigger bool
 	switch estimate.Side {
 	case types.PositionSideLong:
@@ -134,8 +155,19 @@ func (pm *PriceMonitor) checkSingleEstimate(estimate *models.PriceEstimate) {
 	}
 
 	if shouldTrigger {
-		logrus.Infof("价格目标触发: %s %s %s, 当前标记价格: %f, 目标价格: %f",
-			estimate.Symbol, estimate.Side, actionType, currentPrice, estimate.TargetPrice)
+		// 根据交易方向确定价格类型描述
+		var priceType string
+		switch estimate.Side {
+		case types.PositionSideLong:
+			priceType = "卖价(ask)"
+		case types.PositionSideShort:
+			priceType = "买价(bid)"
+		default:
+			priceType = "未知价格"
+		}
+
+		logrus.Infof("价格目标触发: %s %s %s, 当前%s: %f, 目标价格: %f",
+			estimate.Symbol, estimate.Side, actionType, priceType, currentPrice, estimate.TargetPrice)
 
 		// 对于做空场景，检查资金费率
 		if estimate.Side == types.PositionSideShort {
@@ -161,11 +193,13 @@ func (pm *PriceMonitor) triggerEstimate(estimate *models.PriceEstimate, currentP
 		logrus.Errorf("订单执行失败: %s %s %s, 比例: %.2f%%, 目标价: %.4f, 当前价: %.6f, 错误: %v",
 			estimate.Symbol, actionText, positionText, estimate.Percentage, estimate.TargetPrice, currentPrice, err)
 
-		// 更新预估状态为失败
+		// 更新预估状态为失败，并保存错误信息
 		estimate.Status = models.EstimateStatusFailed
+		estimate.ErrorMessage = err.Error() // 保存失败原因
 	} else {
-		// 更新预估状态为已触发
+		// 更新预估状态为已触发，清空错误信息
 		estimate.Status = models.EstimateStatusTriggered
+		estimate.ErrorMessage = "" // 清空之前的错误信息（如果有）
 	}
 
 	estimate.UpdatedAt = time.Now()
@@ -216,8 +250,13 @@ func (pm *PriceMonitor) checkFundingRateForShort(estimate *models.PriceEstimate,
 		logrus.Warnf("做空触发失败: %s 资金费率 %f < 阈值 %f，不允许开空仓",
 			estimate.Symbol, currentFundingRate, threshold)
 
-		// 更新预估状态为失败
+		// 构建错误信息
+		errorMsg := fmt.Sprintf("资金费率过低: 当前%.4f%% < 阈值%.4f%%，不允许开空仓",
+			currentFundingRate*100, threshold*100)
+
+		// 更新预估状态为失败，并保存错误信息
 		estimate.Status = models.EstimateStatusFailed
+		estimate.ErrorMessage = errorMsg
 		estimate.UpdatedAt = time.Now()
 		err := redis.GlobalRedisClient.SetPriceEstimate(estimate)
 		if err != nil {
