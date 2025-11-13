@@ -103,12 +103,16 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 	}
 
 	payload := models.ForceBuyPayload{
-		Pair:        futureSymbol,
-		OrderType:   orderType,
-		EntryTag:    entryTag,
-		StakeAmount: estimate.StakeAmount,
-		Side:        side, // 设置开仓方向
-		Leverage:    estimate.Leverage,
+		Pair:      futureSymbol,
+		OrderType: orderType,
+		EntryTag:  entryTag,
+		Side:      side, // 设置开仓方向
+		Leverage:  estimate.Leverage,
+	}
+
+	// 只有当开仓金额大于0时才设置
+	if estimate.StakeAmount > 0 {
+		payload.StakeAmount = &estimate.StakeAmount
 	}
 
 	// 设置订单价格

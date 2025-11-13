@@ -11,13 +11,13 @@ type LoginResponse struct {
 
 // ForceBuyPayload 强制买入载荷
 type ForceBuyPayload struct {
-	Pair        string  `json:"pair"`
-	Price       float64 `json:"price,omitempty"`
-	OrderType   string  `json:"ordertype,omitempty"`   // market, limit
-	StakeAmount float64 `json:"stakeamount,omitempty"` // 投入金额
-	EntryTag    string  `json:"entry_tag,omitempty"`   // 入场标签
-	Side        string  `json:"side,omitempty"`        // long, short
-	Leverage    int     `json:"leverage,omitempty"`    // 杠杆倍数
+	Pair        string   `json:"pair"`
+	Price       float64  `json:"price,omitempty"`
+	OrderType   string   `json:"ordertype,omitempty"`   // market, limit
+	StakeAmount *float64 `json:"stakeamount,omitempty"` // 投入金额（指针类型，0值时不传）
+	EntryTag    string   `json:"entry_tag,omitempty"`   // 入场标签
+	Side        string   `json:"side,omitempty"`        // long, short
+	Leverage    int      `json:"leverage,omitempty"`    // 杠杆倍数
 }
 
 // ForceAdjustBuyPayload 强制调整买入载荷

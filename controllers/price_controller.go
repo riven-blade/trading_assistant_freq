@@ -86,6 +86,11 @@ func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest
 		req.Leverage = 5 // 默认5倍杠杆
 	}
 
+	// 验证开仓金额
+	if req.ActionType == models.ActionTypeOpen && req.StakeAmount <= 0 {
+		return fmt.Errorf("开仓操作必须指定有效的开仓金额 (stake_amount > 0)")
+	}
+
 	return nil
 }
 

@@ -97,6 +97,7 @@ const TradeDrawer = ({
         <Button 
           type="primary" 
           onClick={() => onSubmit(entryTag)}
+          disabled={!stakeAmount || stakeAmount <= 0}
         >
           确认{side === 'long' ? '开多' : '开空'}
         </Button>
@@ -161,18 +162,22 @@ const TradeDrawer = ({
         {/* 开仓金额设置 */}
         <Form.Item
           label="开仓金额 (USDT)"
+          required
+          validateStatus={stakeAmount && stakeAmount > 0 ? 'success' : 'error'}
+          help={!stakeAmount || stakeAmount <= 0 ? '请输入大于0的开仓金额' : ''}
         >
           <InputNumber
             value={stakeAmount}
             onChange={onStakeAmountChange}
             placeholder="请输入开仓金额"
-            min={0}
+            min={0.01}
             max={100000}
             step={1}
             precision={2}
             style={{ width: '100%' }}
             size="large"
             addonAfter="USDT"
+            status={!stakeAmount || stakeAmount <= 0 ? 'error' : ''}
           />
         </Form.Item>
 
