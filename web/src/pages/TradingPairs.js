@@ -389,12 +389,6 @@ const TradingPairs = () => {
     // 使用传入的entryTag参数，如果没有则使用状态中的值
     const tagToUse = selectedEntryTag || entryTag;
     try {
-      // 校验开仓金额
-      if (!stakeAmount || stakeAmount <= 0) {
-        message.error('请输入大于0的开仓金额');
-        return;
-      }
-
       const markPrice = getCurrentPrice();
       if (!markPrice || markPrice <= 0) {
         message.error('价格数据不可用，请稍后再试');
