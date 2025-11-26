@@ -10,6 +10,30 @@ import React from 'react';
 const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
   // 使用实时价格计算盈亏
   const realTimeMarkPrice = currentPrice || position.mark_price;
+
+  // 计算持仓占比：当前保证金 / (第一个订单cost / 杠杆 * 10)
+  const calculatePositionRatio = () => {
+    // 获取第一个订单的cost
+    const firstOrderCost = position.orders?.[0]?.cost;
+    if (!firstOrderCost || firstOrderCost <= 0) return null;
+
+    const leverage = position.leverage || 1;
+    // notional 是映射后的 stake_amount
+    const currentMargin = position.notional || 0;
+
+    // 最大持仓金额 = 第一个订单cost / 杠杆 * 10
+    const maxPositionAmount = (firstOrderCost / leverage) * 10;
+
+    if (maxPositionAmount <= 0) return null;
+
+    // 持仓占比 = 当前保证金 / 最大持仓金额
+    const ratio = (currentMargin / maxPositionAmount) * 100;
+
+    return ratio;
+  };
+
+  const positionRatio = calculatePositionRatio();
+  const isOverThreshold = positionRatio !== null && positionRatio > 50;
   
   // 计算实时未实现盈亏
   const realTimeUnrealizedPnl = (() => {
@@ -104,7 +128,18 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
           </div>
           <div className="data-group">
             <span className="data-label">保证金</span>
-            <span className="data-value">${formatValue(margin)}</span>
+            <span className="data-value">
+              ${formatValue(margin)}
+              {positionRatio !== null && (
+                <span style={{
+                  color: isOverThreshold ? '#ff4d4f' : '#52c41a',
+                  fontSize: '11px',
+                  marginLeft: '4px'
+                }}>
+                  ({positionRatio.toFixed(0)}%)
+                </span>
+              )}
+            </span>
           </div>
         </div>
         <div className="data-row">

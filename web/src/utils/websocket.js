@@ -50,8 +50,8 @@ class WebSocketManager {
         // 在开发环境中，WebSocket需要连接到后端服务器
         let wsUrl;
         if (process.env.NODE_ENV === 'development') {
-          // 开发环境：连接到后端服务器 (localhost:8080)
-          wsUrl = `${protocol}//localhost:8080/ws?token=${encodeURIComponent(token)}`;
+          // 开发环境：连接到远程后端服务器
+          wsUrl = `wss://t1.foreverlin.cn/ws?token=${encodeURIComponent(token)}`;
         } else {
           // 生产环境：使用当前host
           const host = window.location.host;
