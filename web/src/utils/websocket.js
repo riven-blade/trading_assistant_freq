@@ -58,10 +58,11 @@ class WebSocketManager {
           wsUrl = `${protocol}//${host}/ws?token=${encodeURIComponent(token)}`;
         }
 
+        console.log('[WebSocket] 连接URL:', wsUrl);
         this.ws = new WebSocket(wsUrl);
 
         this.ws.onopen = () => {
-
+          console.log('[WebSocket] 连接成功:', wsUrl);
           this.isConnected = true;
           this.isConnecting = false;
           this.reconnectAttempts = 0;

@@ -94,8 +94,8 @@ const EventNotification = () => {
       WebSocketManager.addConnectionListener(handleConnect);
       WebSocketManager.addDisconnectionListener(handleDisconnect);
 
-      // 订阅事件消息
-      WebSocketManager.subscribe('events', handleEventMessage);
+      // 注意: 'events' 类型后端暂不支持，暂时不订阅
+      // WebSocketManager.subscribe('events', handleEventMessage);
 
       // 检查当前连接状态
       WebSocketManager.getStatus();
@@ -105,7 +105,7 @@ const EventNotification = () => {
 
     // 清理函数
     return () => {
-      WebSocketManager.unsubscribe('events', handleEventMessage);
+      // WebSocketManager.unsubscribe('events', handleEventMessage);
       WebSocketManager.removeConnectionListener(handleConnect);
       WebSocketManager.removeDisconnectionListener(handleDisconnect);
     };
