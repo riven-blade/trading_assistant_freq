@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  Drawer, 
-  Input, 
+import {
+  Drawer,
+  Input,
   message,
   Spin,
   Empty,
@@ -10,13 +10,14 @@ import {
   Table,
   Row,
   Col,
+  Modal,
 } from 'antd';
 
-import { 
-  PlusOutlined, 
+import {
+  PlusOutlined,
   ReloadOutlined
 } from '@ant-design/icons';
-import api, { toggleEstimateEnabled } from '../services/api';
+import api, { toggleEstimateEnabled, updateCoinTier } from '../services/api';
 
 // 通用组件和Hooks
 import PageHeader from '../components/Common/PageHeader';
@@ -26,7 +27,7 @@ import MonitoringCard from '../components/Monitoring/MonitoringCard';
 import useAccountData from '../hooks/useAccountData';
 import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
-import { DEFAULT_CONFIG } from '../utils/constants';
+import { DEFAULT_CONFIG, COIN_TIER_OPTIONS } from '../utils/constants';
 
 const { Option } = Select;
 
@@ -82,6 +83,11 @@ const TradingPairs = () => {
   const [selectedMonitorSymbol, setSelectedMonitorSymbol] = useState('');
   const [symbolEstimatesData, setSymbolEstimatesData] = useState([]);
   const [estimatesLoading, setEstimatesLoading] = useState(false);
+
+  // 等级编辑相关状态
+  const [tierModalVisible, setTierModalVisible] = useState(false);
+  const [editingTierSymbol, setEditingTierSymbol] = useState('');
+  const [selectedTier, setSelectedTier] = useState('');
 
   // 使用自定义Hooks
   const { 
@@ -512,13 +518,33 @@ const TradingPairs = () => {
     try {
       await toggleEstimateEnabled(estimateId, enabled);
       message.success(`监听已${enabled ? '开启' : '关闭'}`);
-      
+
       // 重新获取当前币种的监控数据
       if (selectedMonitorSymbol) {
         fetchSymbolEstimates(selectedMonitorSymbol);
       }
     } catch (error) {
       message.error('切换监听状态失败');
+    }
+  };
+
+  // 等级编辑相关函数
+  const openTierModal = (symbol) => {
+    const pair = selectedPairs.find(p => p.symbol === symbol);
+    setEditingTierSymbol(symbol);
+    setSelectedTier(pair?.tier || '');
+    setTierModalVisible(true);
+  };
+
+  const handleTierChange = async (tier) => {
+    try {
+      await updateCoinTier(editingTierSymbol, tier);
+      message.success(`${editingTierSymbol} 等级已更新为 ${tier || '无'}`);
+      setTierModalVisible(false);
+      // 刷新选中的币种列表
+      await fetchSelectedPairs();
+    } catch (error) {
+      message.error('更新等级失败');
     }
   };
 
@@ -622,6 +648,7 @@ const TradingPairs = () => {
                 symbolEstimates={symbolEstimates}
                 isMobile={isMobile}
                 volumeRank={globalVolumeRanks[pair.symbol]}
+                onEditTags={openTierModal}
               />
             </Col>
           ))}
@@ -964,6 +991,73 @@ const TradingPairs = () => {
           </div>
         </div>
       </Drawer>
+
+      {/* 等级选择弹窗 */}
+      <Modal
+        title={`设置 ${editingTierSymbol} 等级`}
+        open={tierModalVisible}
+        onCancel={() => setTierModalVisible(false)}
+        footer={null}
+        width={320}
+        centered
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '12px 0' }}>
+          {COIN_TIER_OPTIONS.map((tier) => (
+            <button
+              key={tier.key}
+              onClick={() => handleTierChange(tier.key)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '12px 16px',
+                border: selectedTier === tier.key ? `2px solid ${tier.borderColor}` : '1px solid #e5e7eb',
+                borderRadius: '8px',
+                background: selectedTier === tier.key ? tier.bgColor : '#fff',
+                color: selectedTier === tier.key ? tier.color : '#374151',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                fontSize: '14px',
+                fontWeight: selectedTier === tier.key ? '600' : '500'
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '6px',
+                  background: tier.bgColor,
+                  color: tier.color,
+                  fontWeight: '700',
+                  fontSize: '14px'
+                }}>
+                  {tier.label}
+                </span>
+                <span>{tier.description}</span>
+              </span>
+            </button>
+          ))}
+          {/* 清除等级按钮 */}
+          <button
+            onClick={() => handleTierChange('')}
+            style={{
+              padding: '12px 16px',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              background: '#f9fafb',
+              color: '#6b7280',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              fontSize: '14px'
+            }}
+          >
+            清除等级
+          </button>
+        </div>
+      </Modal>
 
     </div>
   );

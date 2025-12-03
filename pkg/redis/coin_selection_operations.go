@@ -148,3 +148,41 @@ func (c *Client) GetAllCoinSelections() ([]*models.CoinSelection, error) {
 
 	return selections, nil
 }
+
+// UpdateCoinTier 更新币种等级
+func (c *Client) UpdateCoinTier(marketID string, tier string) error {
+	// 获取现有的选择状态
+	selection, err := c.GetCoinSelection(marketID)
+	if err != nil {
+		// 如果不存在，创建一个新的
+		selection = &models.CoinSelection{
+			Symbol:    marketID,
+			Status:    models.CoinSelectionActive,
+			Tier:      tier,
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		}
+	} else {
+		// 更新等级
+		selection.Tier = tier
+		selection.UpdatedAt = time.Now()
+	}
+
+	key := fmt.Sprintf("%s:%s", KeyCoinSelection, marketID)
+	data, err := json.Marshal(selection)
+	if err != nil {
+		return fmt.Errorf("序列化币种选择状态失败: %v", err)
+	}
+
+	err = c.rdb.Set(c.ctx, key, data, 0).Err()
+	if err != nil {
+		return fmt.Errorf("保存币种等级失败: %v", err)
+	}
+
+	logrus.WithFields(logrus.Fields{
+		"marketID": marketID,
+		"tier":     tier,
+	}).Info("币种等级已更新")
+
+	return nil
+}

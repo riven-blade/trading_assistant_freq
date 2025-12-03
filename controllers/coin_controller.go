@@ -195,6 +195,13 @@ func (c *CoinController) GetCoins(ctx *gin.Context) {
 	})
 }
 
+// CoinWithTier 带等级信息的币种
+type CoinWithTier struct {
+	models.Coin
+	IsSelected bool   `json:"is_selected"`
+	Tier       string `json:"tier"` // 等级：S, A, B, C
+}
+
 // GetSelectedCoins 获取选中的币种列表
 func (c *CoinController) GetSelectedCoins(ctx *gin.Context) {
 	// 获取选中的币种
@@ -207,17 +214,69 @@ func (c *CoinController) GetSelectedCoins(ctx *gin.Context) {
 		return
 	}
 
-	var result []models.CoinWithSelection
+	var result []CoinWithTier
 	for i := range selectedCoins {
 		coin := selectedCoins[i]
-		result = append(result, models.CoinWithSelection{
+		// 获取选择状态以获取等级信息
+		selection, _ := redis.GlobalRedisClient.GetCoinSelection(coin.Symbol)
+		tier := ""
+		if selection != nil {
+			tier = selection.Tier
+		}
+		result = append(result, CoinWithTier{
 			Coin:       *coin,
 			IsSelected: true,
+			Tier:       tier,
 		})
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"data":  result,
 		"count": len(result),
+	})
+}
+
+// UpdateCoinTier 更新币种等级
+func (c *CoinController) UpdateCoinTier(ctx *gin.Context) {
+	var req struct {
+		Symbol string `json:"symbol" binding:"required"`
+		Tier   string `json:"tier"` // S, A, B, C 或空字符串
+	}
+
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		logrus.Warnf("更新币种等级参数错误: %v", err)
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "请求参数格式错误",
+		})
+		return
+	}
+
+	// 验证等级有效性
+	validTiers := map[string]bool{"": true, "S": true, "A": true, "B": true, "C": true}
+	if !validTiers[req.Tier] {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "无效的等级，可选值为: S, A, B, C 或空",
+		})
+		return
+	}
+
+	// 更新等级
+	err := redis.GlobalRedisClient.UpdateCoinTier(req.Symbol, req.Tier)
+	if err != nil {
+		logrus.Errorf("更新币种等级失败: %v", err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "更新币种等级失败",
+		})
+		return
+	}
+
+	logrus.Infof("币种 %s 等级已更新为 %s", req.Symbol, req.Tier)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "等级更新成功",
+		"data": gin.H{
+			"symbol": req.Symbol,
+			"tier":   req.Tier,
+		},
 	})
 }

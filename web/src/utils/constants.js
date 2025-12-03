@@ -84,3 +84,47 @@ export const DEFAULT_CONFIG = {
     estimate: 30000   // 监听统计更新间隔
   }
 };
+
+// 币种等级
+export const COIN_TIERS = {
+  S: {
+    key: 'S',
+    label: 'S',
+    color: '#fff',
+    bgColor: '#f5222d',
+    borderColor: '#f5222d',
+    description: '最高优先级，最优质'
+  },
+  A: {
+    key: 'A',
+    label: 'A',
+    color: '#fff',
+    bgColor: '#fa8c16',
+    borderColor: '#fa8c16',
+    description: '优质币种，重点关注'
+  },
+  B: {
+    key: 'B',
+    label: 'B',
+    color: '#fff',
+    bgColor: '#1890ff',
+    borderColor: '#1890ff',
+    description: '一般币种，可以交易'
+  },
+  C: {
+    key: 'C',
+    label: 'C',
+    color: '#8c8c8c',
+    bgColor: '#fafafa',
+    borderColor: '#d9d9d9',
+    description: '较低优先级，谨慎交易'
+  }
+};
+
+// 等级列表（用于选择器）
+export const COIN_TIER_OPTIONS = Object.values(COIN_TIERS);
+
+// 根据key获取等级信息
+export const getTierByKey = (key) => {
+  return COIN_TIERS[key] || null;
+};

@@ -517,6 +517,20 @@ code {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* 币种等级标签 */
+.coin-tier-badge {
+  transition: all 0.2s ease;
+}
+
+.coin-tier-badge:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.coin-tier-badge:active {
+  transform: scale(0.95);
+}
+
 /* 交易头部 */
 .trading-header-clean {
   display: flex;

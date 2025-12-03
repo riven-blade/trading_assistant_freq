@@ -68,6 +68,7 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 			coins.GET("/selected", coinController.GetSelectedCoins) // 获取选中的币种
 			coins.POST("/select", coinController.SelectCoin)        // 筛选币种
 			coins.POST("/sync", coinController.SyncCoins)           // 同步币种
+			coins.PUT("/tier", coinController.UpdateCoinTier)       // 更新币种等级
 		}
 
 		// 价格预估路由

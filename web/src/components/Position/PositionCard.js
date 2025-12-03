@@ -11,7 +11,7 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
   // 使用实时价格计算盈亏
   const realTimeMarkPrice = currentPrice || position.mark_price;
 
-  // 计算持仓占比：当前保证金 / (第一个订单cost / 杠杆 * 10)
+  // 计算持仓占比：当前保证金 / (第一个订单cost / 杠杆)
   const calculatePositionRatio = () => {
     // 获取第一个订单的cost
     const firstOrderCost = position.orders?.[0]?.cost;
@@ -21,8 +21,8 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
     // notional 是映射后的 stake_amount
     const currentMargin = position.notional || 0;
 
-    // 最大持仓金额 = 第一个订单cost / 杠杆 * 10
-    const maxPositionAmount = (firstOrderCost / leverage) * 10;
+    // 最大持仓金额 = 第一个订单cost / 杠杆
+    const maxPositionAmount = firstOrderCost / leverage;
 
     if (maxPositionAmount <= 0) return null;
 

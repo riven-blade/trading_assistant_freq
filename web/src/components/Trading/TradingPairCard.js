@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tag } from 'antd';
-import { LineChartOutlined, CloseOutlined } from '@ant-design/icons';
+import { LineChartOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
+import { getTierByKey } from '../../utils/constants';
 
 /**
  * 交易对卡片组件
@@ -14,18 +15,20 @@ import { LineChartOutlined, CloseOutlined } from '@ant-design/icons';
  * @param {Object} symbolEstimates - 监听数量映射
  * @param {boolean} isMobile - 是否为移动端
  * @param {number} volumeRank - 成交额排名
+ * @param {Function} onEditTags - 编辑标签回调 (symbol)
  */
-const TradingPairCard = ({ 
-  pair, 
-  priceInfo, 
-  onAction, 
+const TradingPairCard = ({
+  pair,
+  priceInfo,
+  onAction,
   hasPosition,
   hasAnyPosition,
   hasAnyEstimate,
   hasOpenEstimate,
   symbolEstimates,
   isMobile = false,
-  volumeRank
+  volumeRank,
+  onEditTags
 }) => {
   const symbol = pair.symbol;
   const hasValidPrice = priceInfo && priceInfo.markPrice > 0;
@@ -59,6 +62,9 @@ const TradingPairCard = ({
     return numVolume.toFixed(0);
   };
 
+  // 获取等级信息
+  const tierInfo = getTierByKey(pair.tier);
+
   return (
     <div className="trading-pair-card-clean">
       {/* 头部信息 */}
@@ -67,6 +73,30 @@ const TradingPairCard = ({
           <span className="trading-symbol-clean">
             {symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol}
           </span>
+          {/* 等级标签 - 只在有等级时显示（仅展示） */}
+          {tierInfo && (
+            <span
+              className="coin-tier-badge"
+              title={tierInfo.description}
+              style={{
+                background: tierInfo.bgColor,
+                color: tierInfo.color,
+                border: `1px solid ${tierInfo.borderColor}`,
+                borderRadius: '4px',
+                padding: '0 6px',
+                fontSize: '11px',
+                fontWeight: '600',
+                height: '20px',
+                minWidth: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: '6px'
+              }}
+            >
+              {tierInfo.label}
+            </span>
+          )}
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}>
             {hasAnyEstimate(symbol) && (() => {
               const estimates = symbolEstimates[symbol];
@@ -162,6 +192,27 @@ const TradingPairCard = ({
           </div>
         </div>
       </div>
+
+      {/* 编辑等级按钮 */}
+      {onEditTags && (
+        <div
+          className="coin-tags-row"
+          onClick={() => onEditTags(symbol)}
+          style={{ cursor: 'pointer' }}
+          title={pair.tier ? "点击修改等级" : "点击添加等级"}
+        >
+          <span style={{
+            fontSize: '11px',
+            color: '#9ca3af',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}>
+            <EditOutlined style={{ fontSize: '10px' }} />
+            {pair.tier ? '修改等级' : '添加等级'}
+          </span>
+        </div>
+      )}
 
       {/* 价格信息区域 */}
       <div className="trading-price-section">

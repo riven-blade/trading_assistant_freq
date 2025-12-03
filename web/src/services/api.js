@@ -110,4 +110,15 @@ export const getAllSelectedCoinsPrices = async () => {
   }
 };
 
+// 更新币种等级
+export const updateCoinTier = async (symbol, tier) => {
+  try {
+    const response = await api.put('/coins/tier', { symbol, tier });
+    return response.data;
+  } catch (error) {
+    console.error('更新币种等级失败:', error);
+    throw error;
+  }
+};
+
 export default api;

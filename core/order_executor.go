@@ -167,7 +167,7 @@ func (oe *OrderExecutor) executeAddPosition(estimate *models.PriceEstimate, curr
 		return fmt.Errorf("获取不到原始投入金额")
 	}
 
-	stakeCost := *cost * (estimate.Percentage / 100.0) / *existingPosition.Leverage * 10
+	stakeCost := *cost * (estimate.Percentage / 100.0) / *existingPosition.Leverage
 
 	orderPrice := currentPrice
 

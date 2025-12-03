@@ -70,6 +70,7 @@ type Coin struct {
 type CoinSelection struct {
 	Symbol    string    `json:"symbol"`     // MarketID (统一使用MarketID)
 	Status    string    `json:"status"`     // 选择状态：active, inactive
+	Tier      string    `json:"tier"`       // 等级：S, A, B, C
 	CreatedAt time.Time `json:"created_at"` // 选中时间
 	UpdatedAt time.Time `json:"updated_at"` // 更新时间
 }
