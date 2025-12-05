@@ -27,14 +27,18 @@ import MonitoringCard from '../components/Monitoring/MonitoringCard';
 import useAccountData from '../hooks/useAccountData';
 import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
+import { useSystemConfig } from '../hooks/useSystemConfig';
 import { DEFAULT_CONFIG, COIN_TIER_OPTIONS } from '../utils/constants';
 
 const { Option } = Select;
 
 const TradingPairs = () => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
+
   // 移动端检测
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  
+
   // 基础状态
   const [selectedPairs, setSelectedPairs] = useState([]);
   const [allPairs, setAllPairs] = useState([]);
@@ -270,15 +274,17 @@ const TradingPairs = () => {
   const openTradeModal = (symbol, side) => {
     // 检查是否已有同方向仓位
     if (hasPosition(symbol, side)) {
-      const positionText = side === 'long' ? '多头' : '空头';
-      message.warning(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 已有${positionText}仓位 | 无法重复开仓`);
+      const positionText = isSpotMode ? '持仓' : (side === 'long' ? '多头' : '空头');
+      const actionText = isSpotMode ? '买入' : '开仓';
+      message.warning(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 已有${positionText}仓位 | 无法重复${actionText}`);
       return;
     }
 
     // 检查是否已有同方向开仓监听
     if (hasOpenEstimate(symbol, side)) {
-      const positionText = side === 'long' ? '多头' : '空头';
-      message.warning(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 已有${positionText}开仓监听 | 无法重复开仓`);
+      const positionText = isSpotMode ? '买入' : (side === 'long' ? '多头' : '空头');
+      const actionText = isSpotMode ? '买入' : '开仓';
+      message.warning(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 已有${positionText}${actionText}监听 | 无法重复${actionText}`);
       return;
     }
 
@@ -433,12 +439,14 @@ const TradingPairs = () => {
       };
 
       await api.post('/estimates', orderData);
-      
-      const actionText = tradeSide === 'long' ? '开多' : '开空';
+
+      const actionText = isSpotMode ? '买入' : (tradeSide === 'long' ? '开多' : '开空');
       const orderTypeText = orderType === 'market' ? '市价' : '限价';
-      
+
       const baseAsset = selectedTradeSymbol.replace('USDT', '');
-      message.success(`${actionText}预估价已创建 | ${orderTypeText}单 ${selectedLeverage}x杠杆 逐仓 标签${tagToUse} ${baseAsset} (${stakeAmount} USDT)`);
+      // 现货模式不显示杠杆和保证金模式
+      const leverageText = isSpotMode ? '' : ` ${selectedLeverage}x杠杆 逐仓`;
+      message.success(`${actionText}预估价已创建 | ${orderTypeText}单${leverageText} 标签${tagToUse} ${baseAsset} (${stakeAmount} USDT)`);
       setTradeModalVisible(false);
     } catch (error) {
       message.error('创建订单失败: ' + (error.response?.data?.error || error.message));

@@ -9,6 +9,8 @@ import (
 	"trading_assistant/pkg/config"
 	"trading_assistant/pkg/exchanges/binance"
 	"trading_assistant/pkg/exchanges/bybit"
+	"trading_assistant/pkg/exchanges/mexc"
+	"trading_assistant/pkg/exchanges/okx"
 	"trading_assistant/pkg/exchanges/types"
 )
 
@@ -36,6 +38,8 @@ type ExchangeType string
 const (
 	ExchangeTypeBinance ExchangeType = "binance"
 	ExchangeTypeBybit   ExchangeType = "bybit"
+	ExchangeTypeOKX     ExchangeType = "okx"
+	ExchangeTypeMEXC    ExchangeType = "mexc"
 )
 
 // ExchangeFactory 交易所工厂
@@ -55,6 +59,10 @@ func (f *ExchangeFactory) CreateExchange(exchangeType string, marketType string)
 		return f.createBinanceExchange(marketType)
 	case ExchangeTypeBybit:
 		return f.createBybitExchange(marketType)
+	case ExchangeTypeOKX:
+		return f.createOKXExchange(marketType)
+	case ExchangeTypeMEXC:
+		return f.createMEXCExchange(marketType)
 	default:
 		return nil, fmt.Errorf("不支持的交易所类型: %s", exchangeType)
 	}
@@ -67,7 +75,10 @@ func (f *ExchangeFactory) CreateFromConfig() (ExchangeInterface, error) {
 	}
 
 	exchangeType := config.GlobalConfig.ExchangeType
-	marketType := types.MarketTypeFuture // 默认期货市场
+	marketType := config.GlobalConfig.MarketType
+	if marketType == "" {
+		marketType = types.MarketTypeFuture // 默认期货市场
+	}
 
 	return f.CreateExchange(exchangeType, marketType)
 }
@@ -104,11 +115,32 @@ func (f *ExchangeFactory) createBybitExchange(marketType string) (*bybit.Bybit, 
 	return bybit.New(config)
 }
 
+// createOKXExchange 创建 OKX 交易所实例
+func (f *ExchangeFactory) createOKXExchange(marketType string) (*okx.OKX, error) {
+	config := okx.DefaultConfig()
+
+	// 设置市场类型
+	if err := config.SetMarketType(marketType); err != nil {
+		return nil, fmt.Errorf("设置OKX市场类型失败: %w", err)
+	}
+
+	return okx.New(config)
+}
+
+// createMEXCExchange 创建 MEXC 交易所实例
+func (f *ExchangeFactory) createMEXCExchange(marketType string) (*mexc.MEXC, error) {
+	config := mexc.DefaultConfig()
+	config.MarketType = marketType
+	return mexc.New(config)
+}
+
 // GetSupportedExchanges 获取支持的交易所列表
 func (f *ExchangeFactory) GetSupportedExchanges() []string {
 	return []string{
 		string(ExchangeTypeBinance),
 		string(ExchangeTypeBybit),
+		string(ExchangeTypeOKX),
+		string(ExchangeTypeMEXC),
 	}
 }
 
@@ -133,29 +165,27 @@ func (f *ExchangeFactory) GetExchangeInfo(exchangeType string) (map[string]inter
 	switch ExchangeType(exchangeType) {
 	case ExchangeTypeBinance:
 		return map[string]interface{}{
-			"name":      "Binance",
-			"id":        "binance",
-			"countries": []string{"JP", "MT"},
-			"version":   "v3",
-			"website":   "https://www.binance.com",
-			"api_docs":  "https://binance-docs.github.io/apidocs/",
-			"spot":      true,
-			"futures":   true,
-			"options":   true,
-			"websocket": true,
+			"name": "Binance", "id": "binance", "countries": []string{"JP", "MT"},
+			"version": "v3", "website": "https://www.binance.com",
+			"spot": true, "futures": true,
 		}, nil
 	case ExchangeTypeBybit:
 		return map[string]interface{}{
-			"name":      "Bybit",
-			"id":        "bybit",
-			"countries": []string{"VG"},
-			"version":   "v5",
-			"website":   "https://www.bybit.com",
-			"api_docs":  "https://bybit-exchange.github.io/docs/",
-			"spot":      true,
-			"futures":   true,
-			"options":   true,
-			"websocket": true,
+			"name": "Bybit", "id": "bybit", "countries": []string{"VG"},
+			"version": "v5", "website": "https://www.bybit.com",
+			"spot": true, "futures": true,
+		}, nil
+	case ExchangeTypeOKX:
+		return map[string]interface{}{
+			"name": "OKX", "id": "okx", "countries": []string{"SC"},
+			"version": "v5", "website": "https://www.okx.com",
+			"spot": true, "futures": true,
+		}, nil
+	case ExchangeTypeMEXC:
+		return map[string]interface{}{
+			"name": "MEXC", "id": "mexc", "countries": []string{"SG"},
+			"version": "v3", "website": "https://www.mexc.com",
+			"spot": true, "futures": false,
 		}, nil
 	default:
 		return nil, fmt.Errorf("不支持的交易所类型: %s", exchangeType)
@@ -180,18 +210,12 @@ func (f *ExchangeFactory) GetAvailableMarketTypes(exchangeType string) ([]string
 	exchangeType = strings.ToLower(strings.TrimSpace(exchangeType))
 
 	switch ExchangeType(exchangeType) {
-	case ExchangeTypeBinance:
-		return []string{
-			types.MarketTypeSpot,
-			types.MarketTypeFuture,
-			types.MarketTypeOption,
-		}, nil
-	case ExchangeTypeBybit:
-		return []string{
-			types.MarketTypeSpot,
-			types.MarketTypeFuture,
-			types.MarketTypeOption,
-		}, nil
+	case ExchangeTypeBinance, ExchangeTypeBybit:
+		return []string{types.MarketTypeSpot, types.MarketTypeFuture}, nil
+	case ExchangeTypeOKX:
+		return []string{types.MarketTypeSpot, types.MarketTypeFuture}, nil
+	case ExchangeTypeMEXC:
+		return []string{types.MarketTypeSpot}, nil
 	default:
 		return nil, fmt.Errorf("不支持的交易所类型: %s", exchangeType)
 	}

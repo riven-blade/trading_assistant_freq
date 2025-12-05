@@ -10,6 +10,7 @@ import TradingPairs from './pages/TradingPairs';
 import ChartPage from './pages/ChartPage';
 import { getToken, setToken, removeToken } from './utils/auth';
 import api from './services/api';
+import { SystemConfigProvider } from './hooks/useSystemConfig';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,19 +66,18 @@ function App() {
   }
 
   return (
-    <>
+    <SystemConfigProvider>
       <EventNotification />
       <MainLayout onLogout={handleLogout}>
-                  <Routes>
-              <Route path="/" element={<Navigate to="/positions" replace />} />
-              <Route path="/positions" element={<Positions />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/trading-pairs" element={<TradingPairs />} />
-              <Route path="/klines" element={<ChartPage />} />
-
-            </Routes>
+        <Routes>
+          <Route path="/" element={<Navigate to="/positions" replace />} />
+          <Route path="/positions" element={<Positions />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/trading-pairs" element={<TradingPairs />} />
+          <Route path="/klines" element={<ChartPage />} />
+        </Routes>
       </MainLayout>
-    </>
+    </SystemConfigProvider>
   );
 }
 

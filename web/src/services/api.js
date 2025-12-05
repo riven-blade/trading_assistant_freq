@@ -121,4 +121,15 @@ export const updateCoinTier = async (symbol, tier) => {
   }
 };
 
+// 获取系统配置
+export const getSystemConfig = async () => {
+  try {
+    const response = await api.get('/config');
+    return response.data.data || { market_type: 'future', exchange_type: 'binance' };
+  } catch (error) {
+    console.error('获取系统配置失败:', error);
+    return { market_type: 'future', exchange_type: 'binance' };
+  }
+};
+
 export default api;

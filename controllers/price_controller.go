@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 	"trading_assistant/models"
+	"trading_assistant/pkg/config"
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/redis"
 	"trading_assistant/pkg/utils"
@@ -32,11 +33,28 @@ type PriceEstimateRequest struct {
 	StakeAmount float64     `json:"stake_amount"`                  // 开仓金额 (USDT)
 }
 
+// isSpotMode 判断是否为现货模式
+func (p *PriceController) isSpotMode() bool {
+	return config.GlobalConfig != nil && config.GlobalConfig.MarketType == types.MarketTypeSpot
+}
+
 // validatePriceEstimateRequest 验证价格预估请求
 func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest) error {
-	// 验证交易方向
-	if req.Side != types.PositionSideLong && req.Side != types.PositionSideShort {
-		return fmt.Errorf("交易方向必须是 %s 或 %s", types.PositionSideLong, types.PositionSideShort)
+	// 现货模式特殊处理
+	if p.isSpotMode() {
+		// 现货模式强制使用 long 方向
+		req.Side = types.PositionSideLong
+		// 现货模式杠杆固定为1
+		req.Leverage = 1
+	} else {
+		// 期货模式验证交易方向
+		if req.Side != types.PositionSideLong && req.Side != types.PositionSideShort {
+			return fmt.Errorf("交易方向必须是 %s 或 %s", types.PositionSideLong, types.PositionSideShort)
+		}
+		// 设置默认杠杆
+		if req.Leverage <= 0 {
+			req.Leverage = 5 // 默认5倍杠杆
+		}
 	}
 
 	// 验证操作类型
@@ -79,11 +97,6 @@ func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest
 	}
 	if req.TriggerType != models.TriggerTypeCondition && req.TriggerType != models.TriggerTypeImmediate {
 		return fmt.Errorf("触发类型必须是 %s 或 %s", models.TriggerTypeCondition, models.TriggerTypeImmediate)
-	}
-
-	// 设置默认杠杆
-	if req.Leverage <= 0 {
-		req.Leverage = 5 // 默认5倍杠杆
 	}
 
 	return nil

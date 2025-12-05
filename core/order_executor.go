@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 	"trading_assistant/models"
+	"trading_assistant/pkg/config"
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/freqtrade"
 	"trading_assistant/pkg/redis"
@@ -22,6 +23,19 @@ func NewOrderExecutor(freqtradeClient *freqtrade.Controller) *OrderExecutor {
 	return &OrderExecutor{
 		freqtradeClient: freqtradeClient,
 	}
+}
+
+// getMarketType 获取当前市场类型
+func (oe *OrderExecutor) getMarketType() string {
+	if config.GlobalConfig != nil && config.GlobalConfig.MarketType != "" {
+		return config.GlobalConfig.MarketType
+	}
+	return types.MarketTypeFuture // 默认期货
+}
+
+// convertSymbol 根据市场类型转换 MarketID 为 Symbol
+func (oe *OrderExecutor) convertSymbol(marketID string) string {
+	return utils.ConvertMarketIDToSymbol(marketID, oe.getMarketType())
 }
 
 // ExecuteOrder 执行订单
@@ -77,10 +91,10 @@ func (oe *OrderExecutor) executeFreqtradeOrder(estimate *models.PriceEstimate, c
 
 // executeOpenPosition 开仓
 func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, currentPrice float64) error {
-	futureSymbol := utils.ConvertMarketIDToFutureSymbol(estimate.Symbol)
+	symbol := oe.convertSymbol(estimate.Symbol)
 
 	// 检查是否可以开仓
-	if !oe.freqtradeClient.CheckForceBuy(futureSymbol) {
+	if !oe.freqtradeClient.CheckForceBuy(symbol) {
 		return fmt.Errorf("无法开仓: 达到最大持仓数量或交易对已存在持仓")
 	}
 
@@ -103,7 +117,7 @@ func (oe *OrderExecutor) executeOpenPosition(estimate *models.PriceEstimate, cur
 	}
 
 	payload := models.ForceBuyPayload{
-		Pair:      futureSymbol,
+		Pair:      symbol,
 		OrderType: orderType,
 		EntryTag:  entryTag,
 		Side:      side, // 设置开仓方向
@@ -141,12 +155,12 @@ func (oe *OrderExecutor) executeAddPosition(estimate *models.PriceEstimate, curr
 		return fmt.Errorf("获取仓位信息失败: %v", err)
 	}
 
-	futureSymbol := utils.ConvertMarketIDToFutureSymbol(estimate.Symbol)
+	symbol := oe.convertSymbol(estimate.Symbol)
 
 	var existingPosition *models.TradePosition
 	for i := range positions {
 		pos := &positions[i]
-		if pos.Pair == futureSymbol && pos.IsOpen {
+		if pos.Pair == symbol && pos.IsOpen {
 			// 检查方向是否匹配
 			isLongPosition := pos.TradeDirection == "long" || !pos.IsShort
 			isEstimateLong := estimate.Side == types.PositionSideLong
@@ -194,7 +208,7 @@ func (oe *OrderExecutor) executeAddPosition(estimate *models.PriceEstimate, curr
 	}
 
 	return oe.freqtradeClient.ForceAdjustBuy(
-		futureSymbol,
+		symbol,
 		orderPrice,
 		side,
 		stakeCost,
@@ -215,13 +229,13 @@ func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, cu
 		return fmt.Errorf("获取交易状态失败: %v", err)
 	}
 
-	futureSymbol := utils.ConvertMarketIDToFutureSymbol(estimate.Symbol)
+	symbol := oe.convertSymbol(estimate.Symbol)
 
 	// 查找对应的开仓交易
 	var targetTrade *models.TradePosition
 	for i := range trades {
 		trade := &trades[i]
-		if trade.Pair == futureSymbol && trade.IsOpen {
+		if trade.Pair == symbol && trade.IsOpen {
 			// 检查方向是否匹配
 			isLongPosition := trade.TradeDirection == "long" || !trade.IsShort
 			isEstimateLong := estimate.Side == types.PositionSideLong

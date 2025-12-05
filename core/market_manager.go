@@ -77,7 +77,11 @@ func (mm *MarketManager) SyncMarketAndPriceData() error {
 func (mm *MarketManager) syncMarketData() error {
 	logrus.Info("开始同步市场数据...")
 
-	// 获取所有USDT期货交易对
+	// 获取市场类型
+	marketType := mm.exchangeClient.GetMarketType()
+	isSpotMode := marketType == "spot"
+
+	// 获取所有USDT交易对
 	markets, err := mm.exchangeClient.FetchMarkets(context.Background(), nil)
 	if err != nil {
 		return fmt.Errorf("获取市场数据失败: %v", err)
@@ -90,11 +94,22 @@ func (mm *MarketManager) syncMarketData() error {
 
 	for i := range markets {
 		market := markets[i]
-		// 只处理活跃的USDT永续合约
-		if !market.Active || market.Quote != "USDT" || !market.Swap {
-			logrus.Debugf("跳过非永续合约: %s (Active: %v, Quote: %s, Swap: %v)",
-				market.ID, market.Active, market.Quote, market.Swap)
-			continue
+
+		// 根据市场类型筛选
+		if isSpotMode {
+			// 现货模式：只处理活跃的USDT现货交易对
+			if !market.Active || market.Quote != "USDT" || !market.Spot {
+				logrus.Debugf("跳过非现货交易对: %s (Active: %v, Quote: %s, Spot: %v)",
+					market.ID, market.Active, market.Quote, market.Spot)
+				continue
+			}
+		} else {
+			// 期货模式：只处理活跃的USDT永续合约
+			if !market.Active || market.Quote != "USDT" || !market.Swap {
+				logrus.Debugf("跳过非永续合约: %s (Active: %v, Quote: %s, Swap: %v)",
+					market.ID, market.Active, market.Quote, market.Swap)
+				continue
+			}
 		}
 
 		usdtCount++
@@ -120,8 +135,17 @@ func (mm *MarketManager) syncMarketData() error {
 		}
 
 		// 计算并设置正确的精度值
+		// 优先从 Limits.Price.Step 计算，如果没有则从 Precision.Price 获取
 		coin.PricePrecision = coin.GetPricePrecisionFromTickSize()
+		if coin.PricePrecision == 0 && market.Precision.Price > 0 {
+			// 直接使用 Market.Precision.Price 作为精度位数
+			coin.PricePrecision = int(market.Precision.Price)
+		}
 		coin.QuantityPrecision = coin.GetQuantityPrecisionFromStepSize()
+		if coin.QuantityPrecision == 0 && market.Precision.Amount > 0 {
+			// 直接使用 Market.Precision.Amount 作为精度位数
+			coin.QuantityPrecision = int(market.Precision.Amount)
+		}
 
 		logrus.WithFields(logrus.Fields{
 			"symbol":             coin.Symbol,

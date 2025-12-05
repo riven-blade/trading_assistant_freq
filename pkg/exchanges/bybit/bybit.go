@@ -2,9 +2,6 @@ package bybit
 
 import (
 	"context"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -16,20 +13,16 @@ import (
 	"trading_assistant/pkg/exchanges"
 )
 
-// ========== Bybit 交易所实现 ==========
+// ========== Bybit 交易所实现（简化版 - 仅公共市场数据）==========
 
 // Bybit 实现交易所接口
 type Bybit struct {
 	*exchanges.BaseExchange
 	config   *Config
-	category string // 产品类型：spot, linear, inverse, option
+	category string // 产品类型：spot, linear, inverse
 
 	// API端点缓存
 	endpoints map[string]string
-
-	// 缓存字段
-	lastServerTimeRequest int64
-	serverTimeOffset      int64
 }
 
 // ========== 构造函数 ==========
@@ -57,12 +50,6 @@ func New(config *Config) (*Bybit, error) {
 	// 设置API端点
 	bybit.setEndpoints()
 
-	// 设置凭证
-	bybit.SetCredentials(config.APIKey, config.Secret, "", "")
-
-	// 初始同步服务器时间
-	go bybit.updateServerTimeOffset()
-
 	return bybit, nil
 }
 
@@ -77,25 +64,10 @@ func (b *Bybit) setCapabilities() {
 	capabilities := map[string]bool{
 		"fetchMarkets":    true,
 		"fetchTicker":     true,
+		"fetchBookTicker": true,
 		"fetchKline":      true,
-		"fetchTrades":     true,
-		"fetchOrderBook":  true,
-		"fetchBalance":    true,
-		"createOrder":     true,
-		"cancelOrder":     true,
-		"fetchOrder":      true,
-		"fetchOrders":     true,
-		"fetchOpenOrders": true,
-		"fetchPositions":  false,
-		"setLeverage":     false,
-		"setMarginMode":   false,
-	}
-
-	// 根据产品类型调整功能
-	if b.category == CategoryLinear || b.category == CategoryInverse {
-		capabilities["fetchPositions"] = true
-		capabilities["setLeverage"] = true
-		capabilities["setMarginMode"] = true
+		"fetchMarkPrice":  b.config.IsFutures(),
+		"fetchMarkPrices": b.config.IsFutures(),
 	}
 
 	// 设置时间周期
@@ -129,103 +101,11 @@ func (b *Bybit) setEndpoints() {
 	baseURL := b.config.GetBaseURL()
 
 	b.endpoints["base"] = baseURL
-	b.endpoints["websocket"] = b.config.GetWebSocketURL()
 
 	// 市场数据端点
 	b.endpoints["instrumentsInfo"] = baseURL + EndpointInstrumentsInfo
 	b.endpoints["tickers"] = baseURL + EndpointTickers
 	b.endpoints["kline"] = baseURL + EndpointKline
-	b.endpoints["orderbook"] = baseURL + EndpointOrderbook
-	b.endpoints["recentTrade"] = baseURL + EndpointRecentTrade
-
-	// 交易端点
-	b.endpoints["placeOrder"] = baseURL + EndpointPlaceOrder
-	b.endpoints["cancelOrder"] = baseURL + EndpointCancelOrder
-	b.endpoints["orderHistory"] = baseURL + EndpointOrderHistory
-	b.endpoints["orderRealtime"] = baseURL + EndpointOrderRealtime
-
-	// 账户端点
-	b.endpoints["walletBalance"] = baseURL + EndpointWalletBalance
-
-	// 持仓端点
-	if b.category == CategoryLinear || b.category == CategoryInverse {
-		b.endpoints["positionInfo"] = baseURL + EndpointPositionInfo
-		b.endpoints["setLeverage"] = baseURL + EndpointSetLeverage
-		b.endpoints["switchMode"] = baseURL + EndpointSwitchMode
-	}
-}
-
-// ========== 签名和认证 ==========
-
-// Sign 签名请求
-func (b *Bybit) Sign(path, api, method string, params map[string]interface{}, headers map[string]string, body interface{}) (string, map[string]string, interface{}, error) {
-	if headers == nil {
-		headers = make(map[string]string)
-	}
-
-	// 公开API不需要签名
-	if api == "public" {
-		query := b.buildQuery(params)
-		if query != "" {
-			if strings.Contains(path, "?") {
-				path += "&" + query
-			} else {
-				path += "?" + query
-			}
-		}
-		return path, headers, body, nil
-	}
-
-	// 私有API需要签名
-	if b.GetApiKey() == "" || b.GetSecret() == "" {
-		return "", nil, nil, exchanges.NewAuthenticationError("API key and secret required")
-	}
-
-	// 添加时间戳
-	if params == nil {
-		params = make(map[string]interface{})
-	}
-	params["timestamp"] = b.GetServerTime()
-
-	// 添加接收窗口
-	if b.config.RecvWindow > 0 {
-		params["recvWindow"] = b.config.RecvWindow
-	}
-
-	// 根据HTTP方法处理签名
-	var signature string
-	if method == "GET" || method == "DELETE" {
-		// GET/DELETE请求：参数在查询字符串中
-		query := b.buildQuery(params)
-		signature = b.generateSignature(method, path, query, "")
-		if query != "" {
-			if strings.Contains(path, "?") {
-				path += "&" + query
-			} else {
-				path += "?" + query
-			}
-		}
-	} else {
-		// POST/PUT请求：参数在请求体中
-		bodyStr := ""
-		if len(params) > 0 {
-			bodyBytes, _ := json.Marshal(params)
-			bodyStr = string(bodyBytes)
-			body = bodyStr
-		}
-		signature = b.generateSignature(method, path, "", bodyStr)
-		headers["Content-Type"] = "application/json"
-	}
-
-	// 添加认证头部
-	headers["X-BAPI-API-KEY"] = b.GetApiKey()
-	headers["X-BAPI-SIGN"] = signature
-	headers["X-BAPI-TIMESTAMP"] = fmt.Sprintf("%d", b.GetServerTime())
-	if b.config.RecvWindow > 0 {
-		headers["X-BAPI-RECV-WINDOW"] = fmt.Sprintf("%d", b.config.RecvWindow)
-	}
-
-	return path, headers, body, nil
 }
 
 // buildQuery 构建查询字符串
@@ -249,76 +129,21 @@ func (b *Bybit) buildQuery(params map[string]interface{}) string {
 	return strings.Join(parts, "&")
 }
 
-// generateSignature 生成HMAC SHA256签名
-func (b *Bybit) generateSignature(method, path, query, body string) string {
-	// Bybit v5 签名格式: timestamp + api_key + recv_window + query_string + body
-	timestamp := fmt.Sprintf("%d", b.GetServerTime())
-	recvWindow := ""
-	if b.config.RecvWindow > 0 {
-		recvWindow = fmt.Sprintf("%d", b.config.RecvWindow)
-	}
-
-	payload := timestamp + b.GetApiKey() + recvWindow + query + body
-
-	mac := hmac.New(sha256.New, []byte(b.GetSecret()))
-	mac.Write([]byte(payload))
-	return hex.EncodeToString(mac.Sum(nil))
-}
-
-// GetServerTime 获取服务器时间
-func (b *Bybit) GetServerTime() int64 {
-	now := time.Now().UnixMilli()
-
-	// 如果有时间偏移，应用偏移
-	if b.serverTimeOffset != 0 {
-		return now + b.serverTimeOffset
-	}
-
-	// 如果距离上次请求服务器时间超过5分钟，更新时间偏移
-	if now-b.lastServerTimeRequest > 5*60*1000 {
-		go b.updateServerTimeOffset()
-	}
-
-	return now
-}
-
-// updateServerTimeOffset 更新服务器时间偏移
-func (b *Bybit) updateServerTimeOffset() {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	url := b.endpoints["base"] + "/v5/market/time"
-	resp, err := b.Fetch(ctx, url, "GET", nil, "")
-	if err != nil {
-		return
-	}
-
-	var timeResp struct {
-		RetCode int    `json:"retCode"`
-		RetMsg  string `json:"retMsg"`
-		Result  struct {
-			TimeSecond string `json:"timeSecond"`
-			TimeNano   string `json:"timeNano"`
-		} `json:"result"`
-	}
-	if err := json.Unmarshal([]byte(resp), &timeResp); err != nil {
-		return
-	}
-
-	if timeResp.RetCode == 0 {
-		if serverTime, err := strconv.ParseInt(timeResp.Result.TimeSecond, 10, 64); err == nil {
-			localTime := time.Now().Unix()
-			b.serverTimeOffset = (serverTime - localTime) * 1000 // 转换为毫秒
-			b.lastServerTimeRequest = time.Now().UnixMilli()
-		}
-	}
-}
-
 // ========== 市场数据API ==========
 
 // FetchMarkets 获取市场信息
+// 支持 params["quote"] 筛选报价货币，如 params["quote"] = "USDT"
 func (b *Bybit) FetchMarkets(ctx context.Context, params map[string]interface{}) ([]*types.Market, error) {
 	endpoint := b.endpoints["instrumentsInfo"]
+
+	// 获取筛选参数（在修改 params 之前）
+	var quoteFilter string
+	if params != nil {
+		if q, ok := params["quote"].(string); ok {
+			quoteFilter = q
+			delete(params, "quote") // 从 params 中删除，避免传给 API
+		}
+	}
 
 	// 添加产品类型参数
 	if params == nil {
@@ -363,6 +188,10 @@ func (b *Bybit) FetchMarkets(ctx context.Context, params map[string]interface{})
 	for _, symbolData := range resp.Result.List {
 		market := b.parseMarket(symbolData)
 		if market != nil {
+			// 应用 quote 筛选
+			if quoteFilter != "" && market.Quote != quoteFilter {
+				continue
+			}
 			markets = append(markets, market)
 		}
 	}
@@ -538,6 +367,10 @@ func (b *Bybit) FetchTickers(ctx context.Context, symbols []string, params map[s
 func (b *Bybit) parseTicker(data map[string]interface{}, symbol string) *types.Ticker {
 	timestamp := time.Now().UnixMilli()
 
+	lastPrice := b.SafeFloat(data, "lastPrice", 0)
+	prevPrice := b.SafeFloat(data, "prevPrice24h", 0)
+	change := lastPrice - prevPrice // 计算价格变化
+
 	return &types.Ticker{
 		Symbol:      symbol,
 		TimeStamp:   timestamp,
@@ -548,10 +381,10 @@ func (b *Bybit) parseTicker(data map[string]interface{}, symbol string) *types.T
 		BidVolume:   b.SafeFloat(data, "bid1Size", 0),
 		Ask:         b.SafeFloat(data, "ask1Price", 0),
 		AskVolume:   b.SafeFloat(data, "ask1Size", 0),
-		Open:        b.SafeFloat(data, "prevPrice24h", 0),
-		Close:       b.SafeFloat(data, "lastPrice", 0),
-		Last:        b.SafeFloat(data, "lastPrice", 0),
-		Change:      0,                                          // 需要计算
+		Open:        prevPrice,
+		Close:       lastPrice,
+		Last:        lastPrice,
+		Change:      change,                                     // 价格变化 = lastPrice - prevPrice
 		Percentage:  b.SafeFloat(data, "price24hPcnt", 0) * 100, // 转换为百分比
 		BaseVolume:  b.SafeFloat(data, "volume24h", 0),
 		QuoteVolume: b.SafeFloat(data, "turnover24h", 0),

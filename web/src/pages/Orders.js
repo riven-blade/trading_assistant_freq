@@ -24,10 +24,13 @@ import api, { getAllEstimates } from '../services/api';
 import PageHeader from '../components/Common/PageHeader';
 
 import usePriceData from '../hooks/usePriceData';
+import { useSystemConfig } from '../hooks/useSystemConfig';
 
 const { Text } = Typography;
 
 const Orders = () => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
   const [markPrices, setMarkPrices] = useState({});
   const [pricesLoading, setPricesLoading] = useState(false);
   const [estimateSymbol, setEstimateSymbol] = useState('');
@@ -169,23 +172,29 @@ const Orders = () => {
       width: 100,
       render: (symbol) => <Text strong>{symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol}</Text>
     },
-    {
+    // 现货模式不显示方向列
+    ...(isSpotMode ? [] : [{
       title: '方向',
       dataIndex: 'side',
       key: 'side',
       width: 60,
       render: (side) => <Tag color={side === 'long' ? 'green' : 'red'}>{side === 'long' ? '多头' : '空头'}</Tag>
-    },
+    }]),
     {
       title: '操作类型',
       dataIndex: 'action_type',
       key: 'action_type',
       width: 80,
       render: (actionType) => {
-        const typeMap = {
+        // 现货模式使用不同的文案
+        const typeMap = isSpotMode ? {
+          'open': '买入',
+          'addition': '加仓',
+          'take_profit': '卖出',
+        } : {
           'open': '开仓',
           'addition': '加仓',
-          'take_profit': '止盈', 
+          'take_profit': '止盈',
         };
         const colorMap = {
           'open': 'green',
@@ -288,13 +297,14 @@ const Orders = () => {
       width: 120,
       render: (tag) => tag ? <Tag color="blue">{tag}</Tag> : <Text type="secondary">-</Text>
     },
-    {
+    // 现货模式不显示杠杆列
+    ...(isSpotMode ? [] : [{
       title: '杠杆',
       dataIndex: 'leverage',
       key: 'leverage',
       width: 60,
       render: (leverage) => <Tag color="blue">{leverage}x</Tag>
-    },
+    }]),
 
     {
       title: '创建时间',

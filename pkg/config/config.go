@@ -20,7 +20,8 @@ type Config struct {
 	LogLevel string
 	BaseURL  string
 
-	ExchangeType string // 交易所类型: binance, bybit
+	ExchangeType string // 交易所类型: binance, bybit, okx, mexc
+	MarketType   string // 市场类型: spot, future
 
 	// 风险管理配置
 	ShortFundingRateThreshold float64 // 做空资金费率阈值，低于此阈值不开空仓
@@ -55,6 +56,7 @@ func LoadConfig() {
 		BaseURL:       getEnv("BASE_URL", "localhost"),
 
 		ExchangeType: getEnv("EXCHANGE_TYPE", "binance"), // 默认使用 binance
+		MarketType:   getEnv("MARKET_TYPE", "future"),    // 默认使用期货
 
 		ShortFundingRateThreshold: getEnvFloat("SHORT_FUNDING_RATE_THRESHOLD", -0.002), // 默认-0.2%
 

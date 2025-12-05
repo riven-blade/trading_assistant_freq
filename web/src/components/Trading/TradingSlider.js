@@ -2,6 +2,8 @@ import React from 'react';
 import { Slider } from 'antd';
 import './TradingSlider.css';
 
+import { useSystemConfig } from '../../hooks/useSystemConfig';
+
 /**
  * 交易滑块组件，按照设计图样式
  * @param {string} title - 滑块标题
@@ -33,14 +35,23 @@ const TradingSlider = ({
   disabled = false,
   action
 }) => {
+  const { isSpotMode } = useSystemConfig();
+
   // 根据操作类型确定显示标签
   const getPriceLabel = () => {
     // 如果有明确的displayLabel，直接使用
     if (displayLabel) {
       return displayLabel;
     }
-    
-    // 只有价格滑块才需要根据action显示不同标签
+
+    // 现货模式使用不同的文案
+    if (isSpotMode) {
+      if (action === 'take_profit') return '卖出价:';
+      if (action === 'addition') return '加仓价:';
+      return '买入价:'; // 默认买入
+    }
+
+    // 期货模式
     if (action === 'take_profit') return '止盈价:';
     if (action === 'addition') return '加仓价:';
     return '开仓价:'; // 默认开仓

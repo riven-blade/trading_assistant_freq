@@ -131,3 +131,46 @@ func ConvertMarketIDToFutureSymbol(marketID string) string {
 	// 默认按USDT处理
 	return marketID + "/USDT:USDT"
 }
+
+// ConvertMarketIDToSpotSymbol 将marketid转换为现货格式的symbol
+// 例如: "DOGEUSDT" -> "DOGE/USDT"
+func ConvertMarketIDToSpotSymbol(marketID string) string {
+	if marketID == "" {
+		return ""
+	}
+
+	// 大部分都是以USDT结尾
+	if strings.HasSuffix(marketID, "USDT") {
+		base := strings.TrimSuffix(marketID, "USDT")
+		return base + "/USDT"
+	}
+
+	if strings.HasSuffix(marketID, "USDC") {
+		base := strings.TrimSuffix(marketID, "USDC")
+		return base + "/USDC"
+	}
+
+	if strings.HasSuffix(marketID, "BTC") {
+		base := strings.TrimSuffix(marketID, "BTC")
+		return base + "/BTC"
+	}
+
+	if strings.HasSuffix(marketID, "ETH") {
+		base := strings.TrimSuffix(marketID, "ETH")
+		return base + "/ETH"
+	}
+
+	// 默认按USDT处理
+	return marketID + "/USDT"
+}
+
+// ConvertMarketIDToSymbol 根据市场类型将marketid转换为对应格式的symbol
+// marketType: "spot" 或 "future"
+// 例如: "DOGEUSDT", "spot" -> "DOGE/USDT"
+// 例如: "DOGEUSDT", "future" -> "DOGE/USDT:USDT"
+func ConvertMarketIDToSymbol(marketID string, marketType string) string {
+	if marketType == "spot" {
+		return ConvertMarketIDToSpotSymbol(marketID)
+	}
+	return ConvertMarketIDToFutureSymbol(marketID)
+}

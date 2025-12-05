@@ -144,6 +144,10 @@ func (pm *PriceManager) fetchPricesOnce() {
 	ctx, cancel := context.WithTimeout(pm.ctx, 10*time.Second)
 	defer cancel()
 
+	// 获取市场类型
+	marketType := pm.exchangeClient.GetMarketType()
+	isSpotMode := marketType == "spot"
+
 	// 1. 获取实时BookTicker数据（只包含bid/ask价格，权重更低）
 	tickers, err := pm.exchangeClient.FetchBookTickers(ctx, selectedSymbols, nil)
 	if err != nil {
@@ -151,11 +155,14 @@ func (pm *PriceManager) fetchPricesOnce() {
 		return
 	}
 
-	// 2. 获取资金费率数据
-	markPrices, err := pm.exchangeClient.FetchMarkPrices(ctx, selectedSymbols)
-	if err != nil {
-		logrus.Errorf("获取标记价格失败: %v", err)
-		return
+	// 2. 获取资金费率数据（仅期货模式）
+	var markPrices map[string]*types.MarkPrice
+	if !isSpotMode {
+		markPrices, err = pm.exchangeClient.FetchMarkPrices(ctx, selectedSymbols)
+		if err != nil {
+			logrus.Warnf("获取标记价格失败: %v", err)
+			// 期货模式下标记价格获取失败，继续处理（使用ticker数据）
+		}
 	}
 
 	pm.lastFetchTime = time.Now()
@@ -165,7 +172,12 @@ func (pm *PriceManager) fetchPricesOnce() {
 	// 3. 合并两个数据源
 	for _, symbol := range selectedSymbols {
 		ticker := tickers[symbol]
-		markPrice := markPrices[symbol]
+
+		// 现货模式只需要 ticker，期货模式可能还需要 markPrice
+		var markPrice *types.MarkPrice
+		if markPrices != nil {
+			markPrice = markPrices[symbol]
+		}
 
 		// 确保至少有一个数据源有效
 		if ticker == nil && markPrice == nil {
@@ -182,9 +194,19 @@ func (pm *PriceManager) fetchPricesOnce() {
 		if ticker != nil {
 			watchMarkPrice.BidPrice = ticker.Bid // 最优买价（实时）
 			watchMarkPrice.AskPrice = ticker.Ask // 最优卖价（实时）
+			// 获取参考价格：优先使用 Last，如果为 0 则用 Bid/Ask 中间价
+			if ticker.Last > 0 {
+				watchMarkPrice.MarkPrice = ticker.Last
+			} else if ticker.Bid > 0 && ticker.Ask > 0 {
+				watchMarkPrice.MarkPrice = (ticker.Bid + ticker.Ask) / 2
+			} else if ticker.Bid > 0 {
+				watchMarkPrice.MarkPrice = ticker.Bid
+			} else if ticker.Ask > 0 {
+				watchMarkPrice.MarkPrice = ticker.Ask
+			}
 		}
 
-		// 从 MarkPrice 获取资金费率等信息
+		// 从 MarkPrice 获取资金费率等信息（仅期货模式）
 		if markPrice != nil {
 			watchMarkPrice.MarkPrice = markPrice.MarkPrice         // 标记价格（作为参考）
 			watchMarkPrice.IndexPrice = markPrice.IndexPrice       // 指数价格
@@ -192,7 +214,7 @@ func (pm *PriceManager) fetchPricesOnce() {
 			watchMarkPrice.FundingTime = markPrice.NextFundingTime // 下次资金费时间
 		}
 
-		// 如果没有bid/ask，降级使用标记价格
+		// 如果没有bid/ask，降级使用标记价格或最新价
 		if watchMarkPrice.BidPrice <= 0 && watchMarkPrice.MarkPrice > 0 {
 			watchMarkPrice.BidPrice = watchMarkPrice.MarkPrice
 		}

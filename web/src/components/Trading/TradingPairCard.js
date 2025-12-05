@@ -2,6 +2,7 @@ import React from 'react';
 import { Tag } from 'antd';
 import { LineChartOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { getTierByKey } from '../../utils/constants';
+import { useSystemConfig } from '../../hooks/useSystemConfig';
 
 /**
  * 交易对卡片组件
@@ -30,6 +31,8 @@ const TradingPairCard = ({
   volumeRank,
   onEditTags
 }) => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
   const symbol = pair.symbol;
   const hasValidPrice = priceInfo && priceInfo.markPrice > 0;
   
@@ -265,15 +268,15 @@ const TradingPairCard = ({
               </div>
             )}
 
-            {/* 资金费率 - 移动端也显示 */}
-            {priceInfo?.fundingRate !== undefined && (
-              <div style={{ 
+            {/* 资金费率 - 仅期货模式显示 */}
+            {!isSpotMode && priceInfo?.fundingRate !== undefined && (
+              <div style={{
                 textAlign: 'center',
                 fontSize: isMobile ? '10px' : '11px',
                 color: '#6b7280'
               }}>
                 <span>资金费率: </span>
-                <span style={{ 
+                <span style={{
                   color: priceInfo.fundingRate >= 0 ? '#059669' : '#dc2626',
                   fontWeight: '600'
                 }}>
@@ -290,22 +293,26 @@ const TradingPairCard = ({
         <div className="trading-control-group">
           {hasValidPrice && (
             <>
+              {/* 买入/开多按钮 */}
               <button
                 className={`control-btn ${(hasPosition(symbol, 'long') || hasOpenEstimate(symbol, 'long')) ? 'secondary-btn' : 'success-btn'} trading-control-btn`}
                 disabled={hasPosition(symbol, 'long') || hasOpenEstimate(symbol, 'long')}
                 onClick={() => onAction(symbol, 'long')}
               >
-                {hasPosition(symbol, 'long') ? '已开多' : 
-                 hasOpenEstimate(symbol, 'long') ? '监听中' : '开多'}
+                {hasPosition(symbol, 'long') ? (isSpotMode ? '已持有' : '已开多') :
+                 hasOpenEstimate(symbol, 'long') ? '监听中' : (isSpotMode ? '买入' : '开多')}
               </button>
-              <button
-                className={`control-btn ${(hasPosition(symbol, 'short') || hasOpenEstimate(symbol, 'short')) ? 'secondary-btn' : 'danger-btn'} trading-control-btn`}
-                disabled={hasPosition(symbol, 'short') || hasOpenEstimate(symbol, 'short')}
-                onClick={() => onAction(symbol, 'short')}
-              >
-                {hasPosition(symbol, 'short') ? '已开空' : 
-                 hasOpenEstimate(symbol, 'short') ? '监听中' : '开空'}
-              </button>
+              {/* 卖出/开空按钮 - 现货模式下隐藏 */}
+              {!isSpotMode && (
+                <button
+                  className={`control-btn ${(hasPosition(symbol, 'short') || hasOpenEstimate(symbol, 'short')) ? 'secondary-btn' : 'danger-btn'} trading-control-btn`}
+                  disabled={hasPosition(symbol, 'short') || hasOpenEstimate(symbol, 'short')}
+                  onClick={() => onAction(symbol, 'short')}
+                >
+                  {hasPosition(symbol, 'short') ? '已开空' :
+                   hasOpenEstimate(symbol, 'short') ? '监听中' : '开空'}
+                </button>
+              )}
             </>
           )}
         </div>

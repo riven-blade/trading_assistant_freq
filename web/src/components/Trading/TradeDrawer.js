@@ -3,6 +3,7 @@ import { Drawer, Form, Typography, Tag, Select, Button, InputNumber } from 'antd
 import PriceSlider from './PriceSlider';
 import { ACTIONS } from '../../utils/constants';
 import { formatPrice } from '../../utils/precision';
+import { useSystemConfig } from '../../hooks/useSystemConfig';
 
 const { Text } = Typography;
 
@@ -45,16 +46,19 @@ const TradeDrawer = ({
   onStakeAmountChange,
   pricePrecision
 }) => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
+
   // 百分比状态管理
   const [pricePercentage, setPricePercentage] = useState(0);
-  
+
   // 定义入场标签选项
   const longEntryTags = [120];
   const shortEntryTags = [620];
-  
+
   // 获取当前方向对应的标签选项
   const availableTags = side === 'long' ? longEntryTags : shortEntryTags;
-  
+
   // 获取当前价格
   const markPrice = priceData?.[symbol]?.markPrice || 0;
   
@@ -79,13 +83,35 @@ const TradeDrawer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]); // 只依赖visible，避免价格更新时重置
 
+  // 根据模式获取标题文案
+  const getActionText = () => {
+    if (isSpotMode) {
+      return '买入';
+    }
+    return side === 'long' ? '开多' : '开空';
+  };
+
+  const getTagText = () => {
+    if (isSpotMode) {
+      return 'BUY';
+    }
+    return side === 'long' ? 'LONG' : 'SHORT';
+  };
+
+  const getSummaryText = () => {
+    if (isSpotMode) {
+      return '买入';
+    }
+    return side === 'long' ? '做多 (LONG)' : '做空 (SHORT)';
+  };
+
   return (
     <Drawer
       title={
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span>{side === 'long' ? '开多' : '开空'} {symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol}</span>
+          <span>{getActionText()} {symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol}</span>
           <Tag color={side === 'long' ? 'green' : 'red'}>
-            {side === 'long' ? 'LONG' : 'SHORT'}
+            {getTagText()}
           </Tag>
         </div>
       }
@@ -94,22 +120,22 @@ const TradeDrawer = ({
       onClose={onClose}
       open={visible}
       extra={
-        <Button 
-          type="primary" 
+        <Button
+          type="primary"
           onClick={() => onSubmit(entryTag)}
         >
-          确认{side === 'long' ? '开多' : '开空'}
+          确认{getActionText()}
         </Button>
       }
     >
       <Form layout="vertical">
         {/* 交易信息概要 */}
-        <div style={{ 
-          background: side === 'long' ? '#f6ffed' : '#fff2f0', 
+        <div style={{
+          background: side === 'long' ? '#f6ffed' : '#fff2f0',
           border: `2px solid ${side === 'long' ? '#b7eb8f' : '#ffccc7'}`,
-          padding: 16, 
-          borderRadius: 8, 
-          marginBottom: 16 
+          padding: 16,
+          borderRadius: 8,
+          marginBottom: 16
         }}>
           {/* 标题行 */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
@@ -117,39 +143,45 @@ const TradeDrawer = ({
               交易概要
             </Text>
             <Text strong style={{ color: side === 'long' ? '#52c41a' : '#ff4d4f' }}>
-              {side === 'long' ? '做多 (LONG)' : '做空 (SHORT)'}
+              {getSummaryText()}
             </Text>
           </div>
-          
+
           {/* 价格信息 */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <Text type="secondary">当前价格:</Text>
             <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>${formatPrice(markPrice, pricePrecision)}</Text>
           </div>
-          
+
           {/* 交易参数 */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <Text type="secondary">开仓金额:</Text>
+            <Text type="secondary">{isSpotMode ? '买入金额:' : '开仓金额:'}</Text>
             <Text strong style={{ color: '#fa8c16' }}>
               {stakeAmount ? `${stakeAmount} USDT` : '未设置'}
             </Text>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <Text type="secondary">杠杆倍数:</Text>
-            <Text strong>{selectedLeverage}x</Text>
-          </div>
+          {/* 杠杆倍数 - 仅期货模式显示 */}
+          {!isSpotMode && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <Text type="secondary">杠杆倍数:</Text>
+              <Text strong>{selectedLeverage}x</Text>
+            </div>
+          )}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
             <Text type="secondary">入场标签:</Text>
             <Text strong style={{ color: '#1890ff' }}>
               {entryTag || 'manual'}
             </Text>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <Text type="secondary">保证金模式:</Text>
-            <Text strong style={{ color: '#fa8c16' }}>
-              逐仓
-            </Text>
-          </div>
+          {/* 保证金模式 - 仅期货模式显示 */}
+          {!isSpotMode && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <Text type="secondary">保证金模式:</Text>
+              <Text strong style={{ color: '#fa8c16' }}>
+                逐仓
+              </Text>
+            </div>
+          )}
           {orderType === 'limit' && (
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
               <Text type="secondary">限价价格:</Text>
@@ -208,22 +240,24 @@ const TradeDrawer = ({
 
 
 
-        {/* 杠杆设置 */}
-        <Form.Item label="杠杆倍数">
-          <Select 
-            value={selectedLeverage} 
-            onChange={onLeverageChange}
-            style={{ width: '100%' }}
-            size="large"
-            getPopupContainer={(trigger) => trigger.parentElement}
-          >
-            {[1, 2, 3, 4, 5].map(leverage => (
-              <Select.Option key={leverage} value={leverage}>
-                {leverage}x
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+        {/* 杠杆设置 - 仅期货模式显示 */}
+        {!isSpotMode && (
+          <Form.Item label="杠杆倍数">
+            <Select
+              value={selectedLeverage}
+              onChange={onLeverageChange}
+              style={{ width: '100%' }}
+              size="large"
+              getPopupContainer={(trigger) => trigger.parentElement}
+            >
+              {[1, 2, 3, 4, 5].map(leverage => (
+                <Select.Option key={leverage} value={leverage}>
+                  {leverage}x
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
 
         {/* 入场标签设置 */}
         <Form.Item label="入场标签">

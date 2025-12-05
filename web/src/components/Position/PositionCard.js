@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSystemConfig } from '../../hooks/useSystemConfig';
 
 /**
  * 持仓卡片组件
@@ -8,6 +9,8 @@ import React from 'react';
  * @param {Function} onViewDetails - 查看详情回调
  */
 const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
   // 使用实时价格计算盈亏
   const realTimeMarkPrice = currentPrice || position.mark_price;
 
@@ -103,10 +106,16 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
             })()}
           </span>
           <div className="position-badges">
-            <span className={`side-badge ${(position.side || 'long').toLowerCase()}`}>
-              {position.side?.toLowerCase() === 'long' ? 'L' : 'S'}
-            </span>
-            <span className="leverage-badge">{position.leverage || 1}×</span>
+            {/* 现货模式不显示方向徽章（只有买入） */}
+            {!isSpotMode && (
+              <span className={`side-badge ${(position.side || 'long').toLowerCase()}`}>
+                {position.side?.toLowerCase() === 'long' ? 'L' : 'S'}
+              </span>
+            )}
+            {/* 现货模式不显示杠杆徽章 */}
+            {!isSpotMode && (
+              <span className="leverage-badge">{position.leverage || 1}×</span>
+            )}
           </div>
         </div>
         <div className={`pnl-display ${isProfit ? 'positive' : 'negative'}`}>
@@ -127,10 +136,11 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
             <span className="data-value">{formatSize(position.size)}</span>
           </div>
           <div className="data-group">
-            <span className="data-label">保证金</span>
+            <span className="data-label">{isSpotMode ? '持仓价值' : '保证金'}</span>
             <span className="data-value">
               ${formatValue(margin)}
-              {positionRatio !== null && (
+              {/* 持仓占比仅期货模式显示 */}
+              {!isSpotMode && positionRatio !== null && (
                 <span style={{
                   color: isOverThreshold ? '#ff4d4f' : '#52c41a',
                   fontSize: '11px',

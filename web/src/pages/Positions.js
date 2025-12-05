@@ -22,11 +22,15 @@ import MonitoringCard from '../components/Monitoring/MonitoringCard';
 import useAccountData from '../hooks/useAccountData';
 import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
+import { useSystemConfig } from '../hooks/useSystemConfig';
 import { ACTIONS } from '../utils/constants';
 
 const { Text } = Typography;
 
 const Positions = () => {
+  // 获取系统配置
+  const { isSpotMode } = useSystemConfig();
+
   // 操作相关状态
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(null);
@@ -442,28 +446,34 @@ const Positions = () => {
                 <span style={{ fontSize: '18px', fontWeight: 700, color: '#1890ff' }}>
                   {currentPosition.symbol}
                 </span>
-                <span style={{ 
-                  background: currentPosition.side === 'LONG' ? '#f6ffed' : '#fff2f0',
-                  color: currentPosition.side === 'LONG' ? '#52c41a' : '#ff4d4f',
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  border: `1px solid ${currentPosition.side === 'LONG' ? '#b7eb8f' : '#ffb3b3'}`
-                }}>
-                  {currentPosition.side === 'LONG' ? '多头' : '空头'}
-                </span>
-                <span style={{ 
-                  background: '#f0f9ff',
-                  color: '#1890ff',
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  border: '1px solid #bae6fd'
-                }}>
-                  {currentPosition.leverage}×
-                </span>
+                {/* 现货模式不显示多头/空头标签 */}
+                {!isSpotMode && (
+                  <span style={{
+                    background: currentPosition.side === 'LONG' ? '#f6ffed' : '#fff2f0',
+                    color: currentPosition.side === 'LONG' ? '#52c41a' : '#ff4d4f',
+                    padding: '4px 8px',
+                    borderRadius: '6px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    border: `1px solid ${currentPosition.side === 'LONG' ? '#b7eb8f' : '#ffb3b3'}`
+                  }}>
+                    {currentPosition.side === 'LONG' ? '多头' : '空头'}
+                  </span>
+                )}
+                {/* 现货模式不显示杠杆 */}
+                {!isSpotMode && (
+                  <span style={{
+                    background: '#f0f9ff',
+                    color: '#1890ff',
+                    padding: '4px 8px',
+                    borderRadius: '6px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    border: '1px solid #bae6fd'
+                  }}>
+                    {currentPosition.leverage}×
+                  </span>
+                )}
               </>
             )}
           </div>

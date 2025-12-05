@@ -2,12 +2,8 @@ package binance
 
 import (
 	"context"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -16,7 +12,7 @@ import (
 	"trading_assistant/pkg/exchanges"
 )
 
-// ========== Binance 交易所实现 ==========
+// ========== Binance 交易所实现（简化版 - 仅公共市场数据）==========
 
 // Binance 实现交易所接口
 type Binance struct {
@@ -26,10 +22,6 @@ type Binance struct {
 
 	// API端点缓存
 	endpoints map[string]string
-
-	// 缓存字段
-	lastServerTimeRequest int64
-	serverTimeOffset      int64
 }
 
 // ========== 构造函数 ==========
@@ -57,12 +49,6 @@ func New(config *Config) (*Binance, error) {
 	// 设置API端点
 	binance.setEndpoints()
 
-	// 设置凭证
-	binance.SetCredentials(config.APIKey, config.Secret, "", "")
-
-	// 初始同步服务器时间
-	go binance.updateServerTimeOffset()
-
 	return binance, nil
 }
 
@@ -77,44 +63,29 @@ func (b *Binance) setCapabilities() {
 	capabilities := map[string]bool{
 		"fetchMarkets":    true,
 		"fetchTicker":     true,
+		"fetchBookTicker": true,
 		"fetchKline":      true,
-		"fetchTrades":     true,
-		"fetchOrderBook":  true,
-		"fetchBalance":    true,
-		"createOrder":     true,
-		"cancelOrder":     true,
-		"fetchOrder":      true,
-		"fetchOrders":     true,
-		"fetchOpenOrders": true,
-		"fetchPositions":  true,
-		"setLeverage":     true,
-		"setMarginMode":   true,
-	}
-
-	// 根据市场类型调整功能
-	if b.marketType != types.MarketTypeFuture {
-		capabilities["fetchPositions"] = false
-		capabilities["setLeverage"] = false
-		capabilities["setMarginMode"] = false
+		"fetchMarkPrice":  b.marketType == types.MarketTypeFuture,
+		"fetchMarkPrices": b.marketType == types.MarketTypeFuture,
 	}
 
 	// 设置时间周期
 	timeframes := map[string]string{
-		"1m":  "1m",
-		"3m":  "3m",
-		"5m":  "5m",
-		"15m": "15m",
-		"30m": "30m",
-		"1h":  "1h",
-		"2h":  "2h",
-		"4h":  "4h",
-		"6h":  "6h",
-		"8h":  "8h",
-		"12h": "12h",
-		"1d":  "1d",
-		"3d":  "3d",
-		"1w":  "1w",
-		"1M":  "1M",
+		"1m":  Interval1m,
+		"3m":  Interval3m,
+		"5m":  Interval5m,
+		"15m": Interval15m,
+		"30m": Interval30m,
+		"1h":  Interval1h,
+		"2h":  Interval2h,
+		"4h":  Interval4h,
+		"6h":  Interval6h,
+		"8h":  Interval8h,
+		"12h": Interval12h,
+		"1d":  Interval1d,
+		"3d":  Interval3d,
+		"1w":  Interval1w,
+		"1M":  Interval1M,
 	}
 
 	// 直接设置功能和时间周期
@@ -133,220 +104,27 @@ func (b *Binance) setEndpoints() {
 
 	b.endpoints["base"] = baseURL
 	b.endpoints["futures"] = futuresURL
-	b.endpoints["websocket"] = b.config.GetWebSocketURL()
 
 	// 现货端点
-	b.endpoints["exchangeInfo"] = baseURL + "/api/v3/exchangeInfo"
-	b.endpoints["ticker24hr"] = baseURL + "/api/v3/ticker/24hr"
-	b.endpoints["bookTicker"] = baseURL + "/api/v3/ticker/bookTicker"
-	b.endpoints["klines"] = baseURL + "/api/v3/klines"
-	b.endpoints["trades"] = baseURL + "/api/v3/trades"
-	b.endpoints["depth"] = baseURL + "/api/v3/depth"
-	b.endpoints["account"] = baseURL + "/api/v3/account"
-	b.endpoints["order"] = baseURL + "/api/v3/order"
-	b.endpoints["allOrders"] = baseURL + "/api/v3/allOrders"
-	b.endpoints["openOrders"] = baseURL + "/api/v3/openOrders"
+	b.endpoints["exchangeInfo"] = baseURL + EndpointExchangeInfo
+	b.endpoints["ticker24hr"] = baseURL + EndpointTicker24hr
+	b.endpoints["bookTicker"] = baseURL + EndpointBookTicker
+	b.endpoints["klines"] = baseURL + EndpointKlines
 
 	// 期货端点
 	if b.marketType == types.MarketTypeFuture {
-		b.endpoints["futuresExchangeInfo"] = futuresURL + "/fapi/v1/exchangeInfo"
-		b.endpoints["futuresTicker24hr"] = futuresURL + "/fapi/v1/ticker/24hr"
-		b.endpoints["futuresBookTicker"] = futuresURL + "/fapi/v1/ticker/bookTicker"
-		b.endpoints["futuresKlines"] = futuresURL + "/fapi/v1/klines"
-		b.endpoints["futuresDepth"] = futuresURL + "/fapi/v1/depth"
-		b.endpoints["futuresAccount"] = futuresURL + "/fapi/v2/account"
-		b.endpoints["futuresOrder"] = futuresURL + "/fapi/v1/order"
-		b.endpoints["futuresAllOrders"] = futuresURL + "/fapi/v1/allOrders"
-		b.endpoints["futuresOpenOrders"] = futuresURL + "/fapi/v1/openOrders"
-		b.endpoints["futuresPositionRisk"] = futuresURL + "/fapi/v2/positionRisk"
-		b.endpoints["futuresLeverage"] = futuresURL + "/fapi/v1/leverage"
-		b.endpoints["futuresMarginType"] = futuresURL + "/fapi/v1/marginType"
-		b.endpoints["futuresListenKey"] = futuresURL + "/fapi/v1/listenKey"
+		b.endpoints["futuresExchangeInfo"] = futuresURL + EndpointFuturesExchangeInfo
+		b.endpoints["futuresTicker24hr"] = futuresURL + EndpointFuturesTicker24hr
+		b.endpoints["futuresBookTicker"] = futuresURL + EndpointFuturesBookTicker
+		b.endpoints["futuresKlines"] = futuresURL + EndpointFuturesKlines
+		b.endpoints["futuresPremiumIndex"] = futuresURL + EndpointFuturesPremiumIndex
 	}
-}
-
-// ========== 签名和认证 ==========
-
-// Sign 签名请求
-func (b *Binance) Sign(path, api, method string, params map[string]interface{}, headers map[string]string, body interface{}) (string, map[string]string, interface{}, error) {
-	if headers == nil {
-		headers = make(map[string]string)
-	}
-
-	// 公开API不需要签名
-	if api == "public" {
-		query := b.buildQuery(params)
-		if query != "" {
-			if strings.Contains(path, "?") {
-				path += "&" + query
-			} else {
-				path += "?" + query
-			}
-		}
-		return path, headers, body, nil
-	}
-
-	// 私有API需要签名
-	if b.GetApiKey() == "" || b.GetSecret() == "" {
-		return "", nil, nil, exchanges.NewAuthenticationError("API key and secret required")
-	}
-
-	// 添加时间戳
-	if params == nil {
-		params = make(map[string]interface{})
-	}
-	params["timestamp"] = b.GetServerTime()
-
-	// 添加接收窗口
-	if b.config.RecvWindow > 0 {
-		params["recvWindow"] = b.config.RecvWindow
-	}
-
-	// 构建查询字符串
-	query := b.buildQuery(params)
-
-	// 生成签名
-	signature := b.generateSignature(query)
-	if query != "" {
-		query += "&signature=" + signature
-	} else {
-		query = "signature=" + signature
-	}
-
-	// 添加签名到路径
-	if strings.Contains(path, "?") {
-		path += "&" + query
-	} else {
-		path += "?" + query
-	}
-
-	// 添加API Key到头部
-	headers["X-MBX-APIKEY"] = b.GetApiKey()
-
-	return path, headers, body, nil
-}
-
-// buildQuery 构建查询字符串
-func (b *Binance) buildQuery(params map[string]interface{}) string {
-	if len(params) == 0 {
-		return ""
-	}
-
-	var keys []string
-	for k := range params {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	var parts []string
-	for _, k := range keys {
-		v := params[k]
-		parts = append(parts, fmt.Sprintf("%s=%v", k, v))
-	}
-
-	return strings.Join(parts, "&")
-}
-
-// generateSignature 生成HMAC SHA256签名
-func (b *Binance) generateSignature(query string) string {
-	mac := hmac.New(sha256.New, []byte(b.GetSecret()))
-	mac.Write([]byte(query))
-	return hex.EncodeToString(mac.Sum(nil))
-}
-
-// signRequest 签名请求
-func (b *Binance) signRequest(method, endpoint string, params map[string]interface{}) (string, map[string]string, interface{}, error) {
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/x-www-form-urlencoded"
-
-	// 检查是否需要API密钥
-	if b.GetApiKey() == "" || b.GetSecret() == "" {
-		return "", nil, nil, exchanges.NewAuthenticationError("API key and secret required for signed requests")
-	}
-
-	// 确保参数映射存在
-	if params == nil {
-		params = make(map[string]interface{})
-	}
-
-	// 添加时间戳
-	params["timestamp"] = b.GetServerTime()
-
-	// 添加接收窗口
-	if b.config.RecvWindow > 0 {
-		params["recvWindow"] = b.config.RecvWindow
-	}
-
-	// 构建查询字符串
-	query := b.buildQuery(params)
-
-	// 生成签名
-	signature := b.generateSignature(query)
-	if query != "" {
-		query += "&signature=" + signature
-	} else {
-		query = "signature=" + signature
-	}
-
-	// 构建完整路径
-	path := endpoint
-	if query != "" {
-		if strings.Contains(path, "?") {
-			path += "&" + query
-		} else {
-			path += "?" + query
-		}
-	}
-
-	// 添加API Key到头部
-	headers["X-MBX-APIKEY"] = b.GetApiKey()
-
-	return path, headers, nil, nil
-}
-
-// GetServerTime 获取服务器时间
-func (b *Binance) GetServerTime() int64 {
-	now := time.Now().UnixMilli()
-
-	// 如果有时间偏移，应用偏移
-	if b.serverTimeOffset != 0 {
-		return now + b.serverTimeOffset
-	}
-
-	// 如果距离上次请求服务器时间超过5分钟，更新时间偏移
-	if now-b.lastServerTimeRequest > 5*60*1000 {
-		go b.updateServerTimeOffset()
-	}
-
-	return now
-}
-
-// updateServerTimeOffset 更新服务器时间偏移
-func (b *Binance) updateServerTimeOffset() {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	url := b.endpoints["base"] + "/api/v3/time"
-	resp, err := b.Fetch(ctx, url, "GET", nil, "")
-	if err != nil {
-		return
-	}
-
-	var timeResp struct {
-		ServerTime int64 `json:"serverTime"`
-	}
-	if err := json.Unmarshal([]byte(resp), &timeResp); err != nil {
-		return
-	}
-
-	localTime := time.Now().UnixMilli()
-	b.serverTimeOffset = timeResp.ServerTime - localTime
-	b.lastServerTimeRequest = localTime
 }
 
 // ========== 市场数据API ==========
 
 // FetchMarkets 获取市场信息
+// 支持 params["quote"] 筛选报价货币，如 params["quote"] = "USDT"
 func (b *Binance) FetchMarkets(ctx context.Context, params map[string]interface{}) ([]*types.Market, error) {
 	var endpoint string
 	if b.marketType == types.MarketTypeFuture {
@@ -370,6 +148,14 @@ func (b *Binance) FetchMarkets(ctx context.Context, params map[string]interface{
 		return nil, fmt.Errorf("invalid response format")
 	}
 
+	// 获取筛选参数
+	var quoteFilter string
+	if params != nil {
+		if q, ok := params["quote"].(string); ok {
+			quoteFilter = q
+		}
+	}
+
 	var markets []*types.Market
 	for _, symbolData := range symbols {
 		symbolMap, ok := symbolData.(map[string]interface{})
@@ -379,6 +165,10 @@ func (b *Binance) FetchMarkets(ctx context.Context, params map[string]interface{
 
 		market := b.parseMarket(symbolMap)
 		if market != nil {
+			// 应用 quote 筛选
+			if quoteFilter != "" && market.Quote != quoteFilter {
+				continue
+			}
 			markets = append(markets, market)
 		}
 	}
@@ -826,7 +616,7 @@ func (b *Binance) FetchMarkPrice(ctx context.Context, symbol string) (*types.Mar
 		return nil, fmt.Errorf("标记价格仅在期货模式下可用")
 	}
 
-	endpoint := b.endpoints["futures"] + "/fapi/v1/premiumIndex"
+	endpoint := b.endpoints["futuresPremiumIndex"]
 	if symbol != "" {
 		endpoint += "?symbol=" + symbol
 	}
@@ -850,7 +640,7 @@ func (b *Binance) FetchMarkPrices(ctx context.Context, symbols []string) (map[st
 		return nil, fmt.Errorf("标记价格仅在期货模式下可用")
 	}
 
-	endpoint := b.endpoints["futures"] + "/fapi/v1/premiumIndex"
+	endpoint := b.endpoints["futuresPremiumIndex"]
 
 	respStr, err := b.FetchWithRetry(ctx, endpoint, "GET", nil, "")
 	if err != nil {

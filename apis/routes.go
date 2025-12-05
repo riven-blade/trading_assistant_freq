@@ -17,6 +17,7 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 	coinController := controllers.NewCoinController(exchangeClient, marketManager)
 	priceController := &controllers.PriceController{}
 	authController := &controllers.AuthController{}
+	configController := controllers.NewConfigController()
 	klineController := controllers.NewKlineController(exchangeClient)
 	positionController := controllers.NewPositionController(freqtradeController)
 
@@ -93,6 +94,8 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 			positions.GET("/summary", positionController.GetPositionSummary) // 获取持仓摘要
 		}
 
+		// 系统配置路由
+		v1.GET("/config", configController.GetSystemConfig) // 获取系统配置
 	}
 
 	// 服务前端应用（SPA路由）
