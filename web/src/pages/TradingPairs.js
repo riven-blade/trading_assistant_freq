@@ -351,7 +351,7 @@ const TradingPairs = () => {
         break;
       case 'kline':
         // 在新窗口打开K线页面
-        const klineUrl = `${window.location.origin}/klines?symbol=${symbol}&interval=15m`;
+        const klineUrl = `${window.location.origin}/klines?symbol=${symbol}&interval=4h`;
         window.open(klineUrl, '_blank', 'noopener,noreferrer');
         break;
       case 'monitor':

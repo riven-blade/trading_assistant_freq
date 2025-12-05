@@ -137,7 +137,7 @@ const Positions = () => {
     
     // 处理K线图跳转
     if (action === 'kline') {
-      const klineUrl = `${window.location.origin}/klines?symbol=${position.symbol}&interval=15m`;
+      const klineUrl = `${window.location.origin}/klines?symbol=${position.symbol}&interval=4h`;
       window.open(klineUrl, '_blank', 'noopener,noreferrer');
       return;
     }
@@ -575,9 +575,6 @@ const Positions = () => {
                   <Select.Option value="grind_3_entry">grind_3_entry</Select.Option>
                   <Select.Option value="grind_4_entry">grind_4_entry</Select.Option>
                   <Select.Option value="grind_5_entry">grind_5_entry</Select.Option>
-                  <Select.Option value="buyback_1_entry">buyback_1_entry</Select.Option>
-                  <Select.Option value="buyback_2_entry">buyback_2_entry</Select.Option>
-                  <Select.Option value="buyback_3_entry">buyback_3_entry</Select.Option>
                   <Select.Option value="force_entry">force_entry</Select.Option>
                   
                   {/* TODO: 开仓标签（在其他地方使用）
@@ -612,9 +609,7 @@ const Positions = () => {
                   <Select.Option value="grind_3_exit">grind_3_exit</Select.Option>
                   <Select.Option value="grind_4_exit">grind_4_exit</Select.Option>
                   <Select.Option value="grind_5_exit">grind_5_exit</Select.Option>
-                  <Select.Option value="buyback_1_exit">buyback_1_exit</Select.Option>
-                  <Select.Option value="buyback_2_exit">buyback_2_exit</Select.Option>
-                  <Select.Option value="buyback_3_exit">buyback_3_exit</Select.Option>
+                  <Select.Option value="force_entry">force_entry</Select.Option>
                 </Select>
               </div>
             )}
