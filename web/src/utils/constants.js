@@ -4,7 +4,7 @@ export const ACTIONS = {
     title: '开仓',
     priceLabel: '价格调整',
     quantityLabel: '开仓数量',
-    priceRange: { min: -50, max: 50 }, // 与加仓保持一致
+    priceRange: { min: -100, max: 100 }, // 与加仓保持一致
     priceBase: 'current', // 基于当前价格
     color: '#52c41a'
   },
@@ -12,7 +12,7 @@ export const ACTIONS = {
     title: '加仓',
     priceLabel: '价格调整',
     quantityLabel: '加仓比例',
-    priceRange: { min: -50, max: 50 }, // 更合理的价格调整范围
+    priceRange: { min: -100, max: 100 }, // 更合理的价格调整范围
     priceBase: 'current', // 基于当前价格
     color: '#52c41a'
   },
@@ -20,7 +20,7 @@ export const ACTIONS = {
     title: '止盈',
     priceLabel: '止盈价格',
     quantityLabel: '止盈比例',
-    priceRange: { min: -50, max: 50 },
+    priceRange: { min: -100, max: 100 },
     priceBase: 'current', // 基于当前价格
     color: '#1890ff'
   }
