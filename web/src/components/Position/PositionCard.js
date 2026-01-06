@@ -25,7 +25,7 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
     const currentMargin = position.notional || 0;
 
     // 最大持仓金额 = 第一个订单cost / 杠杆
-    const maxPositionAmount = firstOrderCost / leverage;
+    const maxPositionAmount = firstOrderCost * 5 / leverage;
 
     if (maxPositionAmount <= 0) return null;
 
