@@ -172,15 +172,15 @@ const Positions = () => {
     const basePrice = priceBase === 'current' ? price : entryPrice;
     let defaultTargetPrice = basePrice * (1 + defaultPercentage / 100);
 
-    // 设置默认比例/数量：加仓/止盈默认50%
-    let defaultQuantity = 50;
+    // 设置默认比例/数量：加仓默认15%，止盈默认50%
+    let defaultQuantity = action === 'addition' ? 15 : 50;
     
     setPricePercentage(defaultPercentage);
     setTargetPrice(defaultTargetPrice);
     setQuantity(defaultQuantity);
     
-    // 设置默认入场标签为manual
-    setEntryTag('manual');
+    // 设置默认入场标签：加仓默认grind_1_entry，其他默认manual
+    setEntryTag(action === 'addition' ? 'grind_1_entry' : 'manual');
     
     setDrawerVisible(true);
   };

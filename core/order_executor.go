@@ -181,7 +181,8 @@ func (oe *OrderExecutor) executeAddPosition(estimate *models.PriceEstimate, curr
 		return fmt.Errorf("获取不到原始投入金额")
 	}
 
-	stakeCost := *cost * 5 * (estimate.Percentage / 100.0) / *existingPosition.Leverage
+	// 这个 0.15 是freqtrade 下单时候的初始仓位
+	stakeCost := *cost  * (estimate.Percentage / 100.0) / *existingPosition.Leverage / 0.15
 
 	orderPrice := currentPrice
 

@@ -4,7 +4,7 @@
 
 # Docker 相关变量
 IMAGE_NAME := ddhdocker/trading-assistant-freq
-IMAGE_TAG := v0.0.248
+IMAGE_TAG := v0.0.256
 CONTAINER_NAME := trading-assistant-freq
 
 # 默认目标
