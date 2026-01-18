@@ -4,7 +4,7 @@
 
 # Docker 相关变量
 IMAGE_NAME := ddhdocker/trading-assistant-freq
-IMAGE_TAG := v0.0.256
+IMAGE_TAG := v0.0.260
 CONTAINER_NAME := trading-assistant-freq
 
 # 默认目标
@@ -12,7 +12,7 @@ all: package
 
 # 安装依赖
 install-deps:
-	@echo "🔧 安装后端依赖..."
+	@echo "🔧 安装后端依赖..."、
 	go mod download
 	@echo "🔧 安装前端依赖..."
 	cd web && npm install

@@ -179,8 +179,8 @@ const Positions = () => {
     setTargetPrice(defaultTargetPrice);
     setQuantity(defaultQuantity);
     
-    // 设置默认入场标签：加仓默认grind_1_entry，其他默认manual
-    setEntryTag(action === 'addition' ? 'grind_1_entry' : 'manual');
+    // 设置默认入场标签为manual
+    setEntryTag('manual');
     
     setDrawerVisible(true);
   };
