@@ -301,9 +301,8 @@ func (fc *Controller) CheckForceBuy(pair string) bool {
 	return len(tradeStatus) < fc.PositionStatus.Max
 }
 
-// calculateGrindSummary 计算交易的 grind 状态汇总
-// 逆序遍历订单，只计算最后一次 exit 之后的 entries
-func calculateGrindSummary(orders []models.FreqtradeOrder, isShort bool, totalAmount float64) *models.TradeGrindSummary {
+// calculateGrindSummary 根据订单列表计算 grind 状态
+func calculateGrindSummary(orders []models.FreqtradeOrder, isShort bool, totalAmount float64, leverage float64) *models.TradeGrindSummary {
 	summary := &models.TradeGrindSummary{}
 
 	// 确定入场方向：多头是 buy，空头是 sell
@@ -412,11 +411,26 @@ func calculateGrindSummary(orders []models.FreqtradeOrder, isShort bool, totalAm
 	}
 
 	// 计算占总仓位的比例
+	// 计算占总仓位的比例和保证金金额
 	if totalAmount > 0 {
 		summary.Grind1.Percentage = summary.Grind1.TotalAmount / totalAmount * 100
 		summary.Grind2.Percentage = summary.Grind2.TotalAmount / totalAmount * 100
 		summary.Grind3.Percentage = summary.Grind3.TotalAmount / totalAmount * 100
 		summary.GrindX.Percentage = summary.GrindX.TotalAmount / totalAmount * 100
+	}
+
+	// 计算保证金金额（TotalCost / Leverage）
+	if leverage > 0 {
+		summary.Grind1.StakeAmount = summary.Grind1.TotalCost / leverage
+		summary.Grind2.StakeAmount = summary.Grind2.TotalCost / leverage
+		summary.Grind3.StakeAmount = summary.Grind3.TotalCost / leverage
+		summary.GrindX.StakeAmount = summary.GrindX.TotalCost / leverage
+	} else {
+		// 避免除以零，如果是现货或无杠杆，StakeAmount = TotalCost
+		summary.Grind1.StakeAmount = summary.Grind1.TotalCost
+		summary.Grind2.StakeAmount = summary.Grind2.TotalCost
+		summary.Grind3.StakeAmount = summary.Grind3.TotalCost
+		summary.GrindX.StakeAmount = summary.GrindX.TotalCost
 	}
 
 	return summary
@@ -435,8 +449,14 @@ func (fc *Controller) GetPositions() ([]models.TradePosition, error) {
 	for i := range tradePositions {
 		trade := tradePositions[i]
 		if trade.IsOpen {
+			// 获取杠杆倍数
+			var leverage float64 = 1.0
+			if trade.Leverage != nil {
+				leverage = *trade.Leverage
+			}
+
 			// 计算 grind 状态汇总
-			trade.GrindSummary = calculateGrindSummary(trade.Orders, trade.IsShort, trade.Amount)
+			trade.GrindSummary = calculateGrindSummary(trade.Orders, trade.IsShort, trade.Amount, leverage)
 			openPositions = append(openPositions, trade)
 		}
 	}

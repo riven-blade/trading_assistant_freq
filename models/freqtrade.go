@@ -107,6 +107,7 @@ type GrindStatus struct {
 	EntryCount  int     `json:"entry_count"`            // 入场订单数量
 	TotalAmount float64 `json:"total_amount"`           // 总数量（币数）
 	TotalCost   float64 `json:"total_cost"`             // 总成本（投入的 stake）
+	StakeAmount float64 `json:"stake_amount"`           // 保证金金额（TotalCost / Leverage）
 	OpenRate    float64 `json:"open_rate,omitempty"`    // 平均开仓价格
 	Percentage  float64 `json:"percentage"`             // 占总仓位的比例（0-100）
 }

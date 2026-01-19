@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, Progress, Empty, InputNumber, Button, message, Modal } from 'antd';
-import { useSystemConfig } from '../../hooks/useSystemConfig';
 
 /**
  * Grind 详情抽屉组件
@@ -9,25 +8,16 @@ import { useSystemConfig } from '../../hooks/useSystemConfig';
 const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
   const [exitAmounts, setExitAmounts] = useState({});
   const [loading, setLoading] = useState({});
-  const { isSpotMode } = useSystemConfig();
   
   // 当 position 变化时，清空输入框状态
   useEffect(() => {
     setExitAmounts({});
     setLoading({});
   }, [position?.symbol, position?.side]);
-  
-  // 获取杠杆（期货模式使用，现货模式为1）
-  const leverage = (!isSpotMode && position?.leverage) ? position.leverage : 1;
 
   if (!position) return null;
 
   const grindSummary = position.grind_summary;
-
-  // 调试日志
-  console.log('GrindDetailDrawer - position:', position);
-  console.log('GrindDetailDrawer - grind_summary:', grindSummary);
-
   const grinds = grindSummary ? [
     { key: 'grind_x', label: 'Grind X', data: grindSummary.grind_x, color: '#1890ff' },
     { key: 'grind_1', label: 'Grind 1', data: grindSummary.grind_1, color: '#52c41a' },
@@ -39,8 +29,6 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
   const activeGrinds = grinds.filter(g => 
     g.data?.has_entry || g.data?.has_exit || g.data?.total_amount > 0
   );
-
-  console.log('GrindDetailDrawer - activeGrinds:', activeGrinds);
 
   const formatNumber = (num, decimals = 4) => {
     if (num === undefined || num === null || isNaN(num)) return '0';
@@ -82,9 +70,7 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
 
   const handleTakeProfit = async (grind) => {
     const exitMargin = exitAmounts[grind.key];  // 用户输入的是保证金
-    const totalCost = grind.data?.total_cost || 0;
-    const totalMargin = totalCost / leverage;  // 保证金 = 成本/杠杆
-    const totalAmount = grind.data?.total_amount || 0;
+    const totalMargin = grind.data?.stake_amount || 0;
     
     if (!exitMargin || exitMargin <= 0) {
       message.warning('请输入退出金额');
@@ -226,12 +212,12 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                       {formatNumber(totalAmount, 6)}
                     </div>
                   </div>
-                  <div>
-                    <div style={{ fontSize: '11px', color: '#8c8c8c' }}>保证金</div>
-                    <div style={{ fontSize: '13px', fontWeight: 500 }}>
-                      ${formatNumber((grind.data?.total_cost || 0) / leverage, 2)}
-                    </div>
+                  <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '11px', color: '#8c8c8c' }}>保证金</div>
+                  <div style={{ fontSize: '12px', fontWeight: 500 }}>
+                    ${formatNumber(grind.data.stake_amount, 2)}
                   </div>
+                </div>
                   <div>
                     <div style={{ fontSize: '11px', color: '#8c8c8c' }}>均价</div>
                     <div style={{ fontSize: '13px', fontWeight: 500 }}>
@@ -264,8 +250,8 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                       <InputNumber
                         size="small"
                         min={0}
-                        max={(grind.data?.total_cost || 0) / leverage}
-                        step={(grind.data?.total_cost || 0) / leverage / 10}
+                        max={grind.data?.stake_amount || 0}
+                        step={(grind.data?.stake_amount || 0) / 10}
                         value={currentExitAmount}
                         onChange={(value) => handleExitAmountChange(grind.key, value)}
                         style={{ flex: 1, minWidth: 80 }}
@@ -276,7 +262,7 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                       <Button 
                         size="small"
                         type="text"
-                        onClick={() => handleSetFullAmount(grind.key, (grind.data?.total_cost || 0) / leverage)}
+                        onClick={() => handleSetFullAmount(grind.key, grind.data?.stake_amount || 0)}
                         style={{ 
                           padding: '2px 8px',
                           fontSize: '11px',
