@@ -82,11 +82,17 @@ code {
 /* 头部信息 */
 .position-header-clean {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
   margin-bottom: 18px;
   padding-bottom: 14px;
   border-bottom: 1px solid #f9fafb;
+}
+
+.position-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .position-info-row {
@@ -306,48 +312,55 @@ code {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .position-card-clean, .trading-pair-card-clean, .balance-card-clean {
+
+  .position-card-clean,
+  .trading-pair-card-clean,
+  .balance-card-clean {
     padding: 14px;
     margin-bottom: 12px;
     min-height: auto;
     border-radius: 8px;
   }
-  
-  .position-symbol-clean, .trading-symbol-clean, .balance-asset-name {
+
+  .position-symbol-clean,
+  .trading-symbol-clean,
+  .balance-asset-name {
     font-size: 14px;
   }
-  
-  .control-group, .trading-control-group {
+
+  .control-group,
+  .trading-control-group {
     gap: 2px;
   }
-  
-  .control-btn, .trading-control-btn {
+
+  .control-btn,
+  .trading-control-btn {
     padding: 6px 4px;
     font-size: 10px;
     min-height: 28px;
     border-radius: 4px;
   }
-  
+
   /* 移动端交易对卡片特殊优化 */
   .trading-pair-card-clean {
     min-height: 140px;
     padding: 12px;
   }
-  
+
   .trading-header-clean {
     margin-bottom: 12px;
     padding-bottom: 8px;
   }
-  
+
   .trading-price-section {
     margin-bottom: 12px;
   }
-  
+
   .price-info-section {
     padding: 8px;
     margin-bottom: 8px;
   }
-  
+
   /* 订单页面移动端按钮优化 */
   .orders-action-btn {
     padding: 6px 10px !important;
@@ -355,14 +368,14 @@ code {
     min-width: 60px;
     height: 32px;
   }
-  
+
   .orders-table-btn {
     padding: 4px 8px !important;
     font-size: 10px !important;
     min-width: 40px;
     height: 26px;
   }
-  
+
   /* 币种页面移动端按钮优化 */
   .trading-pairs-header-btn {
     padding: 5px 10px !important;
@@ -370,14 +383,14 @@ code {
     min-width: 70px;
     height: 32px;
   }
-  
+
   .trading-pairs-action-btn {
     padding: 3px 6px !important;
     font-size: 9px !important;
     min-width: 35px;
     height: 26px;
   }
-  
+
   .page-title-clean {
     font-size: 16px;
   }
@@ -579,7 +592,7 @@ code {
 
 .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:active {
   transform: scale(0.95);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .delete-btn-clean {
@@ -777,10 +790,13 @@ code {
   background: #ffffff;
   border-radius: 12px;
   transition: all 0.3s ease;
-  height: 380px; /* 增加高度防止按钮溢出 */
+  height: 380px;
+  /* 增加高度防止按钮溢出 */
   width: 100%;
-  min-width: 320px; /* 增加最小宽度让卡片更宽 */
-  max-width: 100%; /* 防止溢出 */
+  min-width: 320px;
+  /* 增加最小宽度让卡片更宽 */
+  max-width: 100%;
+  /* 防止溢出 */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -813,6 +829,7 @@ code {
 
 /* 移动端特殊处理 - 移除所有可能的蓝色边框 */
 @media (max-width: 768px) {
+
   .enhanced-card,
   .enhanced-card *,
   .ant-card,
@@ -827,7 +844,7 @@ code {
     -webkit-focus-ring-color: transparent !important;
     user-select: none !important;
   }
-  
+
   .enhanced-card:hover,
   .enhanced-card:focus,
   .enhanced-card:active,
@@ -846,16 +863,16 @@ code {
     transform: none !important;
     -webkit-tap-highlight-color: transparent !important;
   }
-  
+
   /* 强制移除所有可能的蓝色样式 */
   * {
     -webkit-tap-highlight-color: transparent !important;
   }
-  
-  input, 
-  textarea, 
-  button, 
-  select, 
+
+  input,
+  textarea,
+  button,
+  select,
   a,
   div:focus,
   div:active {
@@ -870,7 +887,8 @@ code {
 .ant-col {
   padding-left: 12px !important;
   padding-right: 12px !important;
-  min-width: 300px; /* 确保每列有足够宽度 */
+  min-width: 300px;
+  /* 确保每列有足够宽度 */
 }
 
 /* 移动端列布局优化 */
@@ -878,8 +896,10 @@ code {
   .ant-col {
     padding-left: 8px !important;
     padding-right: 8px !important;
-    min-width: unset !important; /* 移除最小宽度限制 */
-    width: 100% !important; /* 确保占满宽度 */
+    min-width: unset !important;
+    /* 移除最小宽度限制 */
+    width: 100% !important;
+    /* 确保占满宽度 */
   }
 }
 
@@ -1004,53 +1024,54 @@ code {
     padding: 16px 8px !important;
     margin: 16px 8px !important;
   }
-  
+
   .position-actions {
     flex-direction: column;
   }
-  
+
   .position-actions .ant-btn {
     margin-bottom: 4px;
   }
-  
+
   .asset-card {
     padding: 12px;
   }
-  
+
   .logo-container {
     padding: 20px 12px;
     margin-bottom: 12px;
   }
-  
+
   .logo-title {
     font-size: 16px;
     letter-spacing: 1px;
   }
-  
+
   .ant-statistic-title {
     font-size: 12px !important;
   }
-  
+
   .ant-statistic-content {
     font-size: 18px !important;
   }
-  
+
   .ant-card-head-title {
     font-size: 16px !important;
   }
-  
+
   .ant-typography h2 {
     font-size: 20px !important;
     margin-bottom: 16px !important;
   }
-  
+
   .ant-typography h4 {
     font-size: 14px !important;
     margin-bottom: 8px !important;
   }
 
   .ant-col {
-    min-width: unset; /* 移除最小宽度限制 */
+    min-width: unset;
+    /* 移除最小宽度限制 */
     padding-left: 8px !important;
     padding-right: 8px !important;
     width: 100%;
@@ -1063,11 +1084,11 @@ code {
     padding: 8px 4px !important;
     margin: 8px 4px !important;
   }
-  
+
   .ant-card {
     margin-bottom: 8px;
   }
-  
+
   .ant-card-body {
     padding: 8px !important;
   }
@@ -1075,27 +1096,28 @@ code {
   .ant-col {
     padding-left: 4px !important;
     padding-right: 4px !important;
-    min-width: unset; /* 移除最小宽度限制 */
+    min-width: unset;
+    /* 移除最小宽度限制 */
     width: 100%;
   }
-  
+
   /* 超小屏幕交易对卡片优化 */
   .trading-pair-card-clean {
     padding: 10px;
     min-height: 120px;
     border-radius: 6px;
   }
-  
+
   .trading-symbol-clean {
     font-size: 13px;
   }
-  
+
   .trading-control-btn {
     padding: 4px 2px;
     font-size: 9px;
     min-height: 24px;
   }
-  
+
   /* K线按钮优化 */
   .trading-header-clean .kline-btn-icon {
     padding: 0 !important;
@@ -1107,68 +1129,69 @@ code {
     max-width: 20px !important;
     max-height: 20px !important;
     border-radius: 50% !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
     box-sizing: border-box !important;
     flex-shrink: 0 !important;
   }
-  
+
   .trading-header-clean .kline-btn-icon .anticon {
     font-size: 11px !important;
   }
-  
+
   /* 通用K线图标按钮样式 */
   .kline-btn-icon {
     transition: all 0.15s ease !important;
-    aspect-ratio: 1 !important; /* 强制1:1比例 */
+    aspect-ratio: 1 !important;
+    /* 强制1:1比例 */
     border-radius: 50% !important;
     box-sizing: border-box !important;
     flex-shrink: 0 !important;
     padding: 0 !important;
   }
-  
+
   .kline-btn-icon:hover {
     background: #40a9ff !important;
     transform: scale(1.05) !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
   }
-  
+
   .kline-btn-icon:active {
     transform: scale(0.95) !important;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) !important;
   }
-  
+
   /* 删除按钮样式 - 圆形红色按钮 */
   .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"] {
     background: #fef2f2 !important;
     border: 1px solid #fecaca !important;
     color: #dc2626 !important;
   }
-  
+
   .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:hover {
     background: #fee2e2 !important;
     border-color: #fca5a5 !important;
     color: #b91c1c !important;
     transform: scale(1.05) !important;
   }
-  
+
   .trading-header-clean .control-btn.kline-btn-icon[title="取消选中"]:active {
     transform: scale(0.95) !important;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) !important;
   }
-  
+
   .position-actions .ant-space-item {
     width: 100%;
   }
-  
+
   .position-actions .ant-btn {
     width: 100%;
     margin-bottom: 8px;
   }
-  
+
   .asset-amount {
     font-size: 18px !important;
   }
-  
+
   .ant-drawer-body {
     padding: 16px !important;
   }
@@ -1178,7 +1201,7 @@ code {
     font-size: 14px !important;
     margin-bottom: 4px !important;
   }
-  
+
   /* 订单页面超小屏幕优化 */
   .orders-action-btn {
     padding: 5px 8px !important;
@@ -1186,14 +1209,14 @@ code {
     min-width: 50px;
     height: 30px;
   }
-  
+
   .orders-table-btn {
     padding: 3px 6px !important;
     font-size: 9px !important;
     min-width: 35px;
     height: 24px;
   }
-  
+
   /* 币种页面按钮优化 */
   .trading-pairs-header-btn {
     padding: 4px 8px !important;
@@ -1201,25 +1224,26 @@ code {
     min-width: 60px;
     height: 28px;
   }
-  
+
   .trading-pairs-action-btn {
     padding: 2px 4px !important;
     font-size: 8px !important;
     min-width: 30px;
     height: 22px;
   }
-  
+
   .price-section {
     padding: 14px 16px !important;
     min-height: 60px !important;
     margin: 6px 0 !important;
   }
-  
-  .bid-price, .ask-price {
+
+  .bid-price,
+  .ask-price {
     font-size: 12px !important;
     letter-spacing: 0.2px !important;
   }
-  
+
   .ant-slider {
     margin: 12px 0 !important;
   }
@@ -1227,12 +1251,13 @@ code {
 
 /* K线图表移动端优化 */
 @media (max-width: 768px) {
+
   /* 图表容器 */
   .kline-chart-container {
     min-height: 300px !important;
     height: calc(100vh - 200px) !important;
   }
-  
+
   /* 工具栏在移动端的间距调整 */
   .chart-toolbar-mobile {
     padding: 8px 12px !important;
@@ -1240,13 +1265,13 @@ code {
     border: none !important;
     outline: none !important;
   }
-  
+
   /* 时间周期按钮移动端优化 */
   .time-interval-buttons {
     justify-content: space-between !important;
     width: 100% !important;
   }
-  
+
   /* 价格监听下拉菜单移动端优化 */
   .ant-dropdown .ant-dropdown-menu {
     max-width: calc(100vw - 20px) !important;
@@ -1254,26 +1279,26 @@ code {
     max-height: 280px !important;
     font-size: 13px !important;
   }
-  
+
   .ant-dropdown .ant-dropdown-menu-item {
     padding: 10px 12px !important;
     line-height: 1.3 !important;
   }
-  
+
   .ant-dropdown .ant-dropdown-menu-item .ant-badge {
     font-size: 11px !important;
   }
-  
+
   .ant-dropdown .ant-dropdown-menu-item .ant-switch {
     min-width: 36px !important;
     height: 18px !important;
   }
-  
+
   /* 指标面板移动端优化 */
   .ant-drawer.indicator-panel-mobile .ant-drawer-body {
     padding: 12px !important;
   }
-  
+
   /* 移除所有可能的焦点和选中状态的边框 */
   .ant-select:focus,
   .ant-select-focused,
@@ -1289,32 +1314,32 @@ code {
     outline: none !important;
     box-shadow: none !important;
   }
-  
+
   /* 移动端工具栏布局优化 */
   .kline-chart-container .ant-select {
     min-width: 100px !important;
   }
-  
+
   /* 价格监听标识在移动端的优化 */
   .price-monitoring-badge {
     font-size: 11px !important;
     padding: 2px 6px !important;
     font-weight: 500 !important;
   }
-  
+
   /* 移动端按钮组适中间距布局 */
   .chart-function-buttons {
     gap: 6px !important;
     flex-wrap: wrap !important;
   }
-  
+
   /* 移动端时间周期按钮优化 */
   .interval-buttons-mobile {
     width: 100% !important;
     justify-content: space-evenly !important;
     gap: 4px !important;
   }
-  
+
   /* 移动端时间周期按钮大小 */
   .interval-buttons-mobile button {
     min-width: 32px !important;
@@ -1322,25 +1347,25 @@ code {
     padding: 6px 10px !important;
     font-size: 13px !important;
   }
-  
+
   /* 移动端图表工具栏垂直布局间距 */
   .chart-toolbar-vertical {
     gap: 6px !important;
     padding: 6px 8px !important;
   }
-  
+
   /* 修复Select组件在移动端的垂直对齐 */
   .ant-select.ant-select-borderless {
     height: auto !important;
   }
-  
+
   .ant-select.ant-select-borderless .ant-select-selector {
     height: 32px !important;
     display: flex !important;
     align-items: center !important;
     border: none !important;
   }
-  
+
   /* 确保所有工具栏元素垂直居中 */
   .chart-toolbar-item {
     display: flex !important;
@@ -1355,7 +1380,7 @@ code {
     min-height: 250px !important;
     height: calc(100vh - 180px) !important;
   }
-  
+
   /* 移动端工具栏按钮更大更易点击 */
   .chart-toolbar-mobile button {
     min-width: 40px !important;
@@ -1370,11 +1395,11 @@ code {
   .ant-btn {
     min-height: 44px;
   }
-  
+
   .ant-input {
     min-height: 44px;
   }
-  
+
   .ant-select-selector {
     min-height: 44px !important;
   }
@@ -1550,7 +1575,10 @@ code {
 }
 
 /* 页面头部主题 */
-.ant-typography h1, .ant-typography h2, .ant-typography h3, .ant-typography h4 {
+.ant-typography h1,
+.ant-typography h2,
+.ant-typography h3,
+.ant-typography h4 {
   color: #374151 !important;
   font-weight: 500 !important;
   letter-spacing: -0.01em;
@@ -1687,7 +1715,7 @@ code {
   .ant-space-wrap {
     justify-content: stretch;
   }
-  
+
   .ant-space-wrap .ant-space-item {
     flex: 1;
   }
@@ -1700,7 +1728,7 @@ code {
   height: 100%;
 }
 
-.monitoring-drawer .ant-drawer-body > div {
+.monitoring-drawer .ant-drawer-body>div {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1999,11 +2027,11 @@ code {
   .ant-drawer .ant-drawer-body {
     padding: 16px 12px;
   }
-  
+
   .monitoring-card .ant-card-body {
     padding: 12px;
   }
-  
+
   .price-info-section {
     padding: 10px;
     margin-bottom: 10px;

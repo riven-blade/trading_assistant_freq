@@ -16,6 +16,7 @@ import { calculatePnl } from '../utils/precision';
 // 通用组件和Hooks
 import PageHeader from '../components/Common/PageHeader';
 import PositionCard from '../components/Position/PositionCard';
+import GrindDetailDrawer from '../components/Position/GrindDetailDrawer';
 import PriceSlider from '../components/Trading/PriceSlider';
 import QuantitySlider from '../components/Trading/QuantitySlider';
 import MonitoringCard from '../components/Monitoring/MonitoringCard';
@@ -41,7 +42,7 @@ const Positions = () => {
   const [quantity, setQuantity] = useState(0);
   const [pricePercentage, setPricePercentage] = useState(0);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [entryTag, setEntryTag] = useState('manual');
+  const [entryTag, setEntryTag] = useState('grind_x_entry');
   const [exitTag, setExitTag] = useState('manual');
 
   // 详情抽屉相关状态
@@ -50,6 +51,10 @@ const Positions = () => {
   const [positionEstimates, setPositionEstimates] = useState([]);
   const [estimatesLoading, setEstimatesLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
+  // Grind 详情抽屉状态
+  const [grindDrawerVisible, setGrindDrawerVisible] = useState(false);
+  const [grindPosition, setGrindPosition] = useState(null);
 
   // 使用自定义Hooks
   const { 
@@ -180,7 +185,7 @@ const Positions = () => {
     setQuantity(defaultQuantity);
     
     // 设置默认入场标签为manual
-    setEntryTag('manual');
+    setEntryTag('grind_x_entry');
     
     setDrawerVisible(true);
   };
@@ -274,7 +279,7 @@ const Positions = () => {
       
       message.success(`${ACTIONS[actionType].title}监听已创建`);
       setDrawerVisible(false);
-      setEntryTag('manual');
+      setEntryTag('grind_x_entry');
       setExitTag('manual');
       
       // 数据会通过全局estimates自动更新，无需手动刷新
@@ -361,6 +366,49 @@ const Positions = () => {
     setPositionEstimates([]);
   };
 
+  // Grind 详情抽屉处理
+  const openGrindDrawer = (position) => {
+    setGrindPosition(position);
+    setGrindDrawerVisible(true);
+  };
+
+  const closeGrindDrawer = () => {
+    setGrindDrawerVisible(false);
+    setGrindPosition(null);
+  };
+
+  // Grind 止盈退出
+  const handleGrindTakeProfit = async (position, grindKey, stakeAmount) => {
+    try {
+      // grindKey 格式如 'grind_1', 'grind_x' 等，需要转换为 exit tag
+      const exitTag = `${grindKey}_exit`;
+      
+      // 使用 estimates 接口创建一个立即执行的止盈订单
+      const estimateData = {
+        symbol: position.symbol,
+        side: position.side.toLowerCase(),
+        action_type: 'take_profit',
+        stake_amount: stakeAmount,  // 使用保证金金额（USDT）
+        tag: exitTag,
+        leverage: position.leverage,
+        margin_mode: 'ISOLATED',
+        order_type: 'market',  // grind 退出使用市价单
+        trigger_type: 'immediate',  // 立即执行
+        target_price: 0,  // 立即执行不需要目标价格
+        enabled: true,
+      };
+
+      await api.post('/estimates', estimateData);
+      
+      // 刷新持仓数据
+      refreshPositions();
+      closeGrindDrawer();
+    } catch (error) {
+      console.error('Grind 止盈失败:', error);
+      throw error;
+    }
+  };
+
   const handleDeleteEstimate = async (estimateId) => {
     await deleteEstimate(estimateId);
     // 数据会通过全局estimates自动更新，无需手动刷新
@@ -428,6 +476,7 @@ const Positions = () => {
                   currentPrice={getCurrentPrice(position.symbol)}
                   onAction={handleAction}
                   onViewDetails={openDetailDrawer}
+                  onGrindDetail={openGrindDrawer}
                 />
               </Col>
           ))}
@@ -481,7 +530,7 @@ const Positions = () => {
         placement="right"
         onClose={() => {
           setDrawerVisible(false);
-          setEntryTag('manual');
+          setEntryTag('grind_x_entry');
           setExitTag('manual');
         }}
         open={drawerVisible}
@@ -569,7 +618,7 @@ const Positions = () => {
                 </Typography.Text>
                 <Select
                   value={entryTag || 'manual'}
-                  onChange={(value) => setEntryTag(value || 'manual')}
+                  onChange={(value) => setEntryTag(value || 'grind_x_entry')}
                   placeholder="选择入场标签..."
                   allowClear
                   size="large"
@@ -715,6 +764,14 @@ const Positions = () => {
           </div>
         )}
       </Drawer>
+
+      {/* Grind 详情抽屉 */}
+      <GrindDetailDrawer
+        visible={grindDrawerVisible}
+        position={grindPosition}
+        onClose={closeGrindDrawer}
+        onTakeProfit={handleGrindTakeProfit}
+      />
     </div>
   );
 };

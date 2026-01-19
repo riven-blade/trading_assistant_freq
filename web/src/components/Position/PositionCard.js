@@ -2,13 +2,77 @@ import React from 'react';
 import { useSystemConfig } from '../../hooks/useSystemConfig';
 
 /**
+ * Grind 状态徽章组件
+ * 显示各个 grind 类型的入场/退出状态
+ */
+const GrindStatusBadges = ({ grindSummary }) => {
+  if (!grindSummary) return null;
+
+  const grinds = [
+    { key: 'grind_1', label: 'G1', data: grindSummary.grind_1 },
+    { key: 'grind_2', label: 'G2', data: grindSummary.grind_2 },
+    { key: 'grind_3', label: 'G3', data: grindSummary.grind_3 },
+    { key: 'grind_x', label: 'Gx', data: grindSummary.grind_x },
+  ];
+
+  // 只显示有入场或有退出的 grind
+  const activeGrinds = grinds.filter(g => g.data?.has_entry || g.data?.has_exit);
+  
+  if (activeGrinds.length === 0) return null;
+
+  return (
+    <div style={{ display: 'flex', gap: '3px', marginLeft: '4px' }}>
+      {activeGrinds.map(grind => {
+        const hasEntry = grind.data?.has_entry;
+        const hasExit = grind.data?.has_exit;
+        
+        // 有入场未退出：绿色（活跃状态）
+        // 有退出：灰色（已完成）
+        // 只有入场没退出：橙色闪烁（需关注）
+        let bgColor = '#52c41a'; // 默认绿色
+        let textColor = '#fff';
+        let animation = '';
+        
+        if (hasEntry && !hasExit) {
+          bgColor = '#52c41a'; // 绿色 - 有入场未退出
+        } else if (hasExit && !hasEntry) {
+          bgColor = '#8c8c8c'; // 灰色 - 已退出无新入场
+        } else if (hasEntry && hasExit) {
+          bgColor = '#faad14'; // 橙色 - 有入场且之前有退出
+        }
+        
+        return (
+          <span
+            key={grind.key}
+            title={`${grind.label}: ${hasEntry ? '有入场' : '无入场'}, ${hasExit ? '有退出' : '无退出'}`}
+            style={{
+              fontSize: '9px',
+              padding: '1px 4px',
+              borderRadius: '3px',
+              backgroundColor: bgColor,
+              color: textColor,
+              fontWeight: 600,
+              lineHeight: '14px',
+              animation: animation,
+            }}
+          >
+            {grind.label}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+/**
  * 持仓卡片组件
  * @param {Object} position - 持仓信息
  * @param {number} currentPrice - 实时标记价格
  * @param {Function} onAction - 操作回调 (position, action)
  * @param {Function} onViewDetails - 查看详情回调
+ * @param {Function} onGrindDetail - 查看 Grind 详情回调
  */
-const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
+const PositionCard = ({ position, currentPrice, onAction, onViewDetails, onGrindDetail }) => {
   // 获取系统配置
   const { isSpotMode } = useSystemConfig();
   // 使用实时价格计算盈亏
@@ -96,36 +160,46 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
 
   return (
     <div className="position-card-clean">
-      {/* 头部信息条 */}
-      <div className="position-header-clean">
-        <div className="position-info-row">
-          <span className="position-symbol-clean">
-            {(() => {
-              const symbol = position.symbol || 'N/A';
-              return symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol;
-            })()}
-          </span>
-          <div className="position-badges">
-            {/* 现货模式不显示方向徽章（只有买入） */}
-            {!isSpotMode && (
-              <span className={`side-badge ${(position.side || 'long').toLowerCase()}`}>
-                {position.side?.toLowerCase() === 'long' ? 'L' : 'S'}
-              </span>
-            )}
-            {/* 现货模式不显示杠杆徽章 */}
-            {!isSpotMode && (
-              <span className="leverage-badge">{position.leverage || 1}×</span>
-            )}
+      {/* 头部信息条 - 点击打开 Grind 详情 */}
+      <div 
+        className="position-header-clean"
+        onClick={() => onGrindDetail && onGrindDetail(position)}
+        style={{ cursor: onGrindDetail ? 'pointer' : 'default' }}
+      >
+        <div className="position-header-top">
+          <div className="position-info-row">
+            <span className="position-symbol-clean">
+              {(() => {
+                const symbol = position.symbol || 'N/A';
+                return symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol;
+              })()}
+            </span>
+            <div className="position-badges">
+              {/* 现货模式不显示方向徽章（只有买入） */}
+              {!isSpotMode && (
+                <span className={`side-badge ${(position.side || 'long').toLowerCase()}`}>
+                  {position.side?.toLowerCase() === 'long' ? 'L' : 'S'}
+                </span>
+              )}
+              {/* 现货模式不显示杠杆徽章 */}
+              {!isSpotMode && (
+                <span className="leverage-badge">{position.leverage || 1}×</span>
+              )}
+            </div>
+          </div>
+          <div className={`pnl-display ${isProfit ? 'positive' : 'negative'}`}>
+            <div className="pnl-amount">
+              {isProfit ? '+' : ''}{(realTimeUnrealizedPnl || 0).toFixed(2)}
+            </div>
+            <div className="pnl-percentage">
+              {isProfit ? '+' : ''}{(pnlPercentage || 0).toFixed(2)}%
+            </div>
           </div>
         </div>
-        <div className={`pnl-display ${isProfit ? 'positive' : 'negative'}`}>
-          <div className="pnl-amount">
-            {isProfit ? '+' : ''}{(realTimeUnrealizedPnl || 0).toFixed(2)}
-          </div>
-          <div className="pnl-percentage">
-            {isProfit ? '+' : ''}{(pnlPercentage || 0).toFixed(2)}%
-          </div>
-        </div>
+        {/* Grind 状态指示器 - 单独一行 */}
+        {position.grind_summary && (
+          <GrindStatusBadges grindSummary={position.grind_summary} />
+        )}
       </div>
 
       {/* 核心数据 */}
@@ -166,11 +240,11 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
 
       {/* 操作按钮 */}
       <div className="position-controls">
-        <div className="control-group">
+        <div className="control-group" style={{ display: 'flex', gap: '8px' }}>
           <button 
             className="control-btn primary-btn"
             onClick={() => onAction(position, 'addition')}
-            style={{ position: 'relative' }}
+            style={{ flex: 1, position: 'relative' }}
           >
             加仓
             {position.additionCount > 0 && (
@@ -179,20 +253,6 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails }) => {
               </span>
             )}
           </button>
-          <button 
-            className="control-btn success-btn"
-            onClick={() => onAction(position, 'take_profit')}
-            style={{ position: 'relative' }}
-          >
-            止盈
-            {position.takeProfitCount > 0 && (
-              <span className="action-count-badge">
-                {position.takeProfitCount}
-              </span>
-            )}
-          </button>
-        </div>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <button 
             className="control-btn info-btn"
             onClick={() => onViewDetails(position)}

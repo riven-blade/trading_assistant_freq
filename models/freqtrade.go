@@ -97,6 +97,26 @@ type TradePosition struct {
 	StakeAmount        float64          `json:"stake_amount"`
 	HasOpenOrders      bool             `json:"has_open_orders"`
 	Orders             []FreqtradeOrder `json:"orders"`
+	GrindSummary       *TradeGrindSummary `json:"grind_summary,omitempty"` // grind 状态汇总
+}
+
+// GrindStatus grind 状态信息
+type GrindStatus struct {
+	HasEntry    bool    `json:"has_entry"`              // 是否有未平仓的入场订单
+	HasExit     bool    `json:"has_exit"`               // 是否有退出（exit 或 derisk）
+	EntryCount  int     `json:"entry_count"`            // 入场订单数量
+	TotalAmount float64 `json:"total_amount"`           // 总数量（币数）
+	TotalCost   float64 `json:"total_cost"`             // 总成本（投入的 stake）
+	OpenRate    float64 `json:"open_rate,omitempty"`    // 平均开仓价格
+	Percentage  float64 `json:"percentage"`             // 占总仓位的比例（0-100）
+}
+
+// TradeGrindSummary 交易的 grind 汇总信息
+type TradeGrindSummary struct {
+	Grind1 GrindStatus `json:"grind_1"`
+	Grind2 GrindStatus `json:"grind_2"`
+	Grind3 GrindStatus `json:"grind_3"`
+	GrindX GrindStatus `json:"grind_x"` // 非 grind_1/2/3_entry 的所有其他订单
 }
 
 // FreqtradeOrder Freqtrade 订单信息
@@ -108,8 +128,11 @@ type FreqtradeOrder struct {
 	OrderFillTimestamp   *int64   `json:"order_fill_timestamp"`
 	OrderUpdateTimestamp *int64   `json:"order_update_timestamp"`
 	Side                 string   `json:"side"`
+	FtOrderSide          string   `json:"ft_order_side"`  // freqtrade 订单方向
+	FtOrderTag           *string  `json:"ft_order_tag"`   // freqtrade 订单标签
 	Amount               float64  `json:"amount"`
 	Price                float64  `json:"price"`
+	SafePrice            float64  `json:"safe_price"`     // 安全价格
 	AveragePrice         *float64 `json:"average"`
 	Cost                 *float64 `json:"cost"`
 	Filled               float64  `json:"filled"`

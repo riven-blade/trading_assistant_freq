@@ -259,33 +259,29 @@ func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, cu
 		orderType = "limit"
 	}
 
-	amount := "all" // 默认全部卖出
 	var sellAmount float64
-	if estimate.Percentage > 0 && estimate.Percentage < 100 {
-		// 根据百分比计算卖出数量
-		sellAmount = targetTrade.Amount * (estimate.Percentage / 100.0)
-		amount = fmt.Sprintf("%.8f", sellAmount)
+	if estimate.StakeAmount > 0 {
+		sellAmount = estimate.StakeAmount
 	} else {
-		sellAmount = targetTrade.Amount
+		return fmt.Errorf("止盈操作必须指定 stake_amount")
 	}
 
 	logrus.WithFields(logrus.Fields{
 		"symbol":          estimate.Symbol,
 		"side":            estimate.Side,
 		"operation":       operation,
-		"position_amount": targetTrade.Amount,
-		"sell_percentage": estimate.Percentage,
-		"sell_amount":     sellAmount,
+		"position_amount": targetTrade.StakeAmount,
+		"stake_amount":    estimate.StakeAmount,
+		"leverage":        estimate.Leverage,
 		"trade_id":        targetTrade.TradeId,
 		"current_price":   currentPrice,
-		"target_price":    estimate.TargetPrice,
 		"order_type":      orderType,
 	}).Info("执行卖出操作")
 
 	return oe.freqtradeClient.ForceSell(
 		fmt.Sprintf("%d", targetTrade.TradeId),
 		orderType,
-		amount,
+		fmt.Sprintf("%.2f", sellAmount),
 	)
 }
 
@@ -308,30 +304,4 @@ func (oe *OrderExecutor) updateEstimateStatus(estimate *models.PriceEstimate, st
 	// 广播价格预估更新
 	go utils.BroadcastSymbolEstimatesUpdate()
 	return nil
-}
-
-// getActionText 获取操作类型的中文描述（freqtrade的3种核心操作）
-func (oe *OrderExecutor) getActionText(actionType string) string {
-	switch actionType {
-	case models.ActionTypeOpen:
-		return "开仓"
-	case models.ActionTypeAddition:
-		return "加仓"
-	case models.ActionTypeTakeProfit:
-		return "止盈"
-	default:
-		return "交易"
-	}
-}
-
-// getPositionText 获取仓位方向的中文描述
-func (oe *OrderExecutor) getPositionText(side string) string {
-	switch side {
-	case types.PositionSideLong:
-		return "做多"
-	case types.PositionSideShort:
-		return "做空"
-	default:
-		return "未知"
-	}
 }

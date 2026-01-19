@@ -24,13 +24,13 @@ type PriceEstimateRequest struct {
 	Side        string      `json:"side" binding:"required"`        // long, short
 	ActionType  string      `json:"action_type" binding:"required"` // open, close
 	TargetPrice float64     `json:"target_price" binding:"required"`
-	Percentage  float64     `json:"percentage" binding:"required"` // 仓位比例
-	Leverage    int         `json:"leverage"`                      // 杠杆倍数
-	OrderType   string      `json:"order_type"`                    // 订单类型：market, limit
-	MarginMode  string      `json:"margin_mode"`                   // CROSS, ISOLATED (默认CROSS)
-	TriggerType string      `json:"trigger_type"`                  // 触发类型
-	Tag         interface{} `json:"tag"`                           // 交易标签（支持字符串和数字）
-	StakeAmount float64     `json:"stake_amount"`                  // 开仓金额 (USDT)
+	Percentage  float64     `json:"percentage"`                     // 仓位比例 (加仓时必填)
+	Leverage    int         `json:"leverage"`                       // 杠杆倍数
+	OrderType   string      `json:"order_type"`                     // 订单类型：market, limit
+	MarginMode  string      `json:"margin_mode"`                    // CROSS, ISOLATED (默认CROSS)
+	TriggerType string      `json:"trigger_type"`                   // 触发类型
+	Tag         interface{} `json:"tag"`                            // 交易标签（支持字符串和数字）
+	StakeAmount float64     `json:"stake_amount"`                   // 操作金额 (USDT 保证金)
 }
 
 // isSpotMode 判断是否为现货模式
@@ -91,12 +91,26 @@ func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest
 		return fmt.Errorf("订单类型必须是 %s 或 %s", types.OrderTypeMarket, types.OrderTypeLimit)
 	}
 
-	// 设置默认值并验证触发类型
+	// 验证触发类型
 	if req.TriggerType == "" {
 		req.TriggerType = models.TriggerTypeCondition // 默认条件触发
 	}
 	if req.TriggerType != models.TriggerTypeCondition && req.TriggerType != models.TriggerTypeImmediate {
 		return fmt.Errorf("触发类型必须是 %s 或 %s", models.TriggerTypeCondition, models.TriggerTypeImmediate)
+	}
+
+	// 根据操作类型验证必填字段
+	switch req.ActionType {
+	case models.ActionTypeAddition:
+		// 加仓必须指定 Percentage
+		if req.Percentage <= 0 || req.Percentage > 100 {
+			return fmt.Errorf("加仓操作必须指定有效的 Percentage (0-100)，当前值: %.2f", req.Percentage)
+		}
+	case models.ActionTypeTakeProfit:
+		// 止盈必须指定 StakeAmount
+		if req.StakeAmount <= 0 {
+			return fmt.Errorf("止盈操作必须指定 StakeAmount > 0")
+		}
 	}
 
 	return nil
@@ -114,9 +128,9 @@ func (p *PriceController) formatPriceEstimatePrecision(req *PriceEstimateRequest
 		return nil
 	}
 
-	// 验证百分比范围 (0-100)
-	if req.Percentage < 0 || req.Percentage > 100 {
-		return fmt.Errorf("仓位比例必须在0-100之间，当前值: %.2f", req.Percentage)
+	// 格式化百分比精度，但允许为0
+	if req.Percentage > 0 {
+		req.Percentage = parseFloat(fmt.Sprintf("%.2f", req.Percentage))
 	}
 
 	// 格式化价格精度
@@ -148,6 +162,7 @@ func (p *PriceController) formatPriceEstimatePrecision(req *PriceEstimateRequest
 
 	logrus.WithFields(logrus.Fields{
 		"symbol":       req.Symbol,
+		"stake_amount": req.StakeAmount,
 		"percentage":   req.Percentage,
 		"target_price": req.TargetPrice,
 		"min_price":    coin.MinPrice,
@@ -178,13 +193,13 @@ func (p *PriceController) createPriceEstimateModel(req *PriceEstimateRequest) *m
 		Side:        req.Side,
 		ActionType:  req.ActionType,
 		TargetPrice: req.TargetPrice,
-		Percentage:  req.Percentage,
+		Percentage:  req.Percentage, // 恢复 Percentage 字段
 		Leverage:    req.Leverage,
 		OrderType:   req.OrderType,
 		MarginMode:  req.MarginMode,
 		TriggerType: req.TriggerType,
 		Tag:         tagStr,                         // 交易标签（转换为字符串）
-		StakeAmount: req.StakeAmount,                // 开仓金额 (USDT)
+		StakeAmount: req.StakeAmount,                // 操作金额 (USDT 保证金)
 		Status:      models.EstimateStatusListening, // 初始状态为监听状态
 		Enabled:     true,                           // 默认启用，自动开始监听
 		CreatedAt:   time.Now(),

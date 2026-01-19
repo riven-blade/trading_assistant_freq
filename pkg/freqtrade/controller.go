@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 	"trading_assistant/models"
 	"trading_assistant/pkg/redis"
@@ -300,6 +301,127 @@ func (fc *Controller) CheckForceBuy(pair string) bool {
 	return len(tradeStatus) < fc.PositionStatus.Max
 }
 
+// calculateGrindSummary 计算交易的 grind 状态汇总
+// 逆序遍历订单，只计算最后一次 exit 之后的 entries
+func calculateGrindSummary(orders []models.FreqtradeOrder, isShort bool, totalAmount float64) *models.TradeGrindSummary {
+	summary := &models.TradeGrindSummary{}
+
+	// 确定入场方向：多头是 buy，空头是 sell
+	entrySide := "buy"
+	exitSide := "sell"
+	if isShort {
+		entrySide = "sell"
+		exitSide = "buy"
+	}
+
+	// 追踪是否已找到对应的 exit
+	grind1IsExitFound := false
+	grind2IsExitFound := false
+	grind3IsExitFound := false
+	grindXIsExitFound := false
+
+	// 倒序遍历订单
+	for i := len(orders) - 1; i >= 0; i-- {
+		order := orders[i]
+		if order.Status != "closed" {
+			continue
+		}
+
+		tag := ""
+		if order.FtOrderTag != nil {
+			tag = *order.FtOrderTag
+		}
+
+		// 处理入场订单（只计算 exit 之后的 entries）
+		if order.FtOrderSide == entrySide {
+			switch tag {
+			case "grind_1_entry":
+				if !grind1IsExitFound {
+					summary.Grind1.HasEntry = true
+					summary.Grind1.EntryCount++
+					summary.Grind1.TotalAmount += order.Filled
+					summary.Grind1.TotalCost += order.Filled * order.SafePrice
+				}
+			case "grind_2_entry":
+				if !grind2IsExitFound {
+					summary.Grind2.HasEntry = true
+					summary.Grind2.EntryCount++
+					summary.Grind2.TotalAmount += order.Filled
+					summary.Grind2.TotalCost += order.Filled * order.SafePrice
+				}
+			case "grind_3_entry":
+				if !grind3IsExitFound {
+					summary.Grind3.HasEntry = true
+					summary.Grind3.EntryCount++
+					summary.Grind3.TotalAmount += order.Filled
+					summary.Grind3.TotalCost += order.Filled * order.SafePrice
+				}
+			default:
+				// 所有其他非 grind_1/2/3_entry 的订单都算 grind_x
+				if !grindXIsExitFound {
+					summary.GrindX.HasEntry = true
+					summary.GrindX.EntryCount++
+					summary.GrindX.TotalAmount += order.Filled
+					summary.GrindX.TotalCost += order.Filled * order.SafePrice
+				}
+			}
+		}
+
+		// 处理退出订单
+		if order.FtOrderSide == exitSide {
+			orderTagParts := strings.Split(tag, " ")
+			orderMode := orderTagParts[0]
+
+			switch orderMode {
+			case "grind_1_exit", "grind_1_derisk":
+				if !grind1IsExitFound {
+					grind1IsExitFound = true
+					summary.Grind1.HasExit = true
+				}
+			case "grind_2_exit", "grind_2_derisk":
+				if !grind2IsExitFound {
+					grind2IsExitFound = true
+					summary.Grind2.HasExit = true
+				}
+			case "grind_3_exit", "grind_3_derisk":
+				if !grind3IsExitFound {
+					grind3IsExitFound = true
+					summary.Grind3.HasExit = true
+				}
+			case "grind_x_exit", "grind_x_derisk":
+				if !grindXIsExitFound {
+					grindXIsExitFound = true
+					summary.GrindX.HasExit = true
+				}
+			}
+		}
+	}
+
+	// 计算平均开仓价格
+	if summary.Grind1.TotalAmount > 0 {
+		summary.Grind1.OpenRate = summary.Grind1.TotalCost / summary.Grind1.TotalAmount
+	}
+	if summary.Grind2.TotalAmount > 0 {
+		summary.Grind2.OpenRate = summary.Grind2.TotalCost / summary.Grind2.TotalAmount
+	}
+	if summary.Grind3.TotalAmount > 0 {
+		summary.Grind3.OpenRate = summary.Grind3.TotalCost / summary.Grind3.TotalAmount
+	}
+	if summary.GrindX.TotalAmount > 0 {
+		summary.GrindX.OpenRate = summary.GrindX.TotalCost / summary.GrindX.TotalAmount
+	}
+
+	// 计算占总仓位的比例
+	if totalAmount > 0 {
+		summary.Grind1.Percentage = summary.Grind1.TotalAmount / totalAmount * 100
+		summary.Grind2.Percentage = summary.Grind2.TotalAmount / totalAmount * 100
+		summary.Grind3.Percentage = summary.Grind3.TotalAmount / totalAmount * 100
+		summary.GrindX.Percentage = summary.GrindX.TotalAmount / totalAmount * 100
+	}
+
+	return summary
+}
+
 // GetPositions 获取当前持仓数据，直接返回freqtrade格式
 func (fc *Controller) GetPositions() ([]models.TradePosition, error) {
 	// 获取freqtrade交易状态
@@ -308,11 +430,13 @@ func (fc *Controller) GetPositions() ([]models.TradePosition, error) {
 		return nil, fmt.Errorf("获取freqtrade交易状态失败: %v", err)
 	}
 
-	// 只返回开仓的交易
+	// 只返回开仓的交易，并计算 grind 状态
 	var openPositions []models.TradePosition
 	for i := range tradePositions {
 		trade := tradePositions[i]
 		if trade.IsOpen {
+			// 计算 grind 状态汇总
+			trade.GrindSummary = calculateGrindSummary(trade.Orders, trade.IsShort, trade.Amount)
 			openPositions = append(openPositions, trade)
 		}
 	}

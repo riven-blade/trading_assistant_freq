@@ -73,7 +73,8 @@ const useAccountData = () => {
             funding_fees: position.funding_fees,
             realized_profit: position.realized_profit,
             original_pair: position.pair, // 保留原始格式以备后用
-            orders: position.orders || [] // 包含订单数据用于加仓计算
+            orders: position.orders || [], // 包含订单数据用于加仓计算
+            grind_summary: position.grind_summary || null // Grind 分布汇总数据
           };
         });
         
