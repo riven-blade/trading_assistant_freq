@@ -393,7 +393,7 @@ const Orders = () => {
             <Space size="middle" style={{ width: '100%' }}>
               <Text strong>交易对筛选:</Text>
               <Select
-                placeholder="选择交易对"
+                placeholder="输入或选择交易对"
                 value={estimateSymbol}
                 onChange={(val) => {
                   setEstimateSymbol(val || '');
@@ -401,6 +401,12 @@ const Orders = () => {
                 }}
                 style={{ minWidth: 200 }}
                 allowClear
+                showSearch
+                filterOption={(input, option) => {
+                  // 获取选项的值（symbol）
+                  const symbol = option?.value || '';
+                  return symbol.toLowerCase().includes(input.toLowerCase());
+                }}
                 listHeight={200}
                 virtual={false}
               >

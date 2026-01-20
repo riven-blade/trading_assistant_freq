@@ -449,6 +449,18 @@ func (fc *Controller) GetPositions() ([]models.TradePosition, error) {
 	for i := range tradePositions {
 		trade := tradePositions[i]
 		if trade.IsOpen {
+			// 检查该币种是否已选中，如果未选中则自动选中
+			// 确保有仓位的币种能够订阅到价格数据
+			if fc.redisClient != nil && trade.Pair != "" {
+				if !fc.redisClient.IsCoinSelected(trade.Pair) {
+					if err := fc.redisClient.SetCoinSelection(trade.Pair, models.CoinSelectionActive); err != nil {
+						logrus.Warnf("自动选中币种 %s 失败: %v", trade.Pair, err)
+					} else {
+						logrus.Infof("自动选中有仓位的币种: %s", trade.Pair)
+					}
+				}
+			}
+
 			// 获取杠杆倍数
 			var leverage float64 = 1.0
 			if trade.Leverage != nil {
