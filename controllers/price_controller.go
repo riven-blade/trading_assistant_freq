@@ -23,7 +23,7 @@ type PriceEstimateRequest struct {
 	Symbol      string      `json:"symbol" binding:"required"`
 	Side        string      `json:"side" binding:"required"`        // long, short
 	ActionType  string      `json:"action_type" binding:"required"` // open, close
-	TargetPrice float64     `json:"target_price" binding:"required"`
+	TargetPrice float64     `json:"target_price"`
 	Percentage  float64     `json:"percentage"`                     // 仓位比例 (加仓时必填)
 	Leverage    int         `json:"leverage"`                       // 杠杆倍数
 	OrderType   string      `json:"order_type"`                     // 订单类型：market, limit
@@ -113,6 +113,11 @@ func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest
 		}
 	}
 
+	// 条件触发时必须指定目标价格
+	if req.TriggerType == models.TriggerTypeCondition && req.TargetPrice <= 0 {
+		return fmt.Errorf("条件触发必须指定有效的目标价格 (target_price > 0)")
+	}
+
 	return nil
 }
 
@@ -139,8 +144,8 @@ func (p *PriceController) formatPriceEstimatePrecision(req *PriceEstimateRequest
 		priceFormat := fmt.Sprintf("%%.%df", pricePrecision)
 		req.TargetPrice = parseFloat(fmt.Sprintf(priceFormat, req.TargetPrice))
 
-		// 验证最小价格
-		if coin.MinPrice != "" {
+		// 验证最小价格（立即触发时跳过验证，因为 target_price 可以为 0）
+		if coin.MinPrice != "" && req.TriggerType != models.TriggerTypeImmediate {
 			minPrice := parseFloat(coin.MinPrice)
 			if minPrice > 0 && req.TargetPrice < minPrice {
 				return fmt.Errorf("目标价格 %.6f 小于最小价格 %.6f", req.TargetPrice, minPrice)
@@ -253,6 +258,17 @@ func (p *PriceController) CreatePriceEstimate(ctx *gin.Context) {
 			"error": "保存价格预估失败",
 		})
 		return
+	}
+
+	// 自动选中币种（如果还未选中）
+	if !redis.GlobalRedisClient.IsCoinSelected(req.Symbol) {
+		err := redis.GlobalRedisClient.SetCoinSelection(req.Symbol, models.CoinSelectionActive)
+		if err != nil {
+			logrus.Warnf("自动选中币种失败: %s, error: %v", req.Symbol, err)
+			// 不影响价格预估的创建，继续执行
+		} else {
+			logrus.Infof("币种 %s 已自动选中", req.Symbol)
+		}
 	}
 
 	logrus.Infof("创建价格预估成功: %s %s %s %.4f",

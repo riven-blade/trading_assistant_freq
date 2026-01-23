@@ -7,7 +7,8 @@ import {
   message,
   Spin,
   Empty,
-  Select
+  Select,
+  Grid
 } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 import api, { toggleEstimateEnabled } from '../services/api';
@@ -20,6 +21,7 @@ import GrindDetailDrawer from '../components/Position/GrindDetailDrawer';
 import PriceSlider from '../components/Trading/PriceSlider';
 import QuantitySlider from '../components/Trading/QuantitySlider';
 import MonitoringCard from '../components/Monitoring/MonitoringCard';
+import KlineDrawer from '../components/Chart/KlineDrawer';
 import useAccountData from '../hooks/useAccountData';
 import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
@@ -27,10 +29,15 @@ import { useSystemConfig } from '../hooks/useSystemConfig';
 import { ACTIONS } from '../utils/constants';
 
 const { Text } = Typography;
+const { useBreakpoint } = Grid;
 
 const Positions = () => {
   // 获取系统配置
-  const { isSpotMode } = useSystemConfig();
+  const { isSpotMode, exchangeType, marketType } = useSystemConfig();
+  
+  // 检测屏幕断点
+  const screens = useBreakpoint();
+  const isMobile = !screens.md; // md 以下为移动端
 
   // 操作相关状态
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -55,6 +62,11 @@ const Positions = () => {
   // Grind 详情抽屉状态
   const [grindDrawerVisible, setGrindDrawerVisible] = useState(false);
   const [grindPosition, setGrindPosition] = useState(null);
+
+  // K线抽屉相关状态
+  const [klineDrawerVisible, setKlineDrawerVisible] = useState(false);
+  const [selectedKlineSymbol, setSelectedKlineSymbol] = useState('');
+  const [klineAnalysisData, setKlineAnalysisData] = useState(null);
 
   // 使用自定义Hooks
   const { 
@@ -141,13 +153,6 @@ const Positions = () => {
     
     if (!action || typeof action !== 'string') {
       console.error('handleAction: action 参数无效:', action);
-      return;
-    }
-    
-    // 处理K线图跳转
-    if (action === 'kline') {
-      const klineUrl = `${window.location.origin}/klines?symbol=${position.symbol}&interval=4h`;
-      window.open(klineUrl, '_blank', 'noopener,noreferrer');
       return;
     }
     
@@ -377,6 +382,46 @@ const Positions = () => {
     setGrindPosition(null);
   };
 
+  // K线抽屉处理
+  const openKlineDrawer = async (symbol) => {
+    setSelectedKlineSymbol(symbol);
+    setKlineDrawerVisible(true);
+    await fetchAnalysisData(symbol);
+  };
+
+  const closeKlineDrawer = () => {
+    setKlineDrawerVisible(false);
+    setKlineAnalysisData(null);
+  };
+
+  // 获取分析数据
+  const fetchAnalysisData = async (symbol) => {
+    try {
+      // 查询该交易对的最新分析数据
+      const response = await api.get('/analysis/results', {
+        params: {
+          symbol: symbol,
+          exchange: exchangeType,
+          market_type: marketType,
+          page: 1,
+          pageSize: 1
+        }
+      });
+
+      const results = response.data.data || [];
+      if (results.length > 0) {
+        // 使用最新的分析结果
+        setKlineAnalysisData(results[0]);
+      } else {
+        // 没有分析数据
+        setKlineAnalysisData(null);
+      }
+    } catch (error) {
+      console.error('获取分析数据失败:', error);
+      setKlineAnalysisData(null);
+    }
+  };
+
   // Grind 止盈退出
   const handleGrindTakeProfit = async (position, grindKey, stakeAmount) => {
     try {
@@ -477,6 +522,7 @@ const Positions = () => {
                   onAction={handleAction}
                   onViewDetails={openDetailDrawer}
                   onGrindDetail={openGrindDrawer}
+                  onViewKline={openKlineDrawer}
                 />
               </Col>
           ))}
@@ -486,13 +532,13 @@ const Positions = () => {
       {/* 操作抽屉 */}
       <Drawer
         title={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: '16px', fontWeight: 600 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: 600 }}>
               {ACTIONS[actionType]?.title}
             </span>
             {currentPosition && (
               <>
-                <span style={{ fontSize: '18px', fontWeight: 700, color: '#1890ff' }}>
+                <span style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: 700, color: '#1890ff' }}>
                   {currentPosition.symbol}
                 </span>
                 {/* 现货模式不显示多头/空头标签 */}
@@ -500,9 +546,9 @@ const Positions = () => {
                   <span style={{
                     background: currentPosition.side === 'LONG' ? '#f6ffed' : '#fff2f0',
                     color: currentPosition.side === 'LONG' ? '#52c41a' : '#ff4d4f',
-                    padding: '4px 8px',
+                    padding: isMobile ? '2px 6px' : '4px 8px',
                     borderRadius: '6px',
-                    fontSize: '12px',
+                    fontSize: isMobile ? '11px' : '12px',
                     fontWeight: 600,
                     border: `1px solid ${currentPosition.side === 'LONG' ? '#b7eb8f' : '#ffb3b3'}`
                   }}>
@@ -514,9 +560,9 @@ const Positions = () => {
                   <span style={{
                     background: '#f0f9ff',
                     color: '#1890ff',
-                    padding: '4px 8px',
+                    padding: isMobile ? '2px 6px' : '4px 8px',
                     borderRadius: '6px',
-                    fontSize: '12px',
+                    fontSize: isMobile ? '11px' : '12px',
                     fontWeight: 600,
                     border: '1px solid #bae6fd'
                   }}>
@@ -534,7 +580,7 @@ const Positions = () => {
           setExitTag('manual');
         }}
         open={drawerVisible}
-        width={window.innerWidth < 768 ? '100%' : 480}
+        width={isMobile ? '100%' : 480}
         extra={
           <button 
             className={`drawer-confirm-btn ${
@@ -699,16 +745,16 @@ const Positions = () => {
       {/* 详情抽屉 */}
       <Drawer
         title={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: '16px', fontWeight: 600, color: '#1f2937' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 12, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: 600, color: '#1f2937' }}>
               {detailPosition?.symbol}
             </span>
             <span style={{ 
               background: detailPosition?.side === 'LONG' ? '#f0fdf4' : '#fef2f2',
               color: detailPosition?.side === 'LONG' ? '#166534' : '#991b1b',
-              padding: '3px 8px',
+              padding: isMobile ? '2px 6px' : '3px 8px',
               borderRadius: '4px',
-              fontSize: '10px',
+              fontSize: isMobile ? '9px' : '10px',
               fontWeight: 600
             }}>
               {detailPosition?.side === 'LONG' ? '多头' : '空头'}
@@ -716,19 +762,38 @@ const Positions = () => {
             <span style={{ 
               background: '#f9fafb',
               color: '#6b7280',
-              padding: '2px 6px',
+              padding: isMobile ? '2px 4px' : '2px 6px',
               borderRadius: '4px',
-              fontSize: '10px',
+              fontSize: isMobile ? '9px' : '10px',
               fontWeight: 500
             }}>
               {positionEstimates.length}个监听
             </span>
+            <button
+              onClick={() => openKlineDrawer(detailPosition?.symbol)}
+              style={{
+                marginLeft: 'auto',
+                padding: isMobile ? '2px 8px' : '4px 12px',
+                background: '#1890ff',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: isMobile ? '11px' : '12px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => e.target.style.background = '#40a9ff'}
+              onMouseLeave={(e) => e.target.style.background = '#1890ff'}
+            >
+              K线
+            </button>
           </div>
         }
         placement="right"
         onClose={closeDetailDrawer}
         open={detailDrawerVisible}
-        width={window.innerWidth < 768 ? '100%' : 500}
+        width={isMobile ? '100%' : 500}
         styles={{
           body: {
             paddingTop: 0,
@@ -771,6 +836,15 @@ const Positions = () => {
         position={grindPosition}
         onClose={closeGrindDrawer}
         onTakeProfit={handleGrindTakeProfit}
+      />
+
+      {/* K线抽屉 */}
+      <KlineDrawer
+        visible={klineDrawerVisible}
+        onClose={closeKlineDrawer}
+        symbol={selectedKlineSymbol}
+        analysisData={klineAnalysisData}
+        defaultInterval="1h"
       />
     </div>
   );

@@ -4,7 +4,7 @@
 
 # Docker 相关变量
 IMAGE_NAME := ddhdocker/trading-assistant-freq
-IMAGE_TAG := v0.0.286
+IMAGE_TAG := v0.0.660
 CONTAINER_NAME := trading-assistant-freq
 
 # 默认目标
@@ -12,10 +12,12 @@ all: package
 
 # 安装依赖
 install-deps:
-	@echo "🔧 安装后端依赖..."、
+	@echo "🔧 安装后端依赖..."
 	go mod download
 	@echo "🔧 安装前端依赖..."
 	cd web && npm install
+	@echo "🔧 安装分析服务依赖..."
+	pip install -r analysis_service/requirements.txt
 
 # 清理构建文件
 clean:
@@ -56,6 +58,11 @@ dev:
 start: package
 	@echo "🚀 启动生产环境..."
 	./dist/trading_assistant
+
+# 启动分析服务
+run-analysis:
+	@echo "🚀 启动分析服务..."
+	cd analysis_service && uvicorn main:app --reload
 
 # Docker 构建镜像
 docker-build: build-backend-linux

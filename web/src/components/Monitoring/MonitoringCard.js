@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'antd';
+import { Switch, Tag } from 'antd';
 import { getDetailedActionText } from '../../utils/constants';
 
 /**
@@ -83,6 +83,23 @@ const MonitoringCard = ({ estimate, currentPosition, onDelete, onToggle }) => {
           <span className={`monitoring-action-tag ${estimate.action_type} ${estimate.side}`}>
             {actionText}
           </span>
+          {estimate.tag && (
+            <Tag 
+              color={
+                estimate.tag.startsWith('grind_') ? 'blue' :
+                estimate.tag === 'manual' ? 'default' :
+                estimate.tag === 'force_entry' ? 'orange' : 'geekblue'
+              }
+              style={{ 
+                fontSize: '10px', 
+                padding: '0 4px', 
+                lineHeight: '18px',
+                marginLeft: '4px'
+              }}
+            >
+              {estimate.tag}
+            </Tag>
+          )}
           <span className="monitoring-order-type">{estimate.order_type}</span>
         </div>
         <div className="monitoring-controls">

@@ -280,3 +280,5 @@ func (c *CoinController) UpdateCoinTier(ctx *gin.Context) {
 		},
 	})
 }
+
+

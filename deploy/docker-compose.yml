@@ -64,12 +64,69 @@ services:
     labels:
       - "traefik.enable=false"
 
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: trading-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d  # 初始化脚本目录
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=your_root_password    # 修改为你的密码
+      - MYSQL_DATABASE=trading
+      - MYSQL_USER=trading
+      - MYSQL_PASSWORD=your_trading_password      # 修改为你的密码
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - trading-network
+    labels:
+      - "traefik.enable=false"
+
+  # Python 分析服务
+  analysis-service:
+    image: ddhdocker/trading-analysis:latest
+    container_name: trading-analysis
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=trading
+      - MYSQL_PASSWORD=your_trading_password      # 修改为你的密码
+      - MYSQL_DB=trading_analysis
+      - ANALYSIS_INTERVAL_HOURS=1
+      - ANALYSIS_EXCHANGES=binance,bybit
+      - ANALYSIS_TIMEFRAMES=1h,4h
+      - ANALYSIS_KLINE_LIMIT=2000
+      - ANALYSIS_RUN_ON_STARTUP=true
+      - ANALYSIS_CONCURRENCY=2
+      - ANALYSIS_BATCH_SIZE=15
+    depends_on:
+      - mysql
+    networks:
+      - trading-network
+    labels:
+      - "traefik.enable=false"  # 内部服务，不对外暴露
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
 networks:
   trading-network:
     driver: bridge
 
 volumes:
   redis_data:
+    driver: local
+  mysql_data:
     driver: local
   traefik_certificates:
     driver: local

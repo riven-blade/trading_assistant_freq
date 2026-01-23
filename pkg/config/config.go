@@ -35,6 +35,13 @@ type Config struct {
 	FreqtradeUsername string // Freqtrade 用户名
 	FreqtradePassword string // Freqtrade 密码
 
+	// MySQL配置
+	MySQLHost     string
+	MySQLPort     string
+	MySQLUser     string
+	MySQLPassword string
+	MySQLDB       string
+
 	// 价格管理配置
 	PriceUpdateInterval time.Duration // 价格更新间隔
 }
@@ -67,6 +74,12 @@ func LoadConfig() {
 		FreqtradeBaseURL:  getEnv("FREQTRADE_BASE_URL", "http://localhost:8080"),
 		FreqtradeUsername: getEnv("FREQTRADE_USERNAME", ""),
 		FreqtradePassword: getEnv("FREQTRADE_PASSWORD", ""),
+
+		MySQLHost:     getEnv("MYSQL_HOST", "localhost"),
+		MySQLPort:     getEnv("MYSQL_PORT", "3306"),
+		MySQLUser:     getEnv("MYSQL_USER", "root"),
+		MySQLPassword: getEnv("MYSQL_PASSWORD", ""),
+		MySQLDB:       getEnv("MYSQL_DB", "trading_analysis"),
 
 		PriceUpdateInterval: getEnvDuration("PRICE_UPDATE_INTERVAL", "15s"), // 默认15秒
 	}

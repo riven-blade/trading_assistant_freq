@@ -20,6 +20,7 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 	configController := controllers.NewConfigController()
 	klineController := controllers.NewKlineController(exchangeClient)
 	positionController := controllers.NewPositionController(freqtradeController)
+	analysisController := controllers.NewAnalysisController()
 
 	// 初始化WebSocket管理器
 	wsManager := websocket.GetGlobalWebSocketManager()
@@ -85,6 +86,13 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 		klines := v1.Group("/klines")
 		{
 			klines.GET("", klineController.GetKlines) // 获取K线数据
+		}
+
+		// AI分析路由
+		analysis := v1.Group("/analysis")
+		{
+			analysis.GET("/results", analysisController.GetAnalysisResults) // 获取AI分析结果
+			analysis.GET("/:id", analysisController.GetAnalysisByID)        // 获取单个分析详情
 		}
 
 		// 持仓管理路由

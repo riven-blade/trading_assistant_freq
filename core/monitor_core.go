@@ -27,7 +27,7 @@ func InitPriceMonitor(freqtradeClient *freqtrade.Controller) {
 	GlobalPriceMonitor = &PriceMonitor{
 		running:       false,
 		stopChan:      make(chan bool),
-		tickInterval:  500 * time.Millisecond, // 0.5秒检查一次，更快响应价格变化
+		tickInterval:  500 * time.Millisecond,
 		orderExecutor: NewOrderExecutor(freqtradeClient),
 	}
 }
@@ -65,7 +65,7 @@ func (pm *PriceMonitor) IsRunning() bool {
 func (pm *PriceMonitor) monitorLoop() {
 	ticker := time.NewTicker(pm.tickInterval)
 	defer ticker.Stop()
-
+	
 	for {
 		select {
 		case <-pm.stopChan:

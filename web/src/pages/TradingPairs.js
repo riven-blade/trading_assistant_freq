@@ -24,6 +24,7 @@ import PageHeader from '../components/Common/PageHeader';
 import TradeDrawer from '../components/Trading/TradeDrawer';
 import TradingPairCard from '../components/Trading/TradingPairCard';
 import MonitoringCard from '../components/Monitoring/MonitoringCard';
+import KlineDrawer from '../components/Chart/KlineDrawer';
 import useAccountData from '../hooks/useAccountData';
 import useEstimates from '../hooks/useEstimates';
 import usePriceData from '../hooks/usePriceData';
@@ -93,6 +94,11 @@ const TradingPairs = () => {
   const [editingTierSymbol, setEditingTierSymbol] = useState('');
   const [selectedTier, setSelectedTier] = useState('');
 
+  // K线抽屉相关状态
+  const [klineDrawerVisible, setKlineDrawerVisible] = useState(false);
+  const [selectedKlineSymbol, setSelectedKlineSymbol] = useState('');
+  const [klineAnalysisData, setKlineAnalysisData] = useState(null);
+
   // 使用自定义Hooks
   const { 
     hasPosition, 
@@ -112,6 +118,9 @@ const TradingPairs = () => {
     priceData, 
     getPriceBySymbol
   } = usePriceData();
+
+  // 使用系统配置
+  const { exchangeType, marketType } = useSystemConfig();
 
   // 全局排名映射
   const [globalVolumeRanks, setGlobalVolumeRanks] = useState({});
@@ -347,7 +356,7 @@ const TradingPairs = () => {
   };
 
   // 统一的卡片操作处理
-  const handleCardAction = (symbol, action) => {
+  const handleCardAction = async (symbol, action) => {
     switch (action) {
       case 'long':
         openTradeModal(symbol, 'long');
@@ -356,9 +365,10 @@ const TradingPairs = () => {
         openTradeModal(symbol, 'short');
         break;
       case 'kline':
-        // 在新窗口打开K线页面
-        const klineUrl = `${window.location.origin}/klines?symbol=${symbol}&interval=4h`;
-        window.open(klineUrl, '_blank', 'noopener,noreferrer');
+        // 打开K线抽屉并加载分析数据
+        setSelectedKlineSymbol(symbol);
+        setKlineDrawerVisible(true);
+        await fetchAnalysisData(symbol);
         break;
       case 'monitor':
         openMonitorDrawer(symbol);
@@ -553,6 +563,34 @@ const TradingPairs = () => {
       await fetchSelectedPairs();
     } catch (error) {
       message.error('更新等级失败');
+    }
+  };
+
+  // 获取分析数据
+  const fetchAnalysisData = async (symbol) => {
+    try {
+      // 查询该交易对的最新分析数据
+      const response = await api.get('/analysis/results', {
+        params: {
+          symbol: symbol,
+          exchange: exchangeType,
+          market_type: marketType,
+          page: 1,
+          pageSize: 1
+        }
+      });
+
+      const results = response.data.data || [];
+      if (results.length > 0) {
+        // 使用最新的分析结果
+        setKlineAnalysisData(results[0]);
+      } else {
+        // 没有分析数据
+        setKlineAnalysisData(null);
+      }
+    } catch (error) {
+      console.error('获取分析数据失败:', error);
+      setKlineAnalysisData(null);
     }
   };
 
@@ -1066,6 +1104,18 @@ const TradingPairs = () => {
           </button>
         </div>
       </Modal>
+
+      {/* K线抽屉 */}
+      <KlineDrawer
+        visible={klineDrawerVisible}
+        onClose={() => {
+          setKlineDrawerVisible(false);
+          setKlineAnalysisData(null);
+        }}
+        symbol={selectedKlineSymbol}
+        analysisData={klineAnalysisData}
+        defaultInterval="1h"
+      />
 
     </div>
   );

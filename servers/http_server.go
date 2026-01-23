@@ -5,11 +5,13 @@ import (
 	"trading_assistant/apis"
 	"trading_assistant/core"
 	"trading_assistant/pkg/config"
+	"trading_assistant/pkg/database"
 	"trading_assistant/pkg/exchange_factory"
 	"trading_assistant/pkg/freqtrade"
+	"trading_assistant/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus" // Keep logrus for Start method
 )
 
 type HTTPServer struct {
@@ -22,6 +24,9 @@ type HTTPServer struct {
 
 // NewHTTPServer 创建HTTP服务器
 func NewHTTPServer(exchangeClient exchange_factory.ExchangeInterface, marketManager *core.MarketManager, freqtradeController *freqtrade.Controller) *HTTPServer {
+	// Initialize database
+	database.InitMySQL(config.GlobalConfig)
+
 	// 设置Gin模式
 	if config.GlobalConfig.LogLevel == "debug" {
 		gin.SetMode(gin.DebugMode)
@@ -29,13 +34,15 @@ func NewHTTPServer(exchangeClient exchange_factory.ExchangeInterface, marketMana
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	engine := gin.Default()
+	r := gin.New()
+	r.Use(gin.Recovery())
+	r.Use(middleware.Cors())
 
-	// 设置路由
-	apis.SetupRoutes(engine, exchangeClient, marketManager, freqtradeController)
+	// Initialize routes
+	apis.SetupRoutes(r, exchangeClient, marketManager, freqtradeController)
 
 	return &HTTPServer{
-		engine:              engine,
+		engine:              r,
 		port:                "8080",
 		exchangeClient:      exchangeClient,
 		marketManager:       marketManager,

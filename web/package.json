@@ -7,6 +7,8 @@
     "antd": "^5.12.8",
     "axios": "^1.6.2",
     "klinecharts": "^10.0.0-alpha5",
+    "lightweight-charts": "^5.1.0",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
@@ -36,5 +38,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://t1.s.foreverlin.cn"
+  "proxy": "https://t1.t.foreverlin.cn/"
 }

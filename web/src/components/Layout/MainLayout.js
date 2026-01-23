@@ -10,7 +10,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   FileTextOutlined,
-  LineChartOutlined,
+  BarChartOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -52,9 +52,9 @@ const MainLayout = ({ children, onLogout }) => {
       label: '订单',
     },
     {
-      key: '/klines',
-      icon: <LineChartOutlined />,
-      label: 'K线',
+      key: '/analysis',
+      icon: <BarChartOutlined />,
+      label: '数据分析',
     },
   ];
 

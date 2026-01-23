@@ -71,8 +71,9 @@ const GrindStatusBadges = ({ grindSummary }) => {
  * @param {Function} onAction - 操作回调 (position, action)
  * @param {Function} onViewDetails - 查看详情回调
  * @param {Function} onGrindDetail - 查看 Grind 详情回调
+ * @param {Function} onViewKline - 查看K线回调
  */
-const PositionCard = ({ position, currentPrice, onAction, onViewDetails, onGrindDetail }) => {
+const PositionCard = ({ position, currentPrice, onAction, onViewDetails, onGrindDetail, onViewKline }) => {
   // 获取系统配置
   const { isSpotMode } = useSystemConfig();
   // 使用实时价格计算盈亏
@@ -265,9 +266,9 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails, onGrind
               </span>
             )}
           </button>
-          <button
-            className="control-btn danger-btn"
-            onClick={() => onAction(position, 'kline')}
+          <button 
+            className="control-btn success-btn"
+            onClick={() => onViewKline && onViewKline(position.symbol)}
             style={{ flex: 1 }}
           >
             K线

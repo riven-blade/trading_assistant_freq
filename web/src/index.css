@@ -1497,17 +1497,22 @@ code {
 /* 收缩状态 */
 .ant-layout-sider-collapsed .sidebar-menu-clean .ant-menu-item {
   margin: 3px 6px;
-  padding: 0;
+  padding: 0 !important;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  width: calc(100% - 12px);
 }
 
 .ant-layout-sider-collapsed .sidebar-menu-clean .ant-menu-item .anticon {
   margin-right: 0;
   font-size: 16px;
+}
+
+.ant-layout-sider-collapsed .sidebar-menu-clean .ant-menu-item .ant-menu-title-content {
+  display: none;
 }
 
 /* 移动端抽屉菜单 */

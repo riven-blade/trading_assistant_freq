@@ -8,6 +8,8 @@ import (
 	"trading_assistant/pkg/exchanges/types"
 	"trading_assistant/pkg/redis"
 
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -39,6 +41,34 @@ func (k *KlineController) GetKlines(ctx *gin.Context) {
 			"error": "symbol参数不能为空",
 		})
 		return
+	}
+	
+	// 规范化symbol格式：移除斜杠 (BTC/USDT -> BTCUSDT)
+	// Binance API需要无斜杠的格式，但前端可能传递带斜杠的格式
+	symbol = strings.ReplaceAll(symbol, "/", "")
+	
+	// 检查symbol是否包含非ASCII字符（如中文）
+	// 如果包含，需要从数据库查询对应的market_id
+	hasNonASCII := false
+	for _, r := range symbol {
+		if r > 127 {
+			hasNonASCII = true
+			break
+		}
+	}
+	
+	if hasNonASCII {
+		// 从数据库查询对应的market_id
+		marketID, err := k.getMarketIDFromSymbol(symbol)
+		if err != nil {
+			logrus.Errorf("无法找到symbol对应的market_id: %s, error: %v", symbol, err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("无法识别的交易对: %s", symbol),
+			})
+			return
+		}
+		logrus.Infof("将symbol %s 转换为 market_id %s", symbol, marketID)
+		symbol = marketID
 	}
 
 	interval := ctx.DefaultQuery("interval", "5m")
@@ -125,4 +155,11 @@ func (k *KlineController) GetKlines(ctx *gin.Context) {
 			"since":    since,
 		},
 	})
+}
+
+// getMarketIDFromSymbol 从数据库查询symbol对应的market_id
+func (k *KlineController) getMarketIDFromSymbol(symbol string) (string, error) {
+	// 这里需要查询coin表，根据symbol模糊匹配找到对应的market_id
+	// 暂时返回错误，需要实现数据库查询逻辑
+	return "", fmt.Errorf("symbol包含非ASCII字符，需要从数据库查询market_id")
 }
