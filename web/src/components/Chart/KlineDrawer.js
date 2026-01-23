@@ -24,7 +24,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
   const volumeSeriesRef = useRef(null);
   const supportLevelsRef = useRef([]); // 存储支撑位价格
   const resistanceLevelsRef = useRef([]); // 存储压力位价格
-  const estimatePriceLinesRef = useRef([]); // 存储监听价格线的引用
+  const estimatePriceLinesRef = useRef([]); // 存储监听价格线的引用 [{line, estimate}]
   const positionPriceLinesRef = useRef([]); // 存储仓位价格线的引用
 
   // 价格监听创建对话框
@@ -32,9 +32,13 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
   const [selectedPriceType, setSelectedPriceType] = useState(null);
   const [form] = Form.useForm();
 
+  // 价格监听删除对话框
+  const [deleteEstimateModalVisible, setDeleteEstimateModalVisible] = useState(false);
+  const [selectedEstimate, setSelectedEstimate] = useState(null);
+
   // 使用 hooks
   const { hasPosition, positions } = useAccountData();
-  const { getEstimatesBySymbol } = useEstimates();
+  const { getEstimatesBySymbol, deleteEstimate } = useEstimates();
 
   // 当 symbol 或 visible 变化时，重置时间周期为默认值
   useEffect(() => {
@@ -148,6 +152,16 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       
       const priceThreshold = Math.abs(price) * 0.005; // 0.5% 的误差范围
       
+      // 检查价格监听线
+      for (const item of estimatePriceLinesRef.current) {
+        if (item && item.estimate) {
+          const estimatePrice = parseFloat(item.estimate.target_price);
+          if (Math.abs(price - estimatePrice) < priceThreshold) {
+            return { price: estimatePrice, type: 'estimate', estimate: item.estimate };
+          }
+        }
+      }
+      
       // 检查支撑位
       for (const supportPrice of supportLevelsRef.current) {
         if (Math.abs(price - supportPrice) < priceThreshold) {
@@ -187,11 +201,18 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       
       if (!clickedPrice || isNaN(clickedPrice)) return;
       
-      // 检查是否点击了支撑位或压力位
+      // 检查是否点击了价格线
       const nearPriceLine = isNearPriceLine(clickedPrice);
       
       if (nearPriceLine) {
-        handlePriceLevelClick(nearPriceLine.price, nearPriceLine.type);
+        if (nearPriceLine.type === 'estimate') {
+          // 点击了价格监听线，显示删除确认对话框
+          setSelectedEstimate(nearPriceLine.estimate);
+          setDeleteEstimateModalVisible(true);
+        } else {
+          // 点击了支撑位或压力位，显示创建监听对话框
+          handlePriceLevelClick(nearPriceLine.price, nearPriceLine.type);
+        }
       }
     };
     
@@ -344,10 +365,10 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     if (!visible || !symbol || !candlestickSeriesRef.current) return;
 
     // 清除之前的价格线
-    estimatePriceLinesRef.current.forEach(line => {
-      if (line && typeof line.remove === 'function') {
+    estimatePriceLinesRef.current.forEach(item => {
+      if (item && item.line && typeof item.line.remove === 'function') {
         try {
-          candlestickSeriesRef.current.removePriceLine(line);
+          candlestickSeriesRef.current.removePriceLine(item.line);
         } catch (e) {
           console.warn('Failed to remove price line:', e);
         }
@@ -401,7 +422,8 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
             title: lineTitle,
           });
           
-          estimatePriceLinesRef.current.push(priceLine);
+          // 存储价格线和关联的estimate数据
+          estimatePriceLinesRef.current.push({ line: priceLine, estimate: estimate });
         } catch (e) {
           console.error('Failed to create price line:', e);
         }
@@ -483,6 +505,41 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     } catch (error) {
       console.error('创建价格监听失败:', error);
       message.error(error.response?.data?.error || '创建价格监听失败');
+    }
+  };
+
+  // 删除价格监听
+  const handleDeleteEstimate = async () => {
+    if (!selectedEstimate || !candlestickSeriesRef.current) return;
+    
+    try {
+      // 先从图表中移除对应的价格线
+      const estimateId = selectedEstimate.id;
+      const itemIndex = estimatePriceLinesRef.current.findIndex(
+        item => item && item.estimate && item.estimate.id === estimateId
+      );
+      
+      if (itemIndex !== -1) {
+        const item = estimatePriceLinesRef.current[itemIndex];
+        if (item.line && typeof item.line.remove === 'function') {
+          try {
+            candlestickSeriesRef.current.removePriceLine(item.line);
+          } catch (e) {
+            console.warn('Failed to remove price line from chart:', e);
+          }
+        }
+        // 从数组中移除该项
+        estimatePriceLinesRef.current.splice(itemIndex, 1);
+      }
+      
+      // 然后调用API删除
+      await deleteEstimate(estimateId);
+      message.success('价格监听删除成功');
+      setDeleteEstimateModalVisible(false);
+      setSelectedEstimate(null);
+    } catch (error) {
+      console.error('删除价格监听失败:', error);
+      message.error(error.response?.data?.error || '删除价格监听失败');
     }
   };
 
@@ -607,6 +664,31 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
             </Select>
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* 删除价格监听确认对话框 */}
+      <Modal
+        title="删除价格监听"
+        open={deleteEstimateModalVisible}
+        onOk={handleDeleteEstimate}
+        onCancel={() => {
+          setDeleteEstimateModalVisible(false);
+          setSelectedEstimate(null);
+        }}
+        okText="确认删除"
+        cancelText="取消"
+      >
+        {selectedEstimate && (
+          <div>
+            <p>确认要删除以下价格监听吗？</p>
+            <div style={{ marginTop: 16, padding: 12, background: '#f5f5f5', borderRadius: 4 }}>
+              <p><strong>目标价格:</strong> ${parseFloat(selectedEstimate.target_price).toFixed(6)}</p>
+              <p><strong>方向:</strong> {selectedEstimate.side === 'long' ? '做多' : '做空'}</p>
+              <p><strong>操作类型:</strong> {selectedEstimate.action_type === 'open' ? '开仓' : selectedEstimate.action_type === 'addition' ? '加仓' : '止盈'}</p>
+              <p><strong>杠杆:</strong> {selectedEstimate.leverage}x</p>
+            </div>
+          </div>
+        )}
       </Modal>
     </Drawer>
   );
