@@ -182,8 +182,8 @@ const Positions = () => {
     const basePrice = priceBase === 'current' ? price : entryPrice;
     let defaultTargetPrice = basePrice * (1 + defaultPercentage / 100);
 
-    // 设置默认比例/数量：加仓默认15%，止盈默认50%
-    let defaultQuantity = action === 'addition' ? 15 : 50;
+    // 设置默认比例/数量：加仓默认100%，止盈默认50%
+    let defaultQuantity = action === 'addition' ? 100 : 50;
     
     setPricePercentage(defaultPercentage);
     setTargetPrice(defaultTargetPrice);
@@ -275,9 +275,19 @@ const Positions = () => {
              actionType === 'take_profit' ? (exitTag || 'manual') : undefined
       };
 
-      // 加仓/止盈使用百分比（0-100）
-      if (actionType === 'addition' || actionType === 'take_profit') {
-        orderData.percentage = Math.min(100, Math.max(0, quantity));
+      // 加仓使用百分比
+      if (actionType === 'addition') {
+        orderData.percentage = Math.min(200, Math.max(0, quantity));
+      }
+
+      // 止盈使用数量 (从百分比计算)
+      if (actionType === 'take_profit') {
+        const percent = Math.min(100, Math.max(0, quantity));
+        // 计算绝对数量：持仓数量 * (百分比 / 100)
+        const absoluteAmount = Math.abs(currentPosition.size) * (percent / 100);
+        orderData.amount = absoluteAmount;
+        // 仍然保留 percentage 字段用于记录
+        orderData.percentage = percent;
       }
 
       await api.post('/estimates', orderData);
@@ -423,7 +433,7 @@ const Positions = () => {
   };
 
   // Grind 止盈退出
-  const handleGrindTakeProfit = async (position, grindKey, stakeAmount) => {
+  const handleGrindTakeProfit = async (position, grindKey, amount) => {
     try {
       // grindKey 格式如 'grind_1', 'grind_x' 等，需要转换为 exit tag
       const exitTag = `${grindKey}_exit`;
@@ -433,13 +443,13 @@ const Positions = () => {
         symbol: position.symbol,
         side: position.side.toLowerCase(),
         action_type: 'take_profit',
-        stake_amount: stakeAmount,  // 使用保证金金额（USDT）
+        amount: amount,  // 使用数量
         tag: exitTag,
         leverage: position.leverage,
         margin_mode: 'ISOLATED',
-        order_type: 'market',  // grind 退出使用市价单
+        order_type: 'limit',  // grind 退出使用限价单
         trigger_type: 'immediate',  // 立即执行
-        target_price: 0,  // 立即执行不需要目标价格
+        target_price: getCurrentPrice(position.symbol),  // 使用当前价格作为限价
         enabled: true,
       };
 

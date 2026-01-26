@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"math"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,6 +32,7 @@ type PriceEstimateRequest struct {
 	TriggerType string      `json:"trigger_type"`                   // 触发类型
 	Tag         interface{} `json:"tag"`                            // 交易标签（支持字符串和数字）
 	StakeAmount float64     `json:"stake_amount"`                   // 操作金额 (USDT 保证金)
+	Amount      float64     `json:"amount"`                         // 交易数量 (币的数量)
 }
 
 // isSpotMode 判断是否为现货模式
@@ -103,13 +105,13 @@ func (p *PriceController) validatePriceEstimateRequest(req *PriceEstimateRequest
 	switch req.ActionType {
 	case models.ActionTypeAddition:
 		// 加仓必须指定 Percentage
-		if req.Percentage <= 0 || req.Percentage > 100 {
-			return fmt.Errorf("加仓操作必须指定有效的 Percentage (0-100)，当前值: %.2f", req.Percentage)
+		if req.Percentage <= 0 {
+			return fmt.Errorf("加仓操作必须指定有效的 Percentage (>0)，当前值: %.2f", req.Percentage)
 		}
 	case models.ActionTypeTakeProfit:
-		// 止盈必须指定 StakeAmount
-		if req.StakeAmount <= 0 {
-			return fmt.Errorf("止盈操作必须指定 StakeAmount > 0")
+		// 止盈必须指定 Amount
+		if req.Amount <= 0 {
+			return fmt.Errorf("止盈操作必须指定 Amount > 0")
 		}
 	}
 
@@ -136,6 +138,43 @@ func (p *PriceController) formatPriceEstimatePrecision(req *PriceEstimateRequest
 	// 格式化百分比精度，但允许为0
 	if req.Percentage > 0 {
 		req.Percentage = parseFloat(fmt.Sprintf("%.2f", req.Percentage))
+	}
+
+	// 格式化数量精度
+	if req.Amount > 0 {
+		quantityPrecision := coin.GetQuantityPrecisionFromStepSize()
+		if quantityPrecision > 0 {
+			quantityFormat := fmt.Sprintf("%%.%df", quantityPrecision)
+			req.Amount = parseFloat(fmt.Sprintf(quantityFormat, req.Amount))
+		}
+		// 验证最小数量
+		if coin.MinQty != "" {
+			minQty := parseFloat(coin.MinQty)
+			if minQty > 0 && req.Amount < minQty {
+				return fmt.Errorf("交易数量 %.6f 小于最小数量 %.6f", req.Amount, minQty)
+			}
+		}
+		// 验证最大数量
+		if coin.MaxQty != "" {
+			maxQty := parseFloat(coin.MaxQty)
+			if maxQty > 0 && req.Amount > maxQty {
+				return fmt.Errorf("交易数量 %.6f 大于最大数量 %.6f", req.Amount, maxQty)
+			}
+		}
+		// 验证数量步长
+		if coin.StepSize != "" {
+			stepSize := parseFloat(coin.StepSize)
+			if stepSize > 0 {
+				// 使用 epsilon 避免浮点数计算误差
+				epsilon := 1e-9
+				steps := req.Amount / stepSize
+				// 检查 steps 是否接近整数
+				if math.Abs(steps-math.Round(steps)) > epsilon {
+					adjustedQty := math.Floor(steps) * stepSize
+					req.Amount = parseFloat(fmt.Sprintf("%%.%df", quantityPrecision, adjustedQty))
+				}
+			}
+		}
 	}
 
 	// 格式化价格精度
@@ -205,6 +244,7 @@ func (p *PriceController) createPriceEstimateModel(req *PriceEstimateRequest) *m
 		TriggerType: req.TriggerType,
 		Tag:         tagStr,                         // 交易标签（转换为字符串）
 		StakeAmount: req.StakeAmount,                // 操作金额 (USDT 保证金)
+		Amount:      req.Amount,                     // 交易数量 (币的数量)
 		Status:      models.EstimateStatusListening, // 初始状态为监听状态
 		Enabled:     true,                           // 默认启用，自动开始监听
 		CreatedAt:   time.Now(),

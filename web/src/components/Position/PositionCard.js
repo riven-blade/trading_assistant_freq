@@ -89,8 +89,8 @@ const PositionCard = ({ position, currentPrice, onAction, onViewDetails, onGrind
     // notional 是映射后的 stake_amount
     const currentMargin = position.notional || 0;
 
-    // 最大持仓金额 = 第一个订单cost / 杠杆 / 0.15  0.15  是freqtrade 的初始仓位
-    const maxPositionAmount = firstOrderCost / leverage / 0.15;
+    // 最大持仓金额 = 第一个订单cost / 杠杆  是freqtrade 的初始仓位
+    const maxPositionAmount = firstOrderCost / leverage;
 
     if (maxPositionAmount <= 0) return null;
 

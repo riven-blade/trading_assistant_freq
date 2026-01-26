@@ -69,15 +69,15 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
   };
 
   const handleTakeProfit = async (grind) => {
-    const exitMargin = exitAmounts[grind.key];  // 用户输入的是保证金
-    const totalMargin = grind.data?.stake_amount || 0;
+    const exitQuantity = exitAmounts[grind.key];  // 用户输入的是数量
+    const totalQuantity = grind.data?.total_amount || 0;
     
-    if (!exitMargin || exitMargin <= 0) {
-      message.warning('请输入退出金额');
+    if (!exitQuantity || exitQuantity <= 0) {
+      message.warning('请输入退出数量');
       return;
     }
-    if (exitMargin > totalMargin) {
-      message.warning('退出金额不能超过持仓保证金');
+    if (exitQuantity > totalQuantity) {
+      message.warning('退出数量不能超过持仓数量');
       return;
     }
 
@@ -86,7 +86,7 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
       content: (
         <div>
           <p>确定要退出 <strong>{grind.label}</strong> 吗？</p>
-          <p>退出金额: <strong>${formatNumber(exitMargin, 2)}</strong></p>
+          <p>退出数量: <strong>{formatNumber(exitQuantity, 6)}</strong></p>
         </div>
       ),
       okText: '确认退出',
@@ -96,11 +96,11 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
         setLoading(prev => ({ ...prev, [grind.key]: true }));
         try {
           if (onTakeProfit) {
-            // 发送保证金金额（USDT）给后端
-            await onTakeProfit(position, grind.key, exitMargin);
+            // 发送数量给后端
+            await onTakeProfit(position, grind.key, exitQuantity);
           }
           message.success(`${grind.label} 退出请求已提交`);
-          // 清空该 grind 的退出金额
+          // 清空该 grind 的退出数量
           setExitAmounts(prev => ({ ...prev, [grind.key]: undefined }));
         } catch (error) {
           message.error(`退出失败: ${error.message}`);
@@ -213,11 +213,11 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                     </div>
                   </div>
                   <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '11px', color: '#8c8c8c' }}>保证金</div>
-                  <div style={{ fontSize: '12px', fontWeight: 500 }}>
-                    ${formatNumber(grind.data.stake_amount, 2)}
+                    <div style={{ fontSize: '11px', color: '#8c8c8c' }}>保证金</div>
+                    <div style={{ fontSize: '12px', fontWeight: 500 }}>
+                      ${formatNumber(grind.data.stake_amount, 2)}
+                    </div>
                   </div>
-                </div>
                   <div>
                     <div style={{ fontSize: '11px', color: '#8c8c8c' }}>均价</div>
                     <div style={{ fontSize: '13px', fontWeight: 500 }}>
@@ -246,23 +246,22 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                       alignItems: 'center', 
                       gap: 8,
                     }}>
-                      <span style={{ fontSize: '12px', color: '#666', whiteSpace: 'nowrap' }}>退出:</span>
+                      <span style={{ fontSize: '12px', color: '#666', whiteSpace: 'nowrap' }}>退出数量:</span>
                       <InputNumber
                         size="small"
                         min={0}
-                        max={grind.data?.stake_amount || 0}
-                        step={(grind.data?.stake_amount || 0) / 10}
+                        max={totalAmount}
+                        step={totalAmount / 10}
                         value={currentExitAmount}
                         onChange={(value) => handleExitAmountChange(grind.key, value)}
                         style={{ flex: 1, minWidth: 80 }}
-                        placeholder="金额"
-                        prefix="$"
-                        precision={2}
+                        placeholder="数量"
+                        precision={6}
                       />
                       <Button 
                         size="small"
                         type="text"
-                        onClick={() => handleSetFullAmount(grind.key, grind.data?.stake_amount || 0)}
+                        onClick={() => handleSetFullAmount(grind.key, totalAmount)}
                         style={{ 
                           padding: '2px 8px',
                           fontSize: '11px',
@@ -274,6 +273,7 @@ const GrindDetailDrawer = ({ visible, position, onClose, onTakeProfit }) => {
                       >
                         全部
                       </Button>
+
                       <Button
                         size="small"
                         loading={loading[grind.key]}

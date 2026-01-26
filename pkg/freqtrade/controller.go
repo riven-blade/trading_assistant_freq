@@ -387,7 +387,7 @@ func calculateGrindSummary(orders []models.FreqtradeOrder, isShort bool, totalAm
 					grind3IsExitFound = true
 					summary.Grind3.HasExit = true
 				}
-			case "grind_x_exit", "grind_x_derisk":
+			case "grind_x_exit", "grind_x_derisk", "force_exit":
 				if !grindXIsExitFound {
 					grindXIsExitFound = true
 					summary.GrindX.HasExit = true

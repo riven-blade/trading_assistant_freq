@@ -23,12 +23,13 @@ const QuantitySlider = ({
   const isPercentMode = action === 'addition' || action === 'take_profit';
   const isAddition = action === 'addition';
 
-  // 加仓比例：0-30%
+  // 加仓比例：0-200%
   const additionMarks = {
     0: '0%',
-    10: '10%',
-    20: '20%',
-    30: '30%'
+    50: '50%',
+    100: '100%',
+    150: '150%',
+    200: '200%'
   };
 
   // 止盈比例：0-100%
@@ -52,7 +53,7 @@ const QuantitySlider = ({
   // 根据操作类型选择marks和max
   const getMarksAndMax = () => {
     if (isAddition) {
-      return { marks: additionMarks, max: 30 };
+      return { marks: additionMarks, max: 200 };
     } else if (isPercentMode) {
       return { marks: takeProfitMarks, max: 100 };
     }

@@ -181,8 +181,8 @@ func (oe *OrderExecutor) executeAddPosition(estimate *models.PriceEstimate, curr
 		return fmt.Errorf("获取不到原始投入金额")
 	}
 
-	// 这个 0.15 是freqtrade 下单时候的初始仓位
-	stakeCost := *cost  * (estimate.Percentage / 100.0) / *existingPosition.Leverage / 0.15
+	// freqtrade 下单时候的初始仓位
+	stakeCost := *cost  * (estimate.Percentage / 100.0) / *existingPosition.Leverage
 
 	orderPrice := currentPrice
 
@@ -260,10 +260,13 @@ func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, cu
 	}
 
 	var sellAmount float64
-	if estimate.StakeAmount > 0 {
+	if estimate.Amount > 0 {
+		sellAmount = estimate.Amount
+	} else if estimate.StakeAmount > 0 {
+		// 仍然支持旧的逻辑（虽然这里 StakeAmount 是 USDT，但旧逻辑可能直接透传了）
 		sellAmount = estimate.StakeAmount
 	} else {
-		return fmt.Errorf("止盈操作必须指定 stake_amount")
+		return fmt.Errorf("止盈操作必须指定 amount 或 stake_amount")
 	}
 
 	logrus.WithFields(logrus.Fields{
@@ -271,6 +274,7 @@ func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, cu
 		"side":            estimate.Side,
 		"operation":       operation,
 		"position_amount": targetTrade.StakeAmount,
+		"amount":          estimate.Amount,
 		"stake_amount":    estimate.StakeAmount,
 		"leverage":        estimate.Leverage,
 		"trade_id":        targetTrade.TradeId,
@@ -278,10 +282,11 @@ func (oe *OrderExecutor) executeSellOperation(estimate *models.PriceEstimate, cu
 		"order_type":      orderType,
 	}).Info("执行卖出操作")
 
+	// 使用 %.8f 保证数量精度
 	return oe.freqtradeClient.ForceSell(
 		fmt.Sprintf("%d", targetTrade.TradeId),
 		orderType,
-		fmt.Sprintf("%.2f", sellAmount),
+		fmt.Sprintf("%.8f", sellAmount),
 	)
 }
 
