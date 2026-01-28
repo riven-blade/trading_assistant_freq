@@ -7,7 +7,6 @@ import Login from './pages/Login';
 import Positions from './pages/Positions';
 import Orders from './pages/Orders';
 import TradingPairs from './pages/TradingPairs';
-import ChartPage from './pages/ChartPage';
 import Analysis from './pages/Analysis';
 import { getToken, setToken, removeToken } from './utils/auth';
 import api from './services/api';
@@ -75,7 +74,6 @@ function App() {
           <Route path="/positions" element={<Positions />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/trading-pairs" element={<TradingPairs />} />
-          <Route path="/klines" element={<ChartPage />} />
           <Route path="/analysis" element={<Analysis />} />
         </Routes>
       </MainLayout>

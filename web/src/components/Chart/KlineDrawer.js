@@ -11,7 +11,7 @@ const { Option } = Select;
  * K线图抽屉组件
  * @param {boolean} visible - 抽屉是否可见
  * @param {function} onClose - 关闭抽屉的回调
- * @param {string} symbol - 交易对符号 (如 BTCUSDT)
+ * @param {string} symbol - 交易对符号
  * @param {object} analysisData - 分析数据（可选），包含 support_levels 和 resistance_levels
  * @param {string} defaultInterval - 默认时间周期（可选，默认 1h）
  */
@@ -26,6 +26,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
   const resistanceLevelsRef = useRef([]); // 存储压力位价格
   const estimatePriceLinesRef = useRef([]); // 存储监听价格线的引用 [{line, estimate}]
   const positionPriceLinesRef = useRef([]); // 存储仓位价格线的引用
+  const currentPriceRef = useRef(null); // 存储当前最新价格
 
   // 价格监听创建对话框
   const [createEstimateModalVisible, setCreateEstimateModalVisible] = useState(false);
@@ -47,12 +48,17 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     }
   }, [visible, symbol, defaultInterval]);
 
-  // 处理价格线点击
-  const handlePriceLevelClick = useCallback((price, type) => {
+  // 处理价格线点击或双击
+  const handlePriceLevelClick = useCallback((price, type, side = null) => {
     setSelectedPriceType(type);
     
-    // 根据类型设置默认值
-    const defaultSide = type === 'resistance' ? 'short' : 'long';
+    // 根据类型或传入的 side 设置方向
+    let defaultSide = 'long';
+    if (side) {
+      defaultSide = side;
+    } else {
+      defaultSide = type === 'resistance' ? 'short' : 'long';
+    }
     
     form.setFieldsValue({
       target_price: price,
@@ -64,7 +70,57 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     setCreateEstimateModalVisible(true);
   }, [form]);
 
-  // 初始化图表
+  // 检查鼠标是否在价格线附近
+  const isNearPriceLine = useCallback((price) => {
+    if (!price || isNaN(price)) return null;
+    
+    const priceThreshold = Math.abs(price) * 0.005; // 0.5% 的误差范围
+    
+    // 检查价格监听线
+    for (const item of estimatePriceLinesRef.current) {
+      if (item && item.estimate) {
+        const estimatePrice = parseFloat(item.estimate.target_price);
+        if (Math.abs(price - estimatePrice) < priceThreshold) {
+          return { price: estimatePrice, type: 'estimate', estimate: item.estimate };
+        }
+      }
+    }
+    
+    return null;
+  }, []);
+
+  // 处理双击事件 (原生)
+  const handleDoubleClick = useCallback((e) => {
+    if (!candlestickSeriesRef.current || !chartContainerRef.current) return;
+    
+    // 获取相对于容器的坐标
+    const rect = chartContainerRef.current.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    
+    // 转换为价格
+    const clickedPrice = candlestickSeriesRef.current.coordinateToPrice(y);
+    
+    if (!clickedPrice || isNaN(clickedPrice)) return;
+    
+    console.debug('[KlineDrawer] Double click detected via native event. Price:', clickedPrice);
+    
+    // 检查是否点击了现有监听线 (如果是，则忽略，避免与单击冲突)
+    const nearLine = isNearPriceLine(clickedPrice);
+    if (nearLine && nearLine.type === 'estimate') {
+       console.debug('[KlineDrawer] Double click ignored on existing estimate line');
+       return;
+    }
+
+    // 双击任意位置：创建监听
+    const currentPrice = currentPriceRef.current;
+    if (currentPrice) {
+      // 价格高于当前价 -> 做空，低于当前价 -> 做多
+      const side = clickedPrice > currentPrice ? 'short' : 'long';
+      handlePriceLevelClick(clickedPrice, 'manual', side);
+    } else {
+      console.debug('Cannot create estimate: Current price unknown');
+    }
+  }, [handlePriceLevelClick, isNearPriceLine]);
   useEffect(() => {
     if (!visible || !chartContainerRef.current || chartRef.current) return;
 
@@ -106,6 +162,8 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
         precision: 4, // 默认4位小数，会在数据加载后动态调整
         minMove: 0.0001,
       },
+      lastValueVisible: true,
+      priceLineWidth: 2, // 当前价格线加粗
     });
     candlestickSeriesRef.current = candlestickSeries;
 
@@ -146,39 +204,6 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
 
     window.addEventListener('resize', handleResize);
 
-    // 检查鼠标是否在价格线附近
-    const isNearPriceLine = (price) => {
-      if (!price || isNaN(price)) return null;
-      
-      const priceThreshold = Math.abs(price) * 0.005; // 0.5% 的误差范围
-      
-      // 检查价格监听线
-      for (const item of estimatePriceLinesRef.current) {
-        if (item && item.estimate) {
-          const estimatePrice = parseFloat(item.estimate.target_price);
-          if (Math.abs(price - estimatePrice) < priceThreshold) {
-            return { price: estimatePrice, type: 'estimate', estimate: item.estimate };
-          }
-        }
-      }
-      
-      // 检查支撑位
-      for (const supportPrice of supportLevelsRef.current) {
-        if (Math.abs(price - supportPrice) < priceThreshold) {
-          return { price: supportPrice, type: 'support' };
-        }
-      }
-      
-      // 检查压力位
-      for (const resistancePrice of resistanceLevelsRef.current) {
-        if (Math.abs(price - resistancePrice) < priceThreshold) {
-          return { price: resistancePrice, type: 'resistance' };
-        }
-      }
-      
-      return null;
-    };
-    
     // 添加鼠标移动事件监听，改变光标样式
     const handleCrosshairMove = (param) => {
       if (!param.point || !chartContainerRef.current) return;
@@ -193,12 +218,11 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       }
     };
     
-    // 添加图表点击事件监听
+    // 添加图表点击事件监听 (仅处理单击 - 删除)
     const handleChartClick = (param) => {
       if (!param.point) return;
       
       const clickedPrice = candlestickSeries.coordinateToPrice(param.point.y);
-      
       if (!clickedPrice || isNaN(clickedPrice)) return;
       
       // 检查是否点击了价格线
@@ -206,12 +230,10 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       
       if (nearPriceLine) {
         if (nearPriceLine.type === 'estimate') {
+          console.debug('[KlineDrawer] Clicked on estimate line, showing delete modal');
           // 点击了价格监听线，显示删除确认对话框
           setSelectedEstimate(nearPriceLine.estimate);
           setDeleteEstimateModalVisible(true);
-        } else {
-          // 点击了支撑位或压力位，显示创建监听对话框
-          handlePriceLevelClick(nearPriceLine.price, nearPriceLine.type);
         }
       }
     };
@@ -224,7 +246,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       chart.unsubscribeCrosshairMove(handleCrosshairMove);
       chart.unsubscribeClick(handleChartClick);
     };
-  }, [visible, handlePriceLevelClick]);
+  }, [visible, handlePriceLevelClick, isNearPriceLine]);
 
   // 获取并渲染K线数据
   useEffect(() => {
@@ -298,6 +320,11 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
             color: parseFloat(item.close) >= parseFloat(item.open) ? '#26a69a' : '#ef5350',
           }))
           .sort((a, b) => a.time - b.time);
+            
+        // 更新当前最新价格
+        if (candleData.length > 0) {
+          currentPriceRef.current = candleData[candleData.length - 1].close;
+        }
 
         if (candlestickSeriesRef.current) {
           candlestickSeriesRef.current.setData(candleData);
@@ -334,7 +361,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
         candlestickSeriesRef.current.createPriceLine({
           price: price,
           color: '#00d4aa',  // 鲜明的青绿色
-          lineWidth: 2,
+          lineWidth: 1, // 变细
           lineStyle: 2, // 点状虚线
           axisLabelVisible: true,
           title: '支撑',
@@ -351,7 +378,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
         candlestickSeriesRef.current.createPriceLine({
           price: price,
           color: '#ff1744',  // 鲜红色
-          lineWidth: 2,
+          lineWidth: 1, // 变细
           lineStyle: 2, // 点状虚线
           axisLabelVisible: true,
           title: '压力',
@@ -366,11 +393,11 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
 
     // 清除之前的价格线
     estimatePriceLinesRef.current.forEach(item => {
-      if (item && item.line && typeof item.line.remove === 'function') {
+      if (item && item.line) {
         try {
           candlestickSeriesRef.current.removePriceLine(item.line);
         } catch (e) {
-          console.warn('Failed to remove price line:', e);
+          console.debug('Failed to remove price line:', e);
         }
       }
     });
@@ -379,11 +406,11 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     // 获取当前币种的监听价格
     const estimates = getEstimatesBySymbol(symbol, 'listening');
     
-    console.log(`[KlineDrawer] Rendering price lines for ${symbol}:`, estimates);
+    console.debug(`[KlineDrawer] Rendering price lines for ${symbol}:`, estimates);
     
     if (estimates && estimates.length > 0) {
       estimates.forEach(estimate => {
-        console.log(`[KlineDrawer] Creating line for estimate ID ${estimate.id}:`, {
+        console.debug(`[KlineDrawer] Creating line for estimate ID ${estimate.id}:`, {
           price: estimate.target_price,
           action_type: estimate.action_type,
           side: estimate.side,
@@ -425,7 +452,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
           // 存储价格线和关联的estimate数据
           estimatePriceLinesRef.current.push({ line: priceLine, estimate: estimate });
         } catch (e) {
-          console.error('Failed to create price line:', e);
+          console.debug('Failed to create price line:', e);
         }
       });
     }
@@ -441,7 +468,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
         try {
           candlestickSeriesRef.current.removePriceLine(line);
         } catch (e) {
-          console.warn('Failed to remove position price line:', e);
+          console.debug('Failed to remove position price line:', e);
         }
       }
     });
@@ -450,7 +477,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     // 获取当前币种的所有仓位
     const allPositions = positions.filter(pos => pos.symbol === symbol && Math.abs(pos.size) > 0);
     
-    console.log(`[KlineDrawer] Checking positions for ${symbol}:`, allPositions);
+    console.debug(`[KlineDrawer] Checking positions for ${symbol}:`, allPositions);
 
     allPositions.forEach(position => {
       const isLong = position.side.toUpperCase() === 'LONG';
@@ -459,15 +486,15 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
         const priceLine = candlestickSeriesRef.current.createPriceLine({
           price: parseFloat(position.entry_price),
           color: isLong ? '#2196f3' : '#9c27b0',  // 蓝色(多) / 紫色(空)
-          lineWidth: 2,  // 2px，与其他线条一致
-          lineStyle: 0,  // 实线
+          lineWidth: 2,
+          lineStyle: 0,
           axisLabelVisible: true,
           title: `${isLong ? '多头' : '空头'}持仓`,
         });
         positionPriceLinesRef.current.push(priceLine);
-        console.log(`[KlineDrawer] Added ${isLong ? 'long' : 'short'} position line at ${position.entry_price}`);
+        console.debug(`[KlineDrawer] Added ${isLong ? 'long' : 'short'} position line at ${position.entry_price}`);
       } catch (e) {
-        console.error(`Failed to create ${isLong ? 'long' : 'short'} position price line:`, e);
+        console.debug(`Failed to create ${isLong ? 'long' : 'short'} position price line:`, e);
       }
     });
   }, [visible, symbol, positions]);
@@ -521,7 +548,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
       
       if (itemIndex !== -1) {
         const item = estimatePriceLinesRef.current[itemIndex];
-        if (item.line && typeof item.line.remove === 'function') {
+        if (item.line) {
           try {
             candlestickSeriesRef.current.removePriceLine(item.line);
           } catch (e) {
@@ -584,6 +611,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
     >
       <div
         ref={chartContainerRef}
+        onDoubleClick={handleDoubleClick}
         style={{
           width: '100%',
           height: 'calc(100vh - 120px)',
@@ -592,7 +620,7 @@ const KlineDrawer = ({ visible, onClose, symbol, analysisData, defaultInterval =
 
       {/* 创建价格监听对话框 */}
       <Modal
-        title={`创建价格监听 - ${selectedPriceType === 'support' ? '支撑位' : '压力位'}`}
+        title={`创建价格监听${selectedPriceType === 'support' ? ' - 支撑位' : selectedPriceType === 'resistance' ? ' - 压力位' : ''}`}
         open={createEstimateModalVisible}
         onOk={handleCreateEstimate}
         onCancel={() => {
