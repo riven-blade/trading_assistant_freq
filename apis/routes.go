@@ -78,6 +78,7 @@ func SetupRoutes(r *gin.Engine, exchangeClient exchange_factory.ExchangeInterfac
 		{
 			estimates.GET("/all", priceController.GetAllPriceEstimates)       // 获取所有价格预估（Orders页面需要）
 			estimates.POST("", priceController.CreatePriceEstimate)           // 创建价格预估
+			estimates.DELETE("/clear", priceController.ClearNonListeningEstimates) // 清理非监听中的价格预估
 			estimates.DELETE("/:id", priceController.DeletePriceEstimate)     // 删除价格预估
 			estimates.PUT("/:id/toggle", priceController.TogglePriceEstimate) // 切换价格预估监听状态
 		}

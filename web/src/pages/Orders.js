@@ -12,11 +12,14 @@ import {
   Statistic,
   Space,
   Select,
-  Tooltip
+  Tooltip,
+  Switch
 } from 'antd';
 import {
   ReloadOutlined,
-  LineChartOutlined
+  LineChartOutlined,
+  ClearOutlined,
+  FilterOutlined
 } from '@ant-design/icons';
 import api, { getAllEstimates } from '../services/api';
 
@@ -35,6 +38,7 @@ const Orders = () => {
   const [pricesLoading, setPricesLoading] = useState(false);
   const [estimateSymbol, setEstimateSymbol] = useState('');
   const [selectedCoins, setSelectedCoins] = useState([]);
+  const [showNonListeningOnly, setShowNonListeningOnly] = useState(false);
   
   // 价格预估相关状态
   const [estimates, setEstimates] = useState([]);
@@ -161,6 +165,27 @@ const Orders = () => {
       setEstimatesLoading(false);
     }
   };
+
+  // 清理所有非监听中的价格预估
+  const handleClearNonListening = async () => {
+    try {
+      setEstimatesLoading(true);
+      const response = await api.delete('/estimates/clear');
+      
+      message.success(response.data.message || '清理完成');
+      
+      // 刷新数据
+      await fetchAllEstimates();
+    } catch (error) {
+      console.error('清理失败:', error);
+      message.error('清理失败: ' + (error.response?.data?.error || error.message));
+    } finally {
+      setEstimatesLoading(false);
+    }
+  };
+
+
+  // 表格列定义
 
 
   // 表格列定义
@@ -437,13 +462,46 @@ const Orders = () => {
               </button>
             </Space>
           </Col>
+          <Col>
+            <Space>
+              <Space>
+                <Switch 
+                  checked={showNonListeningOnly} 
+                  onChange={setShowNonListeningOnly}
+                  checkedChildren={<FilterOutlined />}
+                  unCheckedChildren={<FilterOutlined />}
+                />
+                <Text>只显示非监听中</Text>
+              </Space>
+              
+              <Popconfirm
+                title="确认清理所有非监听记录？"
+                description="将删除所有已触发或失败的记录，此操作不可恢复"
+                onConfirm={handleClearNonListening}
+                okText="确认清理"
+                cancelText="取消"
+                okType="danger"
+              >
+                <button 
+                  className="control-btn danger-btn"
+                  disabled={estimatesLoading}
+                >
+                  <ClearOutlined style={{ marginRight: 4 }} />
+                  一键清理
+                </button>
+              </Popconfirm>
+            </Space>
+          </Col>
         </Row>
       </Card>
 
       <Card>
         <Table
           columns={estimateColumns}
-          dataSource={estimateSymbol ? estimates.filter(e => e.symbol === estimateSymbol) : estimates}
+          dataSource={
+            (estimateSymbol ? estimates.filter(e => e.symbol === estimateSymbol) : estimates)
+            .filter(e => showNonListeningOnly ? e.status !== 'listening' : true)
+          }
           rowKey="id"
           loading={estimatesLoading}
           size="small"

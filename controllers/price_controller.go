@@ -171,7 +171,7 @@ func (p *PriceController) formatPriceEstimatePrecision(req *PriceEstimateRequest
 				// 检查 steps 是否接近整数
 				if math.Abs(steps-math.Round(steps)) > epsilon {
 					adjustedQty := math.Floor(steps) * stepSize
-					req.Amount = parseFloat(fmt.Sprintf("%%.%df", quantityPrecision, adjustedQty))
+					req.Amount = parseFloat(fmt.Sprintf("%.*f", quantityPrecision, adjustedQty))
 				}
 			}
 		}
@@ -351,6 +351,56 @@ func (p *PriceController) DeletePriceEstimate(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "价格预估删除成功",
+	})
+}
+
+// ClearNonListeningEstimates 清理所有非监听中的价格预估
+func (p *PriceController) ClearNonListeningEstimates(ctx *gin.Context) {
+	if redis.GlobalRedisClient == nil {
+		ctx.JSON(http.StatusServiceUnavailable, gin.H{
+			"error": "Redis服务不可用",
+		})
+		return
+	}
+
+	// 获取所有价格预估
+	estimates, err := redis.GlobalRedisClient.GetAllEstimates()
+	if err != nil {
+		logrus.Errorf("获取价格预估失败: %v", err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "获取价格预估失败",
+		})
+		return
+	}
+
+	deletedCount := 0
+	errorCount := 0
+
+	for _, estimate := range estimates {
+		// 只删除非监听中状态的记录 (triggered, failed)
+		// 注意: EstimateStatusListening = "listening"
+		if estimate.Status != models.EstimateStatusListening {
+			err := redis.GlobalRedisClient.DeletePriceEstimate(estimate.ID)
+			if err != nil {
+				logrus.Errorf("清理价格预估失败 ID: %s, Error: %v", estimate.ID, err)
+				errorCount++
+			} else {
+				deletedCount++
+			}
+		}
+	}
+
+	logrus.Infof("清理非监听价格预估: 成功删除 %d 条, 失败 %d 条", deletedCount, errorCount)
+
+	// 通过WebSocket广播价格预估更新
+	if deletedCount > 0 {
+		go utils.BroadcastSymbolEstimatesUpdate()
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message":       fmt.Sprintf("成功清理 %d 条记录", deletedCount),
+		"deleted_count": deletedCount,
+		"error_count":   errorCount,
 	})
 }
 
