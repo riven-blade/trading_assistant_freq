@@ -40,6 +40,20 @@ build: ## 构建 Docker 镜像（AMD64）
 		--load \
 		.
 
+build-arm64: ## 构建 Docker 镜像（ARM64/Apple Silicon）
+	@echo "构建 ARM64 镜像: $(IMAGE_NAME):$(VERSION)"
+	@if ! docker buildx inspect arm64-builder > /dev/null 2>&1; then \
+		echo "创建 buildx builder..."; \
+		docker buildx create --name arm64-builder --use; \
+	else \
+		docker buildx use arm64-builder; \
+	fi
+	docker buildx build \
+		--platform linux/arm64 \
+		--tag $(IMAGE_NAME):$(VERSION) \
+		--load \
+		.
+
 push: ## 推送镜像到 Docker Hub（AMD64）
 	@echo "推送 AMD64 镜像: $(IMAGE_NAME):$(VERSION)"
 	@if ! docker buildx inspect amd64-builder > /dev/null 2>&1; then \

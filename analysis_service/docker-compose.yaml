@@ -1,0 +1,26 @@
+services:
+  analysis-service:
+    image: ddhdocker/trading-analysis:v0.1.0
+    container_name: trading-analysis
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_HOST=168.93.214.185
+      - MYSQL_PORT=3308
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=dou.190824
+      - MYSQL_DB=analysis
+      - ANALYSIS_INTERVAL_HOURS=12
+      - ANALYSIS_EXCHANGES=binance,bybit
+      - ANALYSIS_MARKET_TYPES=future
+      - ANALYSIS_TIMEFRAMES=1h
+      - ANALYSIS_KLINE_LIMIT=2000
+      - ANALYSIS_RUN_ON_STARTUP=true
+      - ANALYSIS_CONCURRENCY=3
+      - ANALYSIS_BATCH_SIZE=20
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

@@ -18,8 +18,7 @@ import {
 import {
   ReloadOutlined,
   LineChartOutlined,
-  ClearOutlined,
-  FilterOutlined
+  ClearOutlined
 } from '@ant-design/icons';
 import api, { getAllEstimates } from '../services/api';
 
@@ -468,10 +467,8 @@ const Orders = () => {
                 <Switch 
                   checked={showNonListeningOnly} 
                   onChange={setShowNonListeningOnly}
-                  checkedChildren={<FilterOutlined />}
-                  unCheckedChildren={<FilterOutlined />}
                 />
-                <Text>只显示非监听中</Text>
+                <Text>已经完成</Text>
               </Space>
               
               <Popconfirm

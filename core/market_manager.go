@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 	"trading_assistant/models"
 	"trading_assistant/pkg/exchange_factory"
@@ -73,6 +74,48 @@ func (mm *MarketManager) SyncMarketAndPriceData() error {
 	return nil
 }
 
+// parseOnboardDate 从 market.Info 中安全提取上市时间戳
+// 支持: Binance(onboardDate), Bybit(launchTime)
+func parseOnboardDate(info map[string]interface{}) int64 {
+	if info == nil {
+		return 0
+	}
+
+	// 尝试获取 onboardDate 字段
+	if onboardDate, ok := info["onboardDate"]; ok {
+		if ts := parseTimestamp(onboardDate); ts > 0 {
+			return ts
+		}
+	}
+
+	// 尝试获取 launchTime 字段
+	if launchTime, ok := info["launchTime"]; ok {
+		if ts := parseTimestamp(launchTime); ts > 0 {
+			return ts
+		}
+	}
+
+	return 0
+}
+
+// parseTimestamp 解析不同类型的时间戳值
+func parseTimestamp(value interface{}) int64 {
+	switch v := value.(type) {
+	case float64:
+		return int64(v)
+	case int64:
+		return v
+	case int:
+		return int64(v)
+	case string:
+		// Bybit 返回字符串类型的时间戳
+		if ts, err := strconv.ParseInt(v, 10, 64); err == nil {
+			return ts
+		}
+	}
+	return 0
+}
+
 // syncMarketData 同步市场数据
 func (mm *MarketManager) syncMarketData() error {
 	logrus.Info("开始同步市场数据...")
@@ -119,19 +162,20 @@ func (mm *MarketManager) syncMarketData() error {
 
 		// 创建币种信息（统一使用MarketID）
 		coin := &models.Coin{
-			Symbol:     market.ID, // 统一使用MarketID: BTCUSDT
-			MarketID:   market.ID, // binance原始ID: BTCUSDT
-			BaseAsset:  market.Base,
-			QuoteAsset: market.Quote,
-			Status:     "active",
-			TickSize:   fmt.Sprintf("%.8f", market.Limits.Price.Step),
-			StepSize:   fmt.Sprintf("%.8f", market.Limits.Amount.Step),
-			MinPrice:   fmt.Sprintf("%.8f", market.Limits.Price.Min),
-			MaxPrice:   fmt.Sprintf("%.8f", market.Limits.Price.Max),
-			MinQty:     fmt.Sprintf("%.8f", market.Limits.Amount.Min),
-			MaxQty:     fmt.Sprintf("%.8f", market.Limits.Amount.Max),
-			CreatedAt:  time.Now(),
-			UpdatedAt:  time.Now(),
+			Symbol:      market.ID, // 统一使用MarketID: BTCUSDT
+			MarketID:    market.ID, // binance原始ID: BTCUSDT
+			BaseAsset:   market.Base,
+			QuoteAsset:  market.Quote,
+			Status:      "active",
+			TickSize:    fmt.Sprintf("%.8f", market.Limits.Price.Step),
+			StepSize:    fmt.Sprintf("%.8f", market.Limits.Amount.Step),
+			MinPrice:    fmt.Sprintf("%.8f", market.Limits.Price.Min),
+			MaxPrice:    fmt.Sprintf("%.8f", market.Limits.Price.Max),
+			MinQty:      fmt.Sprintf("%.8f", market.Limits.Amount.Min),
+			MaxQty:      fmt.Sprintf("%.8f", market.Limits.Amount.Max),
+			OnboardDate: parseOnboardDate(market.Info),
+			CreatedAt:   time.Now(),
+			UpdatedAt:   time.Now(),
 		}
 
 		// 计算并设置正确的精度值

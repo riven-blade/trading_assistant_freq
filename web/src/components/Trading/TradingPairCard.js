@@ -268,6 +268,22 @@ const TradingPairCard = ({
               </div>
             )}
 
+            {/* 上市天数显示 */}
+            {pair.onboard_date > 0 && (() => {
+              const listingDays = Math.floor((Date.now() - pair.onboard_date) / (1000 * 60 * 60 * 24));
+              const isNewCoin = listingDays <= 30;
+              return (
+                <div style={{
+                  textAlign: 'center',
+                  fontSize: '10px',
+                  color: isNewCoin ? '#ea580c' : '#9ca3af',
+                  fontWeight: isNewCoin ? '600' : '400'
+                }}>
+                  上市 {listingDays} 天
+                </div>
+              );
+            })()}
+
             {/* 资金费率 - 仅期货模式显示 */}
             {!isSpotMode && priceInfo?.fundingRate !== undefined && (
               <div style={{

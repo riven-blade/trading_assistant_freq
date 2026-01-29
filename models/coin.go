@@ -62,8 +62,9 @@ type Coin struct {
 	QuoteVolume string `json:"quote_volume"` // 24小时成交额（USDT）
 
 	// ========== 时间戳 ==========
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	OnboardDate int64     `json:"onboard_date"` // 上市时间戳（毫秒）
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // CoinSelection 币种选择状态 - 独立管理选中状态

@@ -11,6 +11,7 @@ import {
   Row,
   Col,
   Modal,
+  Switch,
 } from 'antd';
 
 import {
@@ -47,6 +48,7 @@ const TradingPairs = () => {
   const [refreshing, setRefreshing] = useState(false); // 刷新状态
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [coinFilter, setCoinFilter] = useState([]); // 币种筛选
+  const [showUnselectedOnly, setShowUnselectedOnly] = useState(true); // 只显示未选中的交易对，默认开启
   
   // 监听窗口大小变化
   useEffect(() => {
@@ -58,6 +60,7 @@ const TradingPairs = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const [syncing, setSyncing] = useState(false);
+  const [addingAll, setAddingAll] = useState(false); // 批量添加状态
   const [searchValue, setSearchValue] = useState('');
   const [filteredPairs, setFilteredPairs] = useState([]);
   
@@ -163,6 +166,13 @@ const TradingPairs = () => {
         pair.quote_asset.toLowerCase().includes(searchValue.toLowerCase())
       );
     }
+
+    // 过滤已选中的交易对
+    if (showUnselectedOnly) {
+      filtered = filtered.filter(pair => 
+        !selectedPairs.some(selected => selected.symbol === pair.symbol)
+      );
+    }
     
     // 再进行排序
     const sorted = [...filtered].sort((a, b) => {
@@ -189,6 +199,10 @@ const TradingPairs = () => {
           aValue = parseFloat(a.price || '0');
           bValue = parseFloat(b.price || '0');
           break;
+        case 'onboard_date':
+          aValue = a.onboard_date || 0;
+          bValue = b.onboard_date || 0;
+          break;
         default:
           aValue = a.symbol;
           bValue = b.symbol;
@@ -208,7 +222,7 @@ const TradingPairs = () => {
     });
     
     setFilteredPairs(sorted);
-  }, [searchValue, allPairs, sortBy, sortOrder]);
+  }, [searchValue, allPairs, sortBy, sortOrder, showUnselectedOnly, selectedPairs]);
 
 
 
@@ -353,6 +367,48 @@ const TradingPairs = () => {
     } catch (error) {
       message.error(`${symbol && symbol.length > 8 ? symbol.substring(0, 8) + '...' : symbol} 删除失败`);
     }
+  };
+
+  // 批量添加交易对
+  const handleAddAll = () => {
+    // 从当前过滤列表中筛选出未选中的交易对
+    const unselectedPairs = filteredPairs.filter(pair => !isSelected(pair.symbol));
+
+    if (unselectedPairs.length === 0) {
+      message.info('当前列表中没有未添加的交易对');
+      return;
+    }
+
+    Modal.confirm({
+      title: '批量添加交易对',
+      content: `确定要添加当前列表中的 ${unselectedPairs.length} 个交易对吗？`,
+      okText: '确定添加',
+      cancelText: '取消',
+      onOk: async () => {
+        setAddingAll(true);
+        try {
+          // 串行添加，避免并发请求过多
+          let successCount = 0;
+          for (const pair of unselectedPairs) {
+            try {
+              await api.post('/coins/select', {
+                symbol: pair.symbol,
+                is_selected: true
+              });
+              successCount++;
+            } catch (err) {
+              console.error(`Failed to add ${pair.symbol}`, err);
+            }
+          }
+          message.success(`成功添加 ${successCount} 个交易对`);
+          await fetchSelectedPairs();
+        } catch (error) {
+          message.error('批量添加失败');
+        } finally {
+          setAddingAll(false);
+        }
+      }
+    });
   };
 
   // 统一的卡片操作处理
@@ -725,24 +781,44 @@ const TradingPairs = () => {
           paddingBottom: '12px',
           borderBottom: '1px solid #f0f0f0'
         }}>
-          {/* 同步按钮 */}
-          <button 
-            className="control-btn primary-btn trading-pairs-header-btn"
-            onClick={syncPairs}
-            disabled={syncing}
-            style={{ 
-              marginBottom: '8px',
-              height: '32px',
-              fontSize: isMobile ? '12px' : '13px',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <ReloadOutlined style={{ marginRight: 4 }} />
-            从交易所同步最新交易对
-          </button>
+          {/* 按钮组：同步和一键添加 */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+            <button 
+              className="control-btn primary-btn trading-pairs-header-btn"
+              onClick={syncPairs}
+              disabled={syncing || addingAll}
+              style={{ 
+                flex: 1,
+                height: '32px',
+                fontSize: isMobile ? '12px' : '13px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <ReloadOutlined style={{ marginRight: 4 }} spin={syncing} />
+              同步交易对
+            </button>
+            
+            <button 
+              className="control-btn success-btn trading-pairs-header-btn"
+              onClick={handleAddAll}
+              disabled={syncing || addingAll}
+              style={{ 
+                flex: 1,
+                height: '32px',
+                fontSize: isMobile ? '12px' : '13px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <PlusOutlined style={{ marginRight: 4 }} />
+              一键添加
+            </button>
+          </div>
           
           {/* 搜索框 - 统一样式 */}
           <Input.Search
@@ -759,60 +835,66 @@ const TradingPairs = () => {
           />
           
           {/* 排序控制 - 强制水平布局 */}
+          {/* 排序控制 */}
           <div 
             style={{ 
-              display: 'flex !important', 
-              flexDirection: 'row !important',
-              alignItems: 'center !important',
-              gap: '6px',
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '8px',
               width: '100%',
-              height: '32px',
-              marginTop: '0px',
-              marginBottom: '0px'
+              marginTop: '4px',
+              flexWrap: 'nowrap'
             }}
           >
             <div style={{ 
               fontSize: '12px', 
               color: '#888',
-              width: '28px',
               flexShrink: 0,
-              lineHeight: '32px',
-              textAlign: 'left',
-              display: 'inline-block'
             }}>
               排序
             </div>
-            <div style={{ flex: 1, display: 'inline-block' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <Select
                 value={sortBy}
                 onChange={setSortBy}
-                style={{ 
-                  width: '100%',
-                  height: '32px'
-                }}
-                size="small"
+                style={{ width: '100%' }}
+                size="middle"
                 placeholder="排序方式"
               >
                 <Option value="price_change_percent">涨跌幅</Option>
                 <Option value="volume">成交量</Option>
                 <Option value="quote_volume">成交额</Option>
                 <Option value="price">价格</Option>
+                <Option value="onboard_date">上市天数</Option>
                 <Option value="symbol">名称</Option>
               </Select>
             </div>
-            <div style={{ width: '75px', flexShrink: 0, display: 'inline-block' }}>
+            <div style={{ width: '75px', flexShrink: 0 }}>
               <Select
                 value={sortOrder}
                 onChange={setSortOrder}
-                style={{ 
-                  width: '100%',
-                  height: '32px'
-                }}
-                size="small"
+                style={{ width: '100%' }}
+                size="middle"
               >
                 <Option value="desc">降序</Option>
                 <Option value="asc">升序</Option>
               </Select>
+            </div>
+            
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              flexShrink: 0,
+              paddingLeft: '8px',
+              borderLeft: '1px solid #f0f0f0',
+              marginLeft: '4px'
+            }}>
+              <Switch 
+                checked={showUnselectedOnly}
+                onChange={setShowUnselectedOnly}
+                size="middle"
+              />
+              <span style={{ fontSize: '12px', color: '#666', marginLeft: '4px', whiteSpace: 'nowrap' }}>只看未选</span>
             </div>
           </div>
         </div>
@@ -907,6 +989,26 @@ const TradingPairs = () => {
                   width: 100,
                   align: 'right',
                   render: (quoteVolume) => quoteVolume ? `${(parseFloat(quoteVolume) / 1000000).toFixed(1)}M` : '-',
+                },
+                {
+                  title: '上市',
+                  dataIndex: 'onboard_date',
+                  key: 'onboard_date',
+                  width: 80,
+                  align: 'right',
+                  render: (onboardDate) => {
+                    if (!onboardDate || onboardDate <= 0) return '-';
+                    const days = Math.floor((Date.now() - onboardDate) / (1000 * 60 * 60 * 24));
+                    const isNew = days <= 30;
+                    return (
+                      <span style={{ 
+                        color: isNew ? '#ea580c' : '#666',
+                        fontWeight: isNew ? '600' : '400'
+                      }}>
+                        {days}天
+                      </span>
+                    );
+                  },
                 }
               ]),
               {

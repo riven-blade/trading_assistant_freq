@@ -13,7 +13,13 @@ MYSQL_DB = os.getenv("MYSQL_DB", "trading_analysis")
 
 DATABASE_URL = f"mysql+aiomysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(
+    DATABASE_URL, 
+    echo=False,
+    connect_args={"ssl": False},
+    pool_pre_ping=True,
+    pool_recycle=3600
+)
 
 AsyncSessionLocal = sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
