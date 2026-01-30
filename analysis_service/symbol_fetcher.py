@@ -77,11 +77,16 @@ class SymbolFetcher:
             return False
         
         if market_type == 'spot':
-            # 现货: quote 必须是 USDT
-            return market.get('quote') == 'USDT'
+            # 现货: quote 必须是 USDT，且类型必须是 spot
+            return market.get('quote') == 'USDT' and market.get('type') == 'spot'
         else:
             # 期货: settle (质押物) 必须是 USDT
-            return market.get('settle') == 'USDT'
+            # 且类型必须是 swap (永续合约)
+            # exclude options and dated futures
+            return (
+                market.get('settle') == 'USDT' and 
+                (market.get('swap') is True or market.get('type') == 'swap')
+            )
     
     async def fetch_symbols(self, exchange_name: str, market_type: str) -> List[str]:
         """

@@ -1,6 +1,6 @@
 services:
   analysis-service:
-    image: ddhdocker/trading-analysis:v0.1.0
+    image: ddhdocker/trading-analysis:v0.1.1
     container_name: trading-analysis
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
       - ANALYSIS_TIMEFRAMES=1h
       - ANALYSIS_KLINE_LIMIT=2000
       - ANALYSIS_RUN_ON_STARTUP=true
-      - ANALYSIS_CONCURRENCY=3
+      - ANALYSIS_CONCURRENCY=2
       - ANALYSIS_BATCH_SIZE=20
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]

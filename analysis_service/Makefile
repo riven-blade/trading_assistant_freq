@@ -63,13 +63,13 @@ push: ## 推送镜像到 Docker Hub（AMD64）
 		docker buildx use amd64-builder; \
 	fi
 	docker buildx build \
-		--platform linux/amd64 \
+		--platform linux/amd64,linux/arm64 \
 		--tag $(IMAGE_NAME):$(VERSION) \
 		--push \
 		.
 	@if [ "$(VERSION)" != "latest" ]; then \
 		docker buildx build \
-			--platform linux/amd64 \
+			--platform linux/amd64,linux/arm64 \
 			--tag $(IMAGE_NAME):latest \
 			--push \
 			.; \
